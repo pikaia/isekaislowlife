@@ -4,24 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cv.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log/Screenshot 2024-04-03 110607.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="initital checkin">
       <change afterPath="$PROJECT_DIR$/pugsd.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/cancel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/handle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/quick_handle_checkbox.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/continue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/go.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/ok.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/skip.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,20 +30,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.cv.executor&quot;: &quot;Run&quot;,
-    &quot;Python.game.executor&quot;: &quot;Run&quot;,
-    &quot;Python.login2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/projects/isekaibot/pythonProject1&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.cv.executor": "Run",
+    "Python.game.executor": "Run",
+    "Python.login2.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/projects/isekaibot/pythonProject1",
+    "settings.editor.selected.configurable": "preferences.externalTools"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\isekaibot\pythonProject1" />
@@ -174,9 +162,31 @@
       <option name="presentableId" value="Default" />
       <updated>1711327940312</updated>
     </task>
+    <task id="LOCAL-00001" summary="initital checkin">
+      <option name="closed" value="true" />
+      <created>1712160794720</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712160794720</updated>
+    </task>
+    <task id="LOCAL-00002" summary="initital checkin">
+      <option name="closed" value="true" />
+      <created>1712160944047</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712160944047</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="aa1a6a8f-0f95-45de-aabd-657303bceb10" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -184,11 +194,38 @@
             <State />
           </value>
         </entry>
+        <entry key="aa1a6a8f-0f95-45de-aabd-657303bceb10">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="initital checkin" />
+    <option name="LAST_COMMIT_MESSAGE" value="initital checkin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -215,33 +252,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/game.py</url>
-          <line>392</line>
+          <line>460</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/game.py</url>
-          <line>393</line>
+          <line>461</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python311-32/Lib/site-packages/pyscreeze/__init__.py</url>
-          <line>494</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/game.py</url>
-          <line>295</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/game.py</url>
-          <line>297</line>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/game.py</url>
-          <line>361</line>
+          <line>429</line>
           <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/game.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
