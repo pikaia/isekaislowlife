@@ -9,3 +9,5 @@ Isekai slow life Python bot
 ### Mouse cursor style
 #### Bluestacks
 
+# pyautogui
+## Tweak confidence higher when image doesnt match. A sign is if it thinks its matching wrongly.
