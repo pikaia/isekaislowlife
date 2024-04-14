@@ -37,4 +37,7 @@ Guild numbers are available under Guild, head office. The deployment summarises 
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/9d5dea52-35e4-4751-85f0-be251f8f5135)
 
+Farmstead bonus comes straight from framstead:
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/c7f6eed2-2436-4645-8570-fe17aeb0ec2b)
 
