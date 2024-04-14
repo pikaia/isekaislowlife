@@ -24,6 +24,13 @@ The Family Member value is a lookup of the table comes the Home screen, family, 
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/33f163c7-ac14-4f7e-912d-f703fd5233bc)
 
+The fishing bonus can be seen in the fishing bonus screen beneath the fishing encyclopedia:
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/65423483-e71a-4467-bb3e-00e598b9c60a)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/da70af7e-32a0-481f-b2fd-b354811a23ce)
+
+
 
 
 
