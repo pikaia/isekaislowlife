@@ -31,6 +31,10 @@ The fishing bonus can be seen in the fishing bonus screen beneath the fishing en
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/da70af7e-32a0-481f-b2fd-b354811a23ce)
 
 
+Guild numbers are available under Guild, head office. The deployment summarises the total deployed for each class eg Inspiring:
 
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/6da67894-4b17-49a8-856e-395be6f2035d)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/9d5dea52-35e4-4751-85f0-be251f8f5135)
 
 
