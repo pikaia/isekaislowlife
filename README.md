@@ -93,10 +93,13 @@ eg the Scroll Shop is an Inspiring type building, so its bonus is 945%
 ## Magic farm
 This seems related to the plant encylopedia totals and the earnings increase from the money tree.
 
+eg for the scroll shopt, an Inspiring building, its 600+200 = 800
+
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/c103f373-a852-4d97-8e39-914b112ba830)
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/0415507e-4707-41ea-8f5d-6b979d675ba2)
 
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/6b80af1a-1e52-4f38-8487-d656b4942bb8)
 
 
 ## Fish
