@@ -33,7 +33,15 @@ Basic Earnings is the total of Fellow, total employee, fish adjusted to k/s.
 
 ## Fish
 
-Unknown
+This is the number of employees multiplied by the fishing bonus for building earnings.
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/dd76fa33-c9bb-4001-93e3-fb74e194ddc1)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/027207bd-8a25-46ce-9310-7a5ea813f885)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/52838791-441b-46be-b9b3-5fee1e5c747b)
+
+eg 28325/s = 5665 * 5
 
 
 ## Operating Fellow
