@@ -75,6 +75,13 @@ eg the Apothecary is an Informed class, so its value is 4717%
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/14d7828d-e4fb-4baf-b3cc-3876c87901c7)
 
+## Farmstead
+
+Farmstead bonus comes straight from farmstead:
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/c7f6eed2-2436-4645-8570-fe17aeb0ec2b)
+
+
 ## Inn
 This is the contribution from developing the Inn's menu.
 
@@ -83,11 +90,13 @@ eg the Scroll Shop is an Inspiring type building, so its bonus is 945%
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/6643f11f-2fa4-4e72-8e5c-e3cd7f4d830a)
 
-## Farmstead
+## Magic farm
+This seems related to the plant encylopedia totals and the earnings increase from the money tree.
 
-Farmstead bonus comes straight from farmstead:
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/c103f373-a852-4d97-8e39-914b112ba830)
 
-![image](https://github.com/pikaia/isekaislowlife/assets/1948869/c7f6eed2-2436-4645-8570-fe17aeb0ec2b)
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/0415507e-4707-41ea-8f5d-6b979d675ba2)
+
 
 
 ## Fish
