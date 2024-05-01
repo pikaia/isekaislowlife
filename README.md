@@ -43,6 +43,13 @@ This is the number of employees multiplied by the fishing bonus for building ear
 
 eg 28325/s = 5665 * 5
 
+The extra buff for unfettered comes from the Combination Enclyclopedia, The bubbble family.
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/d73e3806-cc73-4b61-a82f-c91ca71be2ea)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/095d6268-043c-493d-8d52-38935e299d44)
+
+
 
 ## Operating Fellow
 The Operating Fellow is the sum of each fellow assigned to building.
