@@ -2,21 +2,22 @@ import logging.handlers
 import os
 import sys
 import time
+from datetime import timedelta
 
 import numpy as np
 import pyautogui
 import wx
 from tkinter import *
 
-
 APP_TITLE = 'BlueStacks App Player'
 MAIN_MENU = 'resources/mainmenu/'
 MM_HOME = 'resources/mainmenu/home.png'
 MM_VILLAGE = 'resources/mainmenu/village.png'
 MM_DRAKENBERG = 'resources/mainmenu/drakenberg.png'
+MM_DRAKENBERG_ALT = 'resources/mainmenu/drakenberg_sm.png'
 
 MM_DRAKENBERG_TRADINGPOST = 'resources/mainmenu/village/drakenberg/enter_trading_post.png'
-TRADINGPOST_GOLD = 'resources/mainmenu/village/drakenberg/trading_post/gold_small.png'
+TRADINGPOST_GOLD = 'resources/mainmenu/village/drakenberg/trading_post/gold.png'
 TRADINGPOST_BACK = 'resources/mainmenu/village/drakenberg/trading_post/back.png'
 
 DRAKENBERG_ROAMING = 'resources/mainmenu/village/drakenberg/roaming.png'
@@ -55,6 +56,7 @@ EVENTS_CONTINUE = 'resources/mainmenu/village/drakenberg/stage/events/tap_to_con
 STAGE_EVENTS_X = 'resources/mainmenu/village/drakenberg/stage/events_x.png'
 STAGE_EVENTS_Y = 'resources/mainmenu/village/drakenberg/stage/events_y.png'
 STAGE_AUTOHANDLE = 'resources/mainmenu/village/drakenberg/stage/events/autohandle.png'
+
 
 class Point2D:
     def __init__(self, x, y):
@@ -177,31 +179,43 @@ def wait_for_images(images):
             return False
 
 
+def click_one_of_images(images, grayscale=True, confidence=0.5):
+    """
+    Loops through a list of conditions and returns the first one that evaluates to True.
+    If none of the conditions are satisfied, returns None.
+    """
+    for image in images:
+        if click_image(image, grayscale, confidence):
+            return True
+    return False
+
+
 def click_image(image, grayscale=True, confidence=0.5):
     location = None
 
     while location is None:
         try:
-            log.info('Looking for ' + image)
+            log.debug('Looking for ' + image)
             # pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
-            # location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=0.4)
+            #  location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=0.4)
             location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
             # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
             highlightSection(os.path.basename(image), location)
             pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
-            log.debug(
-                f'Found at ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
+            log.info(
+                f'Click ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
         except Exception as e:
-            log.info('Not Found ' + image + repr(e))
             time.sleep(1)
+            log.debug(repr(e))
 
-    log.info('Found ' + image + ' at:' + repr(location))
+    log.debug('Found ' + image + ' at:' + repr(location))
 
 
 # start on the Drakenberg screen
 def collect_trading_post_gold(maxtimes=30):
     # assume main menu is displayed.
     for x in range(1, maxtimes):
+        start = time.time()
         log.info(f'Collecting gold {x}/{maxtimes}...')
 
         click_image(MM_DRAKENBERG)
@@ -212,7 +226,7 @@ def collect_trading_post_gold(maxtimes=30):
 
         # Need higher confidence to match small image(?)
         gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD, APP_TITLE,
-                                          grayscale=True, confidence=0.5)
+                                          grayscale=True, confidence=0.7)
         # Give time for screen to refresh
         time.sleep(1)
         highlightSection(os.path.basename(TRADINGPOST_GOLD), gold)
@@ -223,11 +237,11 @@ def collect_trading_post_gold(maxtimes=30):
         # give time for gold to replenish
         time.sleep(7)
 
-        if x % 10 == 0:
-            run_roaming()
+        elapsed = time.time() - start
+        log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')
 
 
-# Assume your are in drakenburg screen.
+# Assume your are in drakenberg screen.
 def run_roaming():
     click_image(DRAKENBERG_ROAMING)
     time.sleep(1)
@@ -243,6 +257,7 @@ def run_roaming():
         pyautogui.click(location)
     # Get out of roaming
     click_image(ROAMING_BACK, confidence=0.6)
+
 
 def run_stage():
     # start on the Drakenberg screen
@@ -465,12 +480,13 @@ def test():
 # Select the function based on the user input
 while True:
     # Get the user input
-    number = int(
-        input("Select a function (0 roam, 1 Gold, 2 Stage, 3 guild, 4 move right, 5 grind, 6 kitchen, 7 school): "))
+    # number = int(
+    #     input("Select a function (0 roam, 1 Gold, 2 Stage, 3 guild, 4 move right, 5 grind, 6 kitchen, 7 school): "))
+    number = 1
     if number == 0:
         run_roaming()
     if number == 1:
-        collect_trading_post_gold(300)
+        collect_trading_post_gold(3000)
     elif number == 2:
         run_stage()
     elif number == 3:
