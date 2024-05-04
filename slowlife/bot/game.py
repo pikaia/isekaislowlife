@@ -48,10 +48,10 @@ def collect_trading_post_gold(maxtimes=30):
         gold = None
         try:
             gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD1, APP_TITLE,
-                                            grayscale=True, confidence=0.7)
+                                            grayscale=True, confidence=0.6)
         except ImageNotFoundException as e:
             gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD2, APP_TITLE,
-                                            grayscale=True, confidence=0.7)
+                                            grayscale=True, confidence=0.6)
 
         # Give time for screen to refresh
         time.sleep(1)
