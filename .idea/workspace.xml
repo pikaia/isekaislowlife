@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Add roaming">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/home.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home.png" afterDir="false" />
-    </list>
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +18,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -278,7 +273,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714845858217</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right.">
+      <option name="closed" value="true" />
+      <created>1714858671079</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714858671079</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right.">
+      <option name="closed" value="true" />
+      <created>1714858698528</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714858698528</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -381,7 +392,8 @@
     <MESSAGE value="Add roaming to script" />
     <MESSAGE value="Images for scripts" />
     <MESSAGE value="Add roaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add roaming" />
+    <MESSAGE value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
