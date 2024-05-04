@@ -1,11 +1,9 @@
-import os
-import time
 from datetime import timedelta
 
-import pyautogui
+from pyautogui import ImageNotFoundException
 
-from common.utils import click_image, log, highlightSection, match_image, wait_for_image
-from resources.constants import *
+from slowlife.common.utils import *
+from slowlife.resources.constants import *
 
 
 # start on the Drakenberg screen
@@ -16,17 +14,48 @@ def collect_trading_post_gold(maxtimes=30):
         log.info(f'Collecting gold {x}/{maxtimes}...')
 
         click_image(MM_DRAKENBERG)
+        time.sleep(1)
+
+        # Roam if possible
+        click_image(DRAKENBERG_ROAMING)
+        # Give time for screen to refresh
+        time.sleep(1)
+        location = click_image(ROAMING_GO)
+        time.sleep(1)
+
+        # roaming has outcomes when u click on GO
+        # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
+        # 2. roaming available:     go -> ok diagloue -> click ok -> back
+        try:
+            roaming_ok = pyautogui.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
+            pyautogui.click(roaming_ok)
+        except ImageNotFoundException as e:
+            # When this is no roaming available, a dialog appears
+            # click anywhere to dismiss it.
+            pyautogui.click(location)
+
+        # Click on back to continue
+        back = pyautogui.locateOnWindow(ROAMING_BACK, APP_TITLE, grayscale=True, confidence=0.45)
+
+        pyautogui.click(back)
 
         # Enter trading post
         click_image(MM_DRAKENBERG_TRADINGPOST)
         time.sleep(1)
 
         # Need higher confidence to match small image(?)
-        gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD, APP_TITLE,
-                                        grayscale=True, confidence=0.5)
+        # Also it may be one of 2 possible images.
+        gold = None
+        try:
+            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD1, APP_TITLE,
+                                            grayscale=True, confidence=0.7)
+        except ImageNotFoundException as e:
+            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD2, APP_TITLE,
+                                            grayscale=True, confidence=0.7)
+
         # Give time for screen to refresh
         time.sleep(1)
-        highlightSection(os.path.basename(TRADINGPOST_GOLD), gold)
+        highlightSection(os.path.basename(TRADINGPOST_GOLD1), gold)
         pyautogui.click(gold)
 
         click_image(TRADINGPOST_BACK, grayscale=False, confidence=0.6)
@@ -104,7 +133,7 @@ def run_stage():
     for x in range(1, 100):
         print('Collecting gold {}.'.format(x))
         wait_for_image(MM_DRAKENBERG_TRADINGPOST)
-        wait_for_image(TRADINGPOST_GOLD)
+        wait_for_image(TRADINGPOST_GOLD1)
         # pause for gold to replenish
         time.sleep(6)
         wait_for_image(TRADINGPOST_BACK)
