@@ -1,0 +1,1555 @@
+Index: buildings.py
+===================================================================
+diff --git a/buildings.py b/buildings.py
+deleted file mode 100644
+--- a/buildings.py	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ /dev/null	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
+@@ -1,98 +0,0 @@
+-import logging.handlers
+-import os
+-import sys
+-import time
+-
+-from tkinter import *
+-import pyautogui
+-import pygetwindow
+-
+-log = logging.getLogger(__name__)
+-log.setLevel(logging.INFO)
+-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+-h = logging.StreamHandler(sys.stdout)
+-h.setLevel(logging.DEBUG)
+-h.setFormatter(formatter)
+-log.addHandler(h)
+-
+-APP_TITLE = 'BlueStacks App Player'
+-
+-buildings = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station',
+-             'patisserie', 'archery range', 'clinic', 'market street', 'bank', 'tailor shop',
+-             'sports park', 'museum']
+-
+-
+-def highlightSection(title, rect, color='red', duration=3):
+-    win = Tk()
+-    win.title = title
+-    # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/geometry.html
+-    # A geometry string has this general form: 'wxh±x±y'
+-    # where:
+-    # The w and h parts give the window width and height in pixels. They are separated by the character 'x'.
+-    # If the next part has the form +x, it specifies that the left side of the window should be x pixels
+-    # from the left side of the desktop. If it has the form -x, the right side of the window is x pixels
+-    # from the right side of the desktop.
+-    geometry = str(rect[2]) + 'x' + str(rect[3]) + '+' + str(rect[0]) + '+' + str(rect[1])
+-    win.geometry(geometry)
+-    log.debug(f'title={title}, str = {geometry}')
+-    win.configure(background=color)
+-    win.overrideredirect(1)
+-    win.attributes('-alpha', 0.3)
+-    win.wm_attributes('-topmost', 1)
+-    win.after(duration * 1000, lambda: win.destroy())
+-    win.mainloop()
+-
+-
+-def click_image(image, grayscale=True, confidence=0.5):
+-    location = None
+-
+-    while location is None:
+-        try:
+-            log.debug('Looking for ' + image)
+-            # pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+-            #  location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=0.4)
+-            location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+-            # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
+-            highlightSection(os.path.basename(image), location)
+-            pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
+-            log.info(
+-                f'Click ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
+-        except Exception as e:
+-            time.sleep(1)
+-            log.debug(repr(e))
+-
+-    log.debug('Found ' + image + ' at:' + repr(location))
+-
+-
+-# Get the coordinates of the window
+-app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
+-
+-# Whole app window
+-screenshot = pyautogui.screenshot(region=(app.left, app.top, app.right - app.left,
+-                                          app.bottom - app.top), imageFilename='resources/ss/data/full_app.png')
+-
+-# Minus caption on top and bottom
+-mini_region = (app.left, app.top + 60, app.right - app.left,
+-               app.bottom - app.top - 70 - 60)
+-mini_screenshot = pyautogui.screenshot(region=mini_region,
+-                                       imageFilename='resources/ss/data/mini_app.png')
+-
+-# Assume we start with Inn having focus.
+-earnings = None
+-location = None
+-for bldg in buildings:
+-    # Display earnings breakout
+-    if earnings is None:
+-        earnings = pyautogui.locateOnScreen('resources/ss/data/buildings/earnings.png', 1, grayscale=True, confidence=0.7)
+-    pyautogui.click(earnings)
+-    # wait for screen to appear
+-    time.sleep(3)
+-    # Save each building in resources/ss/data/buildings
+-    pyautogui.screenshot(region=mini_region, imageFilename=f'resources/ss/data/buildings/{bldg}.png'.replace(' ', '_'))
+-    # Dismiss screen
+-    pyautogui.click(app.right - 10, app.bottom - app.top - 70 - 60 - 10)
+-    # Click on arrow to go to next building
+-    if location is None:
+-        location = pyautogui.locateOnScreen('resources/ss/data/buildings/next_building.png', 1, grayscale=True, confidence=0.7)
+-    pyautogui.click(location)
+-    time.sleep(1)
+Index: family.py
+===================================================================
+diff --git a/family.py b/family.py
+deleted file mode 100644
+--- a/family.py	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ /dev/null	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
+@@ -1,143 +0,0 @@
+-import logging.handlers
+-import os
+-import sys
+-import time
+-
+-from tkinter import *
+-import pyautogui
+-import pygetwindow
+-
+-log = logging.getLogger(__name__)
+-log.setLevel(logging.INFO)
+-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+-h = logging.StreamHandler(sys.stdout)
+-h.setLevel(logging.DEBUG)
+-h.setFormatter(formatter)
+-log.addHandler(h)
+-
+-APP_TITLE = 'BlueStacks App Player'
+-TAKE_SNAPSHOT = False
+-
+-def highlightSection(title, rect, color='red', duration=3):
+-    if not TAKE_SNAPSHOT:
+-        return
+-    win = Tk()
+-    win.title = title
+-    # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/geometry.html
+-    # A geometry string has this general form: 'wxh±x±y'
+-    # where:
+-    # The w and h parts give the window width and height in pixels. They are separated by the character 'x'.
+-    # If the next part has the form +x, it specifies that the left side of the window should be x pixels
+-    # from the left side of the desktop. If it has the form -x, the right side of the window is x pixels
+-    # from the right side of the desktop.
+-    geometry = str(rect[2]) + 'x' + str(rect[3]) + '+' + str(rect[0]) + '+' + str(rect[1])
+-    win.geometry(geometry)
+-    log.debug(f'title={title}, str = {geometry}')
+-    win.configure(background=color)
+-    win.overrideredirect(1)
+-    win.attributes('-alpha', 0.3)
+-    win.wm_attributes('-topmost', 1)
+-    win.after(duration * 1000, lambda: win.destroy())
+-    win.mainloop()
+-
+-
+-def click_image(image, grayscale=True, confidence=0.5):
+-    location = None
+-
+-    while location is None:
+-        try:
+-            log.debug('Looking for ' + image)
+-            # pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+-            #  location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=0.4)
+-            if TAKE_SNAPSHOT:
+-                location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+-            # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
+-            highlightSection(os.path.basename(image), location)
+-            pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
+-            log.info(
+-                f'Click ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
+-        except Exception as e:
+-            time.sleep(1)
+-            log.debug(repr(e))
+-
+-    log.debug('Found ' + image + ' at:' + repr(location))
+-
+-
+-# Get the coordinates of the window
+-app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
+-
+-# Whole app window
+-screenshot = pyautogui.screenshot(region=(app.left, app.top, app.right - app.left,
+-                                          app.bottom - app.top), imageFilename='resources/ss/data/full_app.png')
+-
+-# Minus caption on top and bottom
+-mini_region = (app.left, app.top + 60, app.right - app.left,
+-               app.bottom - app.top - 70 - 60)
+-mini_screenshot = pyautogui.screenshot(region=mini_region,
+-                                       imageFilename='resources/ss/data/mini_app.png')
+-
+-# Assume we start with first family member displayed.
+-blessing = None
+-advanced_blessing = None
+-fellow_blessing = None
+-cancel = None
+-next_member = None
+-for x in range(0, 39):
+-    # Display blessing screen
+-    if blessing is None:
+-        blessing = pyautogui.locateOnWindow('resources/ss/data/family/blessing_available.png', APP_TITLE, grayscale=True, confidence=0.7)
+-    pyautogui.click(blessing)
+-
+-    # Click on advanced. If there is no blessing it will display warning.
+-    image = 'resources/ss/data/family/advanced_blessing.png'
+-    if advanced_blessing is None:
+-        advanced_blessing = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.4)
+-        # pyautogui.locateOnScreen('resources/ss/data/family/advanced_blessing.png', 1, grayscale=True, confidence=0.7)
+-    log.info(f'Click ({int(advanced_blessing.left + advanced_blessing.width / 2)}, {int(advanced_blessing.top + advanced_blessing.height / 2)}) {image}')
+-    highlightSection(os.path.basename(image), advanced_blessing)
+-    pyautogui.click(advanced_blessing)
+-    time.sleep(1)
+-    # If there is no blessing it will display warning. Dismiss any waring
+-    pyautogui.click(blessing)
+-
+-    # Click on fellow blessing in case we have both blessings.
+-    image = 'resources/ss/data/family/fellow_blessing.png'
+-    if fellow_blessing is None:
+-        fellow_blessing = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.7)
+-    log.info(f'Click ({int(fellow_blessing.left + fellow_blessing.width / 2)}, {int(fellow_blessing.top + fellow_blessing.height / 2)}) {image}')
+-    highlightSection(os.path.basename(image), fellow_blessing)
+-    pyautogui.click(fellow_blessing)
+-    # If there is no blessing it will display warning. Dismiss any waring
+-    time.sleep(1)
+-    pyautogui.click(blessing)
+-
+-    # Display blessing screen
+-    image = 'resources/ss/data/family/cancel.png'
+-    if cancel is None:
+-        cancel = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.7)
+-    time.sleep(1)
+-    highlightSection(os.path.basename(image), cancel)
+-    log.info(f'Click ({int(cancel.left + cancel.width / 2)}, {int(cancel.top + cancel.height / 2)}) {image}')
+-    pyautogui.click(cancel)
+-
+-    # wait for screen to appear
+-    time.sleep(1)
+-    # Save each building in resources/ss/data/buildings
+-    log.info(f'Take screenshot family_member{x}.png')
+-    if TAKE_SNAPSHOT:
+-        pyautogui.screenshot(region=mini_region, imageFilename=f'resources/ss/data/generated/family/family_member{x}.png'.replace(' ', '_'))
+-
+-    # go to next member. Confidence max was 0.548
+-    image = 'resources/ss/data/family/next_family_member.png'
+-    if next_member is None:
+-        next_member = pyautogui.locateOnWindow('resources/ss/data/family/next_family_member.png', APP_TITLE, grayscale=True, confidence=0.5)
+-        highlightSection(os.path.basename('resources/ss/data/family/next_family_member.png'), next_member)
+-    time.sleep(1)
+-    highlightSection(os.path.basename(image), next_member)
+-    log.info(f'Click ({int(next_member.left + next_member.width / 2)}, {int(next_member.top + next_member.height / 2)}) {image}')
+-    pyautogui.click(next_member)
+-    # Click twice anywhere to dismiss dialogue
+-    if TAKE_SNAPSHOT:
+-        time.sleep(10)
+-    else:
+-        time.sleep(1)
+Index: ocr.py
+===================================================================
+diff --git a/ocr.py b/ocr.py
+deleted file mode 100644
+--- a/ocr.py	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ /dev/null	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
+@@ -1,39 +0,0 @@
+-import pytesseract
+-import re
+-from PIL import Image
+-
+-# The following line is for Windows users only. You may need to change the path below depending
+-# on the path of your Tesseract OCR installation.
+-pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+-
+-# Open the image file
+-image = Image.open('resources/ss/data/buildings/apothecary.png')
+-
+-# Convert the image to grayscale
+-image = image.convert("L")
+-
+-# Perform OCR on the image
+-text = pytesseract.image_to_string(image)
+-
+-# Print the extracted text to the console
+-print(text)
+-
+-types = ['inspiring', 'diligent', 'brave', 'informed', 'unfettered']
+-pos = []
+-for line in text.splitlines():
+-    for typ in types:
+-        pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
+-        result = re.search(pattern, line)
+-        if result is not None:
+-            print(line, result, '||', result.groups(), '||', result.group(result.lastindex))
+-            pos[typ] = result.group(result.lastindex)
+-
+-# Total unlocked skills: 681
+-# ‘@ Inspiring Building Earning Bonus +4593%
+-# ‘@ Diligent Building Earning Bonus +4776%
+-# @Brave Building Earning Bonus +4658%
+-#
+-# @ Informed Building Earning Bonus +4746%
+-# @ Unfettered Building Earning Bonus +4604%
+-
+-# Parse last number
+\ No newline at end of file
+Index: .idea/pythonProject1.iml
+===================================================================
+diff --git a/.idea/pythonProject1.iml b/.idea/pythonProject1.iml
+deleted file mode 100644
+--- a/.idea/pythonProject1.iml	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ /dev/null	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="PYTHON_MODULE" version="4">
+-  <component name="NewModuleRootManager">
+-    <content url="file://$MODULE_DIR$">
+-      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+-    </content>
+-    <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: slowlife/Point2D.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/Point2D.py b/slowlife/Point2D.py
+new file mode 100644
+--- /dev/null	(date 1714820646633)
++++ b/slowlife/Point2D.py	(date 1714820646633)
+@@ -0,0 +1,4 @@
++class Point2D:
++    def __init__(self, x, y):
++        self.x = x
++        self.y = y
+Index: slowlife/capture/fishing.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/capture/fishing.py b/slowlife/capture/fishing.py
+new file mode 100644
+--- /dev/null	(date 1714820646637)
++++ b/slowlife/capture/fishing.py	(date 1714820646637)
+@@ -0,0 +1,61 @@
++import re
++
++import pytesseract
++from PIL import Image
++
++print(pytesseract.__version__)
++# The following line is for Windows users only. You may need to change the path below depending
++# on the path of your Tesseract OCR installation.
++pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
++
++buildings = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station',
++             'patisserie', 'archery range', 'clinic', 'market street', 'bank', 'tailor shop',
++             'sports park', 'museum', 'theater']
++
++earnings = {'Earnings': 0.0,
++            'Basic Earnings': 0.0,
++            'Fellow Operation Ability': 0.0,
++            'Total Employee Earnings': 0.0,
++            'Fish1': 0.0,
++            'Earnings Bonus': 0.0,
++            'Operating Fellow': 0.0,
++            'Upgrade': 0.0,
++            'Family Member': 0.0,
++            'Farmstead': 0.0,
++            'Inn': 0.0,
++            'Magic Farm': 0.0,
++            'Fish2': 0.0,
++            'Challenge': 0.0,
++            'Guild': 0.0,
++            }
++
++for bldg in buildings:
++    for ss_type in ['earning', 'operating_fellow']:
++
++        # Convert the image to grayscale
++        log.info(f'Extracting text from resources/ss/data/generated/building/{bldg}_{ss_type}.png...')
++        image = Image.open(f'resources/ss/data/generated/building/{bldg}_{ss_type}.png').convert("L")
++
++        # Perform OCR on the image
++        text = pytesseract.image_to_string(image)
++
++        # Print the extracted text to the console
++        print(text, '\n\n')
++
++types = ['inspiring', 'diligent', 'brave', 'informed', 'unfettered']
++pos = []
++for line in text.splitlines():
++    for typ in types:
++        pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
++        result = re.search(pattern, line)
++        if result is not None:
++            print(line, result, '||', result.groups(), '||', result.group(result.lastindex))
++            pos[typ] = result.group(result.lastindex)
++
++# Total unlocked skills: 681
++# ‘@ Inspiring Building Earning Bonus +4593%
++# ‘@ Diligent Building Earning Bonus +4776%
++# @Brave Building Earning Bonus +4658%
++#
++# @ Informed Building Earning Bonus +4746%
++# @ Unfettered Building Earning Bonus +4604%
+Index: slowlife/resources/constants.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/resources/constants.py b/slowlife/resources/constants.py
+new file mode 100644
+--- /dev/null	(date 1714820646668)
++++ b/slowlife/resources/constants.py	(date 1714820646668)
+@@ -0,0 +1,48 @@
++APP_TITLE = 'BlueStacks App Player'
++
++MAIN_MENU = '../resources/mainmenu/'
++MM_HOME = '../resources/mainmenu/home.png'
++MM_VILLAGE = '../resources/mainmenu/village.png'
++MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
++MM_DRAKENBERG_ALT = '../resources/mainmenu/drakenberg_sm.png'
++
++MM_DRAKENBERG_TRADINGPOST = '../resources/mainmenu/village/drakenberg/enter_trading_post.png'
++TRADINGPOST_GOLD = '../resources/mainmenu/village/drakenberg/trading_post/gold.png'
++TRADINGPOST_BACK = '../resources/mainmenu/village/drakenberg/trading_post/back.png'
++
++DRAKENBERG_ROAMING = '../resources/mainmenu/village/drakenberg/roaming.png'
++ROAMING_GO = '../resources/mainmenu/village/drakenberg/roaming/go.png'
++ROAMING_OK = '../resources/mainmenu/village/drakenberg/roaming/ok.png'
++ROAMING_CANCEL = '../resources/mainmenu/village/drakenberg/roaming/cancel.png'
++ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'
++
++SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
++SCHOOL_BELOW_PUPILS = '../resources/mainmenu/village/school/below_pupils.png'
++SCHOOL_BACK = '../resources/mainmenu/village/school/back.png'
++
++VILLAGE_SCHOOL = '../resources/mainmenu/village/school.png'
++VILLAGE_KITCHEN = '../resources/mainmenu/village/enter_kitchen.png'
++KITCHEN_SERVE = '../resources/mainmenu/village/kitchen/serve.png'
++KITCHEN_OK = '../resources/mainmenu/village/kitchen/ok.png'
++KITCHEN_ORDER_JEWELS = '../resources/mainmenu/village/kitchen/order_jewels.png'
++KITCHEN_CANCEL = '../resources/mainmenu/village/kitchen/cancel.png'
++KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_available.png'
++
++DRAKENBERG_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
++GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'
++GUILD_HANDLE = '../resources/mainmenu/village/drakenberg/guild/handle.png'
++GUILD_REQUESTS = '../resources/mainmenu/village/drakenberg/guild/random_requests.png'
++
++DRAKENBERG_STAGE = '../resources/mainmenu/village/drakenberg/stage.png'
++STAGE_CHALLENGE = '../resources/mainmenu/village/drakenberg/stage/challenge.png'
++CHALLENGE_EMPTY = '../resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png'
++CHALLENGE_GOLD = '../resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png'
++CHALLENGE_ITEM = '../resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png'
++CHALLENGE_NEGOTIATE = '../resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png'
++CHALLENGE_CONTINUE = '../resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png'
++
++STAGE_GO = '../resources/mainmenu/village/drakenberg/stage/go.png'
++EVENTS_CONTINUE = '../resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png'
++STAGE_EVENTS_X = '../resources/mainmenu/village/drakenberg/stage/events_x.png'
++STAGE_EVENTS_Y = '../resources/mainmenu/village/drakenberg/stage/events_y.png'
++STAGE_AUTOHANDLE = '../resources/mainmenu/village/drakenberg/stage/events/autohandle.png'
+Index: slowlife/capture/buildings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/capture/buildings.py b/slowlife/capture/buildings.py
+new file mode 100644
+--- /dev/null	(date 1714820646636)
++++ b/slowlife/capture/buildings.py	(date 1714820646636)
+@@ -0,0 +1,68 @@
++import time
++
++import pyautogui
++import pygetwindow
++
++from common.utils import log
++from resources.constants import *
++
++buildings = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station',
++             'patisserie', 'archery range', 'clinic', 'market street', 'bank', 'tailor shop',
++             'sports park', 'museum', 'theater']
++
++# Get the coordinates of the window
++app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
++
++# Whole app window
++screenshot = pyautogui.screenshot(region=(app.left, app.top, app.right - app.left,
++                                          app.bottom - app.top), imageFilename='../resources/ss/data/full_app.png')
++
++# calculate region minus (l,t,w,h) caption on top and bottom. The offsets are measured using Autohotkey Window Spy
++mini_region = (app.left, app.top + 60, app.right - app.left,
++               app.bottom - app.top - 70 - 60)
++mini_screenshot = pyautogui.screenshot(region=mini_region,
++                                       imageFilename='../resources/ss/data/mini_app.png')
++
++# Assume we start with Inn having focus.
++log.info(f'Iterate through buildings: {buildings}...')
++earnings = None
++location = None
++for bldg in buildings:
++    log.info(f'[{bldg}] process operating fellow earnings...')
++
++    # Roughly click on any part of the rows of fellows.
++    log.info(f'[{bldg}] Click on row of operating fellows...')
++    pyautogui.click(x=app.left + (app.right - app.left) / 4, y=app.bottom - 100)
++    # wait for screen to appear
++    time.sleep(1)  # pause to let screen display
++
++    imageFilename = f'../resources/ss/data/generated/building/{bldg}_operating_fellow.png'.replace(
++        ' ', '_')
++    log.info(f'[{bldg}] Take screenshot of operating fellow stats --> {imageFilename}...')
++    pyautogui.screenshot(region=mini_region, imageFilename=imageFilename)
++    # Dismiss screen
++    pyautogui.click(x=app.left + (app.right - app.left) / 4, y=app.bottom - 100)
++
++    # Display earnings breakout
++    if earnings is None:
++        log.info(f'[{bldg}] For first building save position...')
++        earnings = pyautogui.locateOnScreen('../resources/ss/data/buildings/earnings.png', 1, grayscale=True,
++                                            confidence=0.7)
++    log.info(f'[{bldg}] Click on exclamation mark to display earnings details...')
++    pyautogui.click(earnings)
++
++    # wait for screen to appear
++    time.sleep(2)  # pause to let screen display
++
++    # Save earnings in ../resources/ss/data/generated/building
++    log.info(f'[{bldg}] Take screenshot of earnings details...')
++    pyautogui.screenshot(region=mini_region,
++                         imageFilename=f'../resources/ss/data/generated/building/{bldg}_earning.png'.replace(' ', '_'))
++    # Dismiss screen
++    pyautogui.click(app.right - 10, app.bottom - app.top - 70 - 60 - 10)
++    # Click on arrow to go to next building
++    if location is None:
++        location = pyautogui.locateOnScreen('../resources/ss/data/buildings/next_building.png', 1, grayscale=True,
++                                            confidence=0.7)
++    pyautogui.click(location)
++    time.sleep(1)
+Index: slowlife/__init__.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/__init__.py b/slowlife/__init__.py
+new file mode 100644
+--- /dev/null	(date 1714820646634)
++++ b/slowlife/__init__.py	(date 1714820646634)
+@@ -0,0 +1,4 @@
++
++
++
++
+Index: slowlife/capture/family.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/capture/family.py b/slowlife/capture/family.py
+new file mode 100644
+--- /dev/null	(date 1714820646637)
++++ b/slowlife/capture/family.py	(date 1714820646637)
+@@ -0,0 +1,90 @@
++import os
++import time
++
++import pyautogui
++import pygetwindow
++
++from common.utils import log, highlightSection
++from resources.constants import *
++
++TAKE_SNAPSHOT = False
++
++# Get the coordinates of the window
++app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
++
++# Whole app window
++screenshot = pyautogui.screenshot(region=(app.left, app.top, app.right - app.left,
++                                          app.bottom - app.top), imageFilename='../resources/ss/data/generated/family/full_app.png')
++
++# Minus caption on top and bottom
++mini_region = (app.left, app.top + 60, app.right - app.left,
++               app.bottom - app.top - 70 - 60)
++mini_screenshot = pyautogui.screenshot(region=mini_region,
++                                       imageFilename='../resources/ss/data/generated/family/mini_app.png')
++
++# Assume we start with first family member with blessing screen displayed.
++# Assume screen is divided into a grid, 7 blocks horizontally, 13 vertically.
++advanced_blessing = None
++fellow_blessing = None
++cancel = None
++next_member = None
++for x in range(0, 39):
++
++    # Click on advanced. If there is no blessing it will display warning.
++    image = '../resources/ss/data/family/advanced_blessing.png'
++    if advanced_blessing is None:
++        advanced_blessing =
++    log.info(
++        f'Click ({int(advanced_blessing.left + advanced_blessing.width / 2)}, {int(advanced_blessing.top + advanced_blessing.height / 2)}) {image}')
++    highlightSection(os.path.basename(image), advanced_blessing)
++    pyautogui.click(advanced_blessing)
++    time.sleep(1)
++    # If there is no blessing it will display warning. Dismiss by clicking to the left.
++    pyautogui.click(x=advanced_blessing.top, y=advanced_blessing.left - advanced_blessing.width)
++
++    # Click on fellow blessing in case we have both blessings.
++    image = '../resources/ss/data/family/fellow_blessing.png'
++    if fellow_blessing is None:
++        fellow_blessing = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.7)
++    log.info(
++        f'Click ({int(fellow_blessing.left + fellow_blessing.width / 2)}, {int(fellow_blessing.top + fellow_blessing.height / 2)}) {image}')
++    pyautogui.click(fellow_blessing)
++    # If there is no blessing it will display warning. Dismiss any waring
++    time.sleep(1)
++    pyautogui.click(x=fellow_blessing.top, y=fellow_blessing.left - fellow_blessing.width)
++
++    # Display blessing screen
++    image = '../resources/ss/data/family/cancel.png'
++    if cancel is None:
++        cancel = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.7)
++    time.sleep(1)
++    highlightSection(os.path.basename(image), cancel)
++    log.info(f'Click ({int(cancel.left + cancel.width / 2)}, {int(cancel.top + cancel.height / 2)}) {image}')
++    pyautogui.click(cancel)
++
++    # wait for screen to appear
++    time.sleep(1)
++    # Save each building in ../resources/ss/data/buildings
++
++    log.info(f'Take screenshot family_member{x}.png')
++    if TAKE_SNAPSHOT:
++        pyautogui.screenshot(region=mini_region,
++                             imageFilename=f'../resources/ss/data/generated/family/family_member{x}.png'.replace(' ',
++                                                                                                                 '_'))
++
++    # go to next member. Confidence max was 0.548
++    image = '../resources/ss/data/family/next_family_member.png'
++    if next_member is None:
++        next_member = pyautogui.locateOnWindow('../resources/ss/data/family/next_family_member.png', APP_TITLE,
++                                               grayscale=True, confidence=0.5)
++        highlightSection(os.path.basename('../resources/ss/data/family/next_family_member.png'), next_member)
++    time.sleep(1)
++    highlightSection(os.path.basename(image), next_member)
++    log.info(
++        f'Click ({int(next_member.left + next_member.width / 2)}, {int(next_member.top + next_member.height / 2)}) {image}')
++    pyautogui.click(next_member)
++    # Click twice anywhere to dismiss dialogue
++    if TAKE_SNAPSHOT:
++        time.sleep(10)
++    else:
++        time.sleep(1)
+Index: cv.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/cv.py b/slowlife/capture/cv.py
+rename from cv.py
+rename to slowlife/capture/cv.py
+--- a/cv.py	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ b/slowlife/capture/cv.py	(date 1714820646636)
+@@ -1,11 +1,10 @@
+ import cv2
+-import pyautogui
+ 
+ # Load the image to be matched
+-image = cv2.imread('resources/mainmenu/home.png')
++image = cv2.imread('../../resources/mainmenu/home.png')
+ 
+ # Load the screenshot
+-screenshot = cv2.imread('log/test.png')
++screenshot = cv2.imread('../log/test.png')
+ 
+ # Convert the image and screenshot to grayscale
+ gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/pythonProject1.iml\" filepath=\"$PROJECT_DIR$/.idea/pythonProject1.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ b/.idea/modules.xml	(date 1714820646632)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/pythonProject1.iml" filepath="$PROJECT_DIR$/.idea/pythonProject1.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/slowlife.iml" filepath="$PROJECT_DIR$/.idea/slowlife.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"69733375-64ba-4286-a42c-b4123416d578\" name=\"Changes\" comment=\"initital checkin\">\r\n      <change afterPath=\"$PROJECT_DIR$/pugsd.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/game.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/game.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2e9s4zIJHMoE6Y8oyAU2kG2uuYT\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"Python.cv.executor\": \"Run\",\r\n    \"Python.game.executor\": \"Run\",\r\n    \"Python.login2.executor\": \"Run\",\r\n    \"Python.main.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"last_opened_file_path\": \"C:/projects/isekaibot/pythonProject1\",\r\n    \"settings.editor.selected.configurable\": \"preferences.externalTools\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\projects\\isekaibot\\pythonProject1\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.game\">\r\n    <configuration name=\"cv\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"pythonProject1\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/cv.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"game\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"pythonProject1\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/game.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"login2\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"pythonProject1\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/login2.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\r\n      <module name=\"pythonProject1\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python.game\" />\r\n        <item itemvalue=\"Python.cv\" />\r\n        <item itemvalue=\"Python.login2\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"69733375-64ba-4286-a42c-b4123416d578\" name=\"Changes\" comment=\"\" />\r\n      <created>1711327940312</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1711327940312</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"initital checkin\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712160794720</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712160794720</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"initital checkin\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1712160944047</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1712160944047</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"OPEN_GENERIC_TABS\">\r\n      <map>\r\n        <entry key=\"aa1a6a8f-0f95-45de-aabd-657303bceb10\" value=\"TOOL_WINDOW\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n        <entry key=\"aa1a6a8f-0f95-45de-aabd-657303bceb10\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"HEAD\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                  <entry key=\"roots\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"$PROJECT_DIR$\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n              <option name=\"SHOW_ONLY_AFFECTED_CHANGES\" value=\"true\" />\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"initital checkin\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"initital checkin\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python311-32/Lib/site-packages/pyautogui/__init__.py</url>\r\n          <line>740</line>\r\n          <option name=\"timeStamp\" value=\"15\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python311-32/Lib/site-packages/pyscreeze/__init__.py</url>\r\n          <line>363</line>\r\n          <option name=\"timeStamp\" value=\"21\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/cv.py</url>\r\n          <line>33</line>\r\n          <option name=\"timeStamp\" value=\"32\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/cv.py</url>\r\n          <line>28</line>\r\n          <option name=\"timeStamp\" value=\"33\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/game.py</url>\r\n          <line>460</line>\r\n          <option name=\"timeStamp\" value=\"41\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/game.py</url>\r\n          <line>461</line>\r\n          <option name=\"timeStamp\" value=\"42\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/game.py</url>\r\n          <line>429</line>\r\n          <option name=\"timeStamp\" value=\"64\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/game.py</url>\r\n          <line>194</line>\r\n          <option name=\"timeStamp\" value=\"72\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n      <default-breakpoints>\r\n        <breakpoint type=\"python-exception\">\r\n          <properties notifyOnTerminate=\"true\" exception=\"BaseException\">\r\n            <option name=\"notifyOnTerminate\" value=\"true\" />\r\n          </properties>\r\n        </breakpoint>\r\n      </default-breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d0ca9eec42ce5cc8e94b5eb26c7f64e1228e5956)
++++ b/.idea/workspace.xml	(date 1714820880373)
+@@ -4,21 +4,365 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="initital checkin">
+-      <change afterPath="$PROJECT_DIR$/pugsd.py" afterDir="false" />
++    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Do not check in credentials.">
++      <change afterPath="$PROJECT_DIR$/slowlife/Point2D.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/__init__.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/bot/__init__.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/capture/__init__.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/capture/buildings.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/capture/family.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/capture/fishing.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/capture/ocr.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/common/__init__.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/log/Screenshot 2024-04-15 195804.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/__init__.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/claim.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/login_green.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/login_greyed.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg_alt.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg_sm.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/enter_inn.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/enter_magic_garden1.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/autodate.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_bottom_left.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_top_left.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_training/blessing/advanced_blessing.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_training/blessing/fellow_blessing.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_training/blessing_available.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_training/interact.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/family_training/skills.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/family/study_tour.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/fellow.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/stage.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/tounoislandstory/chat.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/tounoislandstory/chat_continue.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/tounoislandstory/stroll1.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/tounoislandstory/stroll2.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/challenge.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_guild.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_trading_post.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/cancel.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/donated.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/drag_point.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/medium_donation.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/handle.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/quick_handle_checkbox.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/random_requests.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/recruit.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/cancel.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/continue.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/go.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/ok.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/skip.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/too_much.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/autohandle.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/close.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events_x.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events_y.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/go.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/fixture_left_of_gold.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_available.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_zero.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/negotiate.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/person_below_gold.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_kitchen.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_magic_garden1.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_magic_garden2.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/awaken.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_list.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude/alraunes_gift.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude/aptitude_list.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude/limit_break_i.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude/secrets_of_the_sea.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude/supreme_talent.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/aptitude_disabled.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/born_aptitude.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/brave_expertise.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/fellow_stats/weaponry_trading.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/level_up.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/limit_break.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fellow/operation.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fish/no_bait.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fishing.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/inn_visible.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/cancel.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/guests_available.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/inn_pamphlet.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/menu.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/ok.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/order_jewels.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/serve.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/station_list.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/drag_point.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/fram_drag_point.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/money_tree.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/orders_deliver.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/orders_filled.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/quick_harvest.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/quick_sow.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/sch0ol.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/school/pupils_row.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/shop.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/union_hall.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/npc.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/back.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/below_pupils.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/educate.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/first_pupil.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school_visible.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/acquaint_stone.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/acquaint_stone_fragment.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/bravery_crystal.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/building_upgrade_blueprint.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/anne.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/app_caption.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/augustine.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/bottom_buttons.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/brave.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/building_upgrade_blueprint.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/buildings/earnings.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/buildings/next_building.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/diligent.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/emosen.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/advanced_blessing.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/blessing_available.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/cancel.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/fellow_blessing.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/gt_bb.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family/next_family_member.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/family_skill_bonus.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/farmstead_bonus.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/fishing_bonus1.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/fishing_bonus2.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/fishing_bonus3.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/full_app.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/gt/20240425.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/gt/20240426.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/gt/gt_bb.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/gt/gt_bb2.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/guild.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/guild_building_bonus1.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/guild_building_bonus2.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/guild_building_bonus3.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/ida.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/informed.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/inn/menu.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/inn_leaderboard.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/inn_menu_stats.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/inspiring.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/kaye.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/kitchen_menu.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/market_street.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/mini_app.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/money_tree.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/npc_money_tree.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/plant_encyclopedia.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/rank/rank_36.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/tigirl.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/unfettered.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/village_earnings_20210430.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/farmstead_upgrade_blueprint.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/frying_pan.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/hope_crystal.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/luck_stone.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/magic_ore.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/reforge_oil.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/skill_pearl.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/study_notes.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/wisdom_crystal.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/pythonProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/slowlife.iml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/buildings.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/cv.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/capture/cv.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/family.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/inn_level_8_hire.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/inn_level_8_hire.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/mueseum_level_4_hire.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/mueseum_level_4_hire.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/screenshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/screenshot.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/stage_1247_5 cost.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/stage_1247_5 cost.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/stage_1248_1_cost.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/stage_1248_1_cost.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/stage_1248_2_cost.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/stage_1248_2_cost.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/test.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/test.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/log/trading_post.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/trading_post.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ocr.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/claim.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/login_green.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/login_greyed.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/drakenberg.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/enter_inn.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/enter_magic_garden1.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/autodate.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_bottom_left.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_top_left.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing/advanced_blessing.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing/fellow_blessing.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing_available.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/interact.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/skills.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/study_tour.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/fellow.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/home.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/stage.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/storage.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/chat.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/chat_continue.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/stroll1.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/stroll2.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/banquet.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/challenge.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/enter_guild.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/enter_trading_post.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/cancel.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/donated.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/drag_point.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/medium_donation.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/handle.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/quick_handle_checkbox.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/random_requests.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/recruit.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/cancel.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/continue.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/go.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/ok.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/skip.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/too_much.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/autohandle.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/close.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events_x.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events_y.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/go.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/fixture_left_of_gold.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_available.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_zero.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/negotiate.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/person_below_gold.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_kitchen.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_magic_garden1.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_magic_garden2.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/awaken.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_list.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/alraunes_gift.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/aptitude_list.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/limit_break_i.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/secrets_of_the_sea.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/supreme_talent.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude_disabled.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/born_aptitude.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/brave_expertise.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/weaponry_trading.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/level_up.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/limit_break.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/operation.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fish/no_bait.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fishing.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/inn_visible.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/cancel.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/guests_available.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/inn_pamphlet.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/menu.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/ok.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/order_jewels.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/serve.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/station_list.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/drag_point.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/fram_drag_point.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/money_tree.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/orders_deliver.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/orders_filled.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/quick_harvest.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/quick_sow.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/sch0ol.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/school/pupils_row.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/shop.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/union_hall.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/npc.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/back.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/below_pupils.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/educate.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/first_pupil.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school_visible.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/ss/data/buildings/earnings.png" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/resources/ss/data/buildings/next_building.png" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Python Script" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Merge.Settings">
++    <option name="BRANCH" value="origin/master" />
++  </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;pikaia&quot;
++  }
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/pikaia/isekaislowlife&quot;,
++    &quot;accountId&quot;: &quot;6c338cff-1b69-4f0d-980e-c0a2f53d663c&quot;
++  }
++}</component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 1
+ }</component>
+@@ -30,28 +374,45 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "Python.cv.executor": "Run",
+-    "Python.game.executor": "Run",
+-    "Python.login2.executor": "Run",
+-    "Python.main.executor": "Run",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "master",
+-    "last_opened_file_path": "C:/projects/isekaibot/pythonProject1",
+-    "settings.editor.selected.configurable": "preferences.externalTools"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;Python.buildings (1).executor&quot;: &quot;Run&quot;,
++    &quot;Python.buildings.executor&quot;: &quot;Run&quot;,
++    &quot;Python.config.executor&quot;: &quot;Run&quot;,
++    &quot;Python.createtables.executor&quot;: &quot;Run&quot;,
++    &quot;Python.cv.executor&quot;: &quot;Run&quot;,
++    &quot;Python.family.executor&quot;: &quot;Debug&quot;,
++    &quot;Python.game (1).executor&quot;: &quot;Run&quot;,
++    &quot;Python.game.executor&quot;: &quot;Run&quot;,
++    &quot;Python.login2.executor&quot;: &quot;Run&quot;,
++    &quot;Python.main.executor&quot;: &quot;Run&quot;,
++    &quot;Python.ocr.executor&quot;: &quot;Run&quot;,
++    &quot;Python.screenshots.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/projects/isekaibot/pythonProject1/slowlife/resources&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.intentionPowerPack&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\resources" />
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife" />
+       <recent name="C:\projects\isekaibot\pythonProject1" />
+     </key>
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife" />
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\" />
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\capture" />
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\bot" />
++      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\db" />
++    </key>
+   </component>
+-  <component name="RunManager" selected="Python.game">
+-    <configuration name="cv" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+-      <module name="pythonProject1" />
++  <component name="RunManager" selected="Python.game (1)">
++    <configuration name="buildings" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="slowlife" />
+       <option name="ENV_FILES" value="" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -59,11 +420,55 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/buildings.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="family" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="slowlife" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/family.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="game (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="slowlife" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/bot" />
+       <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cv.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/bot/game.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -73,7 +478,7 @@
+       <method v="2" />
+     </configuration>
+     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+-      <module name="pythonProject1" />
++      <module name="slowlife" />
+       <option name="ENV_FILES" value="" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -85,7 +490,7 @@
+       <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game.py" />
++      <option name="SCRIPT_NAME" value="C:\projects\isekaibot\pythonProject1\slowlife\game.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -94,8 +499,8 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
+-    <configuration name="login2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+-      <module name="pythonProject1" />
++    <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="slowlife" />
+       <option name="ENV_FILES" value="" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -103,11 +508,11 @@
+         <env name="PYTHONUNBUFFERED" value="1" />
+       </envs>
+       <option name="SDK_HOME" value="" />
+-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/bot" />
+       <option name="IS_MODULE_SDK" value="true" />
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/login2.py" />
++      <option name="SCRIPT_NAME" value="C:\projects\isekaibot\pythonProject1\slowlife\game.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -117,7 +522,7 @@
+       <method v="2" />
+     </configuration>
+     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+-      <module name="pythonProject1" />
++      <module name="slowlife" />
+       <option name="ENV_FILES" value="" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -130,6 +535,28 @@
+       <option name="ADD_CONTENT_ROOTS" value="true" />
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="ocr" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="slowlife" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="C:\projects\isekaibot\pythonProject1\slowlife\capture\ocr.py" />
+       <option name="PARAMETERS" value="" />
+       <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+@@ -140,16 +567,18 @@
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="Python.game" />
+-        <item itemvalue="Python.cv" />
+-        <item itemvalue="Python.login2" />
++        <item itemvalue="Python.game (1)" />
++        <item itemvalue="Python.family" />
++        <item itemvalue="Python.buildings" />
++        <item itemvalue="Python.game (1)" />
++        <item itemvalue="Python.ocr" />
+       </list>
+     </recent_temporary>
+   </component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+-        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
++        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
+       </set>
+     </attachedChunks>
+   </component>
+@@ -178,7 +607,87 @@
+       <option name="project" value="LOCAL" />
+       <updated>1712160944047</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="Use constants for all paths to resources.&#10;Add script for roaming.">
++      <option name="closed" value="true" />
++      <created>1712197345711</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1712197345711</updated>
++    </task>
++    <task id="LOCAL-00004" summary="Use constants for all paths to resources.&#10;Add script for roaming.">
++      <option name="closed" value="true" />
++      <created>1712197363674</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1712197363674</updated>
++    </task>
++    <task id="LOCAL-00005" summary="Add script to take screenshots of each building's earnings.">
++      <option name="closed" value="true" />
++      <created>1713755693245</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1713755693246</updated>
++    </task>
++    <task id="LOCAL-00006" summary="Add script to take screenshots of each building's earnings.">
++      <option name="closed" value="true" />
++      <created>1713755758136</created>
++      <option name="number" value="00006" />
++      <option name="presentableId" value="LOCAL-00006" />
++      <option name="project" value="LOCAL" />
++      <updated>1713755758136</updated>
++    </task>
++    <task id="LOCAL-00007" summary="Add sample script to extract text from earnings screen.">
++      <option name="closed" value="true" />
++      <created>1713755913545</created>
++      <option name="number" value="00007" />
++      <option name="presentableId" value="LOCAL-00007" />
++      <option name="project" value="LOCAL" />
++      <updated>1713755913545</updated>
++    </task>
++    <task id="LOCAL-00008" summary="Add script to process blessings">
++      <option name="closed" value="true" />
++      <created>1713963679954</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1713963679954</updated>
++    </task>
++    <task id="LOCAL-00009" summary="Files for connecting to postgres and creating some tables">
++      <option name="closed" value="true" />
++      <created>1714665796168</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1714665796168</updated>
++    </task>
++    <task id="LOCAL-00010" summary="Finetune script for collecting gold">
++      <option name="closed" value="true" />
++      <created>1714666016846</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1714666016846</updated>
++    </task>
++    <task id="LOCAL-00011" summary="Refactor scripts into modules">
++      <option name="closed" value="true" />
++      <created>1714819651439</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1714819651439</updated>
++    </task>
++    <task id="LOCAL-00012" summary="Do not check in credentials.">
++      <option name="closed" value="true" />
++      <created>1714819741619</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1714819741619</updated>
++    </task>
++    <option name="localTasksCounter" value="13" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -225,7 +734,15 @@
+   <component name="VcsManagerConfiguration">
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="initital checkin" />
+-    <option name="LAST_COMMIT_MESSAGE" value="initital checkin" />
++    <MESSAGE value="Use constants for all paths to resources.&#10;Add script for roaming." />
++    <MESSAGE value="Add script to take screenshots of each building's earnings." />
++    <MESSAGE value="Add sample script to extract text from earnings screen." />
++    <MESSAGE value="Add script to process blessings" />
++    <MESSAGE value="Files for connecting to postgres and creating some tables" />
++    <MESSAGE value="Finetune script for collecting gold" />
++    <MESSAGE value="Refactor scripts into modules" />
++    <MESSAGE value="Do not check in credentials." />
++    <option name="LAST_COMMIT_MESSAGE" value="Do not check in credentials." />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+@@ -241,34 +758,24 @@
+           <option name="timeStamp" value="21" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/cv.py</url>
+-          <line>33</line>
+-          <option name="timeStamp" value="32" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/cv.py</url>
+-          <line>28</line>
+-          <option name="timeStamp" value="33" />
++          <url>file://$USER_HOME$/AppData/Local/Programs/Python/Python311-32/Lib/site-packages/pyautogui/__init__.py</url>
++          <line>949</line>
++          <option name="timeStamp" value="86" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/game.py</url>
+-          <line>460</line>
+-          <option name="timeStamp" value="41" />
++          <url>file://$PROJECT_DIR$/slowlife/db/createtables.py</url>
++          <line>59</line>
++          <option name="timeStamp" value="93" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/game.py</url>
+-          <line>461</line>
+-          <option name="timeStamp" value="42" />
++          <url>file://$PROJECT_DIR$/slowlife/db/createtables.py</url>
++          <line>57</line>
++          <option name="timeStamp" value="95" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/game.py</url>
+-          <line>429</line>
+-          <option name="timeStamp" value="64" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/game.py</url>
+-          <line>194</line>
+-          <option name="timeStamp" value="72" />
++          <url>file://$PROJECT_DIR$/slowlife/capture/family.py</url>
++          <line>36</line>
++          <option name="timeStamp" value="97" />
+         </line-breakpoint>
+       </breakpoints>
+       <default-breakpoints>
+Index: .idea/slowlife.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/slowlife.iml b/.idea/slowlife.iml
+new file mode 100644
+--- /dev/null	(date 1714820646632)
++++ b/.idea/slowlife.iml	(date 1714820646632)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$/slowlife">
++      <sourceFolder url="file://$MODULE_DIR$/slowlife" isTestSource="false" />
++      <excludeFolder url="file://$MODULE_DIR$/slowlife/log" />
++      <excludeFolder url="file://$MODULE_DIR$/slowlife/resources/ss/data/generated/building" />
++    </content>
++    <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: slowlife/capture/ocr.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/slowlife/capture/ocr.py b/slowlife/capture/ocr.py
+new file mode 100644
+--- /dev/null	(date 1714820646641)
++++ b/slowlife/capture/ocr.py	(date 1714820646641)
+@@ -0,0 +1,61 @@
++import re
++
++import pytesseract
++from PIL import Image
++
++print(pytesseract.__version__)
++# The following line is for Windows users only. You may need to change the path below depending
++# on the path of your Tesseract OCR installation.
++pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
++
++buildings = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station',
++             'patisserie', 'archery range', 'clinic', 'market street', 'bank', 'tailor shop',
++             'sports park', 'museum', 'theater']
++
++earnings = {'Earnings': 0.0,
++            'Basic Earnings': 0.0,
++            'Fellow Operation Ability': 0.0,
++            'Total Employee Earnings': 0.0,
++            'Fish1': 0.0,
++            'Earnings Bonus': 0.0,
++            'Operating Fellow': 0.0,
++            'Upgrade': 0.0,
++            'Family Member': 0.0,
++            'Farmstead': 0.0,
++            'Inn': 0.0,
++            'Magic Farm': 0.0,
++            'Fish2': 0.0,
++            'Challenge': 0.0,
++            'Guild': 0.0,
++            }
++
++for bldg in buildings:
++    for ss_type in ['earning', 'operating_fellow']:
++
++        # Convert the image to grayscale
++        log.info(f'Extracting text from resources/ss/data/generated/building/{bldg}_{ss_type}.png...')
++        image = Image.open(f'resources/ss/data/generated/building/{bldg}_{ss_type}.png').convert("L")
++
++        # Perform OCR on the image
++        text = pytesseract.image_to_string(image)
++
++        # Print the extracted text to the console
++        print(text, '\n\n')
++
++types = ['inspiring', 'diligent', 'brave', 'informed', 'unfettered']
++pos = []
++for line in text.splitlines():
++    for typ in types:
++        pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
++        result = re.search(pattern, line)
++        if result is not None:
++            print(line, result, '||', result.groups(), '||', result.group(result.lastindex))
++            pos[typ] = result.group(result.lastindex)
++
++# Total unlocked skills: 681
++# ‘@ Inspiring Building Earning Bonus +4593%
++# ‘@ Diligent Building Earning Bonus +4776%
++# @Brave Building Earning Bonus +4658%
++#
++# @ Informed Building Earning Bonus +4746%
++# @ Unfettered Building Earning Bonus +4604%
+diff --git a/slowlife/resources/__init__.py b/slowlife/resources/__init__.py
+new file mode 100644
+diff --git a/slowlife/capture/__init__.py b/slowlife/capture/__init__.py
+new file mode 100644
