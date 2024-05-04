@@ -8,7 +8,7 @@ import numpy as np
 import pyautogui
 import wx
 
-from slowlife.resources.constants import APP_TITLE
+from slowlife.resources.constants import APP_TITLE, MM_HOME
 
 
 class Point2D:
@@ -136,7 +136,8 @@ def click_image(image, grayscale=True, confidence=0.5):
             log.debug('Looking for ' + repr(image))
             # pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
             #  location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=0.4)
-            location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+            # location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
+            location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=confidence)
             # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
             highlightSection(os.path.basename(image), location)
             pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
@@ -190,3 +191,30 @@ log.warning(pyautogui.position())
 
 # python should default to where the script lives
 log.warning('ROOT: ' + os.getcwd())
+
+
+def scroll_screen(direction, times):
+    if direction == 'left':
+        for i in range(times):
+            # to drag screen left, start from the right
+            home = pyautogui.locateOnWindow(MM_HOME, APP_TITLE, grayscale=True, confidence=0.5)
+            #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
+            pyautogui.mouseDown(home.left + 20 + home.width * 6, home.top - home.height * 6)
+            # 5 homes to right. duration is needed
+            pyautogui.moveTo(x=home.left + 20, y=home.top - home.height * 6, duration=0.5)
+            pyautogui.mouseUp()
+
+            time.sleep(2)
+    else:
+        for i in range(times):
+            # to drag screen right, start from the left
+            home = pyautogui.locateOnWindow(MM_HOME, APP_TITLE, grayscale=True, confidence=0.5)
+            # to drag screen right, start from the left. +5 to keep off the edge.
+            pyautogui.mouseDown(home.left + 20, home.top - home.height * 6)
+            #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
+            # pyautogui.dragTo(x=home.left + 20 + home.width * 6, y=home.top - home.height * 6, duration=0.5,
+            #                  button='left')
+            pyautogui.moveTo(x=home.left + 20 + home.width * 6, y=home.top - home.height * 6, duration=0.5)
+            pyautogui.mouseUp()
+
+            time.sleep(2)

@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+import pyautogui
 from pyautogui import ImageNotFoundException
 
 from slowlife.common.utils import *
@@ -13,13 +14,26 @@ def collect_trading_post_gold(maxtimes=30):
         start = time.time()
         log.info(f'Collecting gold {x}/{maxtimes}...')
 
-        click_image(MM_DRAKENBERG)
+        drankenerg = click_image(MM_DRAKENBERG)
         time.sleep(1)
 
+        # Guild random requests
+        log.info('Random requests...')
+        scroll_screen('left', 1)
+        pyautogui.sleep(2)
+        click_image(DRAKENBERG_GUILD)
+        click_image(GUILD_REQUESTS)
+        click_image(GUILD_HANDLE)
+        time.sleep(2)
+        pyautogui.click(drankenerg)
+        click_image(GUILD_BACK, confidence=0.9)
+
         # Roam if possible
+        time.sleep(1)
+        scroll_screen('right', 1)
         click_image(DRAKENBERG_ROAMING)
         # Give time for screen to refresh
-        time.sleep(1)
+        time.sleep(2)
         location = click_image(ROAMING_GO)
         time.sleep(1)
 
@@ -35,9 +49,7 @@ def collect_trading_post_gold(maxtimes=30):
             pyautogui.click(location)
 
         # Click on back to continue
-        back = pyautogui.locateOnWindow(ROAMING_BACK, APP_TITLE, grayscale=True, confidence=0.45)
-
-        pyautogui.click(back)
+        click_image(ROAMING_BACK)
 
         # Enter trading post
         click_image(MM_DRAKENBERG_TRADINGPOST)
@@ -137,36 +149,6 @@ def run_stage():
         # pause for gold to replenish
         time.sleep(6)
         wait_for_image(TRADINGPOST_BACK)
-
-
-def scroll_screen(direction, times):
-    if direction == 'left':
-        for i in range(times):
-            try:
-                home = pyautogui.locateOnScreen(MM_HOME)
-                # 1.5 home above button
-
-                # to drag screen right, move the mouse to the right and drage it left horizontally
-                pyautogui.mouseDown(home.left + home.width * 6, home.top - home.height * 6)
-                # 5 homes to right. duration is needed
-                pyautogui.dragTo(home.left, home.top - home.height * 6, duration=0.5)
-                time.sleep(2)
-            except Exception as e:
-                log.error(f'Expecting to see Home button on the bottom: {e}')
-    else:
-        for i in range(times):
-            try:
-                home = pyautogui.locateOnScreen(MM_HOME)
-                # 1.5 home above button
-
-                # to drag screen right, move the mouse to the right and drag it left horizontally
-                pyautogui.mouseDown(home.left + home.width * 6, home.top - home.height * 6)
-                time.sleep(0.5)
-                # 5 homes to right. duration is needed
-                pyautogui.dragTo(home.left, home.top - home.height * 6, duration=0.5)
-                time.sleep(0.5)
-            except Exception as e:
-                log.error(f'Expecting to see Home button on the bottom: {e}')
 
 
 def run_kitchen():

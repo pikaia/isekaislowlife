@@ -31,6 +31,7 @@ DRAKENBERG_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
 GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'
 GUILD_HANDLE = '../resources/mainmenu/village/drakenberg/guild/handle.png'
 GUILD_REQUESTS = '../resources/mainmenu/village/drakenberg/guild/random_requests.png'
+GUILD_BACK = '../resources/mainmenu/village/drakenberg/guild/back.png'
 
 DRAKENBERG_STAGE = '../resources/mainmenu/village/drakenberg/stage.png'
 STAGE_CHALLENGE = '../resources/mainmenu/village/drakenberg/stage/challenge.png'
