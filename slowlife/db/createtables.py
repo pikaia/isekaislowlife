@@ -1,16 +1,13 @@
 import psycopg2
 
-from db.config import load_config
+from slowlife.db.config import load_config
 
 
 def create_tables():
     """ Create tables in the PostgreSQL database"""
     commands = (
         """
-        DROP TABLE slowlife.fish_encyclopedia;
-        """,
-        """
-        CREATE TABLE slowlife.fish_encyclopedia (
+        CREATE TABLE IF NOT EXISTS slowlife.fish_encyclopedia (
             name text NOT NULL DEFAULT '',
             amount INTEGER NOT NULL DEFAULT 0,
             longest float NOT NULL DEFAULT 0.0,
@@ -19,31 +16,53 @@ def create_tables():
             crowned_level INTEGER NOT NULL DEFAULT 0,
             crowned_buff text NOT NULL DEFAULT '',
             last_update timestamp NOT NULL DEFAULT now()
-        )
+        );
+        ALTER TABLE IF EXISTS slowlife.fish_encyclopedia
+            OWNER to pik;        
         """,
-        """
-        DROP TABLE slowlife.antique_encyclopedia;
-        """,
-        """ CREATE TABLE slowlife.antique_encyclopedia (
+        """ CREATE TABLE IF NOT EXISTS slowlife.antique_encyclopedia (
                 name text PRIMARY KEY,
                 description text NOT NULL DEFAULT '',
                 first_obtained timestamp,
                 level INTEGER NOT  NULL DEFAULT 0,
                 buff text NOT NULL DEFAULT '',
                 last_update timestamp NOT NULL DEFAULT now()
-            )
+            );
+        ALTER TABLE IF EXISTS slowlife.antique_encyclopedia
+            OWNER to pik;        
         """,
-        """
-        DROP TABLE slowlife.combination_encyclopedia;
-        """,
-        """ CREATE TABLE slowlife.combination_encyclopedia (
+        """ CREATE TABLE IF NOT EXISTS slowlife.combination_encyclopedia (
                 name text PRIMARY KEY,
                 description text NOT NULL DEFAULT '',
                 completion_in timestamp,
                 base_buff text,
                 combination_buff text,
                 last_update timestamp NOT NULL DEFAULT now()
-            )
+            );
+        ALTER TABLE IF EXISTS slowlife.combination_encyclopedia
+            OWNER to pik;
+        """,
+        """ CREATE TABLE IF NOT EXISTS slowlife.player (
+                id bigint NOT NULL,
+                name text COLLATE pg_catalog."default" NOT NULL,
+                server text COLLATE pg_catalog."default",
+                guild text COLLATE pg_catalog."default",
+                last_update timestamp with time zone NOT NULL,
+                CONSTRAINT player_pkey PRIMARY KEY (id)
+            );
+        ALTER TABLE IF EXISTS slowlife.player
+            OWNER to pik;
+        """,
+        """ CREATE TABLE IF NOT EXISTS slowlife.guild (
+                id bigint NOT NULL,
+                name text COLLATE pg_catalog."default" NOT NULL,
+                num_members integer,
+                max_members integer,
+                last_update timestamp with time zone NOT NULL,
+                CONSTRAINT guild_pkey PRIMARY KEY (id)
+            );
+        ALTER TABLE IF EXISTS slowlife.guild
+            OWNER to pik;
         """)
 
     try:
