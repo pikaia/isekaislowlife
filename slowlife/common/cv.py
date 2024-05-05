@@ -2,10 +2,10 @@ import cv2
 import pyautogui
 
 # Load the image to be matched
-image = cv2.imread('resources/mainmenu/home.png')
+image = cv2.imread('../../resources/mainmenu/home.png')
 
 # Load the screenshot
-screenshot = cv2.imread('log/test.png')
+screenshot = cv2.imread('../../log/test.png')
 
 # Convert the image and screenshot to grayscale
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

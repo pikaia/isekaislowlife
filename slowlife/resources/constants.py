@@ -1,4 +1,6 @@
 APP_TITLE = 'BlueStacks App Player'
+
+# Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
 MM_HOME = '../resources/mainmenu/home.png'
 MM_VILLAGE = '../resources/mainmenu/village.png'
@@ -47,3 +49,19 @@ EVENTS_CONTINUE = '../resources/mainmenu/village/drakenberg/stage/events/tap_to_
 STAGE_EVENTS_X = '../resources/mainmenu/village/drakenberg/stage/events_x.png'
 STAGE_EVENTS_Y = '../resources/mainmenu/village/drakenberg/stage/events_y.png'
 STAGE_AUTOHANDLE = '../resources/mainmenu/village/drakenberg/stage/events/autohandle.png'
+
+# shared by all capture modules
+CAPTURE_FULL_APP = '../resources/ss/data/source/building/full_app.png'
+CAPTURE_MINI_APP = '../resources/ss/data/source/building/mini_app.png'
+
+
+BUILDINGS = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station', 'patisserie',
+             'archery range', 'clinic', 'market street', 'bank', 'tailor shop', 'sports park', 'museum', 'theatre']
+
+# Files used to drive capture
+SOURCE_BUILDING_FOLDER = '../resources/ss/data/source/building'
+SOURCE_BUILDING_EARNINGS = SOURCE_BUILDING_FOLDER + '/earnings.png'
+SOURCE_BUILDING_NEXT = SOURCE_BUILDING_FOLDER + '/next_building.png'
+
+# Images generated
+CAPTURE_BUILDING_FOLDER = '../resources/ss/data/generated/building'

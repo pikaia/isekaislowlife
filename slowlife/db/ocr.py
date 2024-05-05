@@ -7,7 +7,7 @@ from PIL import Image
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 # Open the image file
-image = Image.open('resources/ss/data/buildings/apothecary.png')
+image = Image.open('../resources/ss/data/buildings/apothecary.png')
 
 # Convert the image to grayscale
 image = image.convert("L")

@@ -122,7 +122,7 @@ for x in range(0, 39):
 
     # wait for screen to appear
     time.sleep(1)
-    # Save each building in resources/ss/data/buildings
+    # Save each buildings in resources/ss/data/buildings
     log.info(f'Take screenshot family_member{x}.png')
     if TAKE_SNAPSHOT:
         pyautogui.screenshot(region=mini_region, imageFilename=f'resources/ss/data/generated/family/family_member{x}.png'.replace(' ', '_'))
