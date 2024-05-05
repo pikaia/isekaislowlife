@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Refactor to cleanup code.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -289,7 +291,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714858698528</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Sync repo">
+      <option name="closed" value="true" />
+      <created>1714859264715</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714859264715</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactor to cleanup code.">
+      <option name="closed" value="true" />
+      <created>1714876453673</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714876453673</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -393,7 +411,9 @@
     <MESSAGE value="Images for scripts" />
     <MESSAGE value="Add roaming" />
     <MESSAGE value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
+    <MESSAGE value="Sync repo" />
+    <MESSAGE value="Refactor to cleanup code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor to cleanup code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -437,16 +457,6 @@
           <url>file://$PROJECT_DIR$/game.py</url>
           <line>194</line>
           <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="94" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>23</line>
-          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

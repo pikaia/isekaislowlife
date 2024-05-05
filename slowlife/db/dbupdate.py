@@ -1,5 +1,6 @@
 import psycopg2
-from config import load_config
+
+from slowlife.db.config import load_config
 
 
 def update_vendor(vendor_id, vendor_name):
@@ -14,8 +15,8 @@ def update_vendor(vendor_id, vendor_name):
     config = load_config()
 
     try:
-        with  psycopg2.connect(**config) as conn:
-            with  conn.cursor() as cur:
+        with psycopg2.connect(**config) as conn:
+            with conn.cursor() as cur:
                 # execute the UPDATE statement
                 cur.execute(sql, (vendor_name, vendor_id))
                 updated_row_count = cur.rowcount
