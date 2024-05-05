@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-import pyautogui
 from pyautogui import ImageNotFoundException
 
 from slowlife.common.utils import *
@@ -10,70 +9,83 @@ from slowlife.resources.constants import *
 # start on the Drakenberg screen
 def collect_trading_post_gold(maxtimes=30):
     # assume main menu is displayed.
-    for x in range(1, maxtimes):
+    for x in range(0, maxtimes):
         start = time.time()
         log.info(f'Collecting gold {x}/{maxtimes}...')
-
-        drankenerg = click_image(MM_DRAKENBERG)
-        time.sleep(1)
-
-        # Guild random requests
-        log.info('Random requests...')
-        scroll_screen('left', 1)
-        pyautogui.sleep(2)
-        click_image(DRAKENBERG_GUILD)
-        click_image(GUILD_REQUESTS)
-        click_image(GUILD_HANDLE)
-        time.sleep(2)
-        pyautogui.click(drankenerg)
-        click_image(GUILD_BACK, confidence=0.9)
-
-        # Roam if possible
-        time.sleep(1)
-        scroll_screen('right', 1)
-        click_image(DRAKENBERG_ROAMING)
-        # Give time for screen to refresh
-        time.sleep(2)
-        location = click_image(ROAMING_GO)
-        time.sleep(1)
-
-        # roaming has outcomes when u click on GO
-        # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
-        # 2. roaming available:     go -> ok diagloue -> click ok -> back
-        try:
-            roaming_ok = pyautogui.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
-            pyautogui.click(roaming_ok)
-        except ImageNotFoundException as e:
-            # When this is no roaming available, a dialog appears
-            # click anywhere to dismiss it.
-            pyautogui.click(location)
-
-        # Click on back to continue
-        click_image(ROAMING_BACK)
-
-        # Enter trading post
-        click_image(MM_DRAKENBERG_TRADINGPOST)
-        time.sleep(1)
+        click(MM_DRAKENBERG)
+        click(MM_DRAKENBERG_TRADINGPOST)
 
         # Need higher confidence to match small image(?)
         # Also it may be one of 2 possible images.
         gold = None
         try:
-            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD1, APP_TITLE,
-                                            grayscale=True, confidence=0.6)
-        except ImageNotFoundException as e:
-            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD2, APP_TITLE,
-                                            grayscale=True, confidence=0.6)
-
+            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD1, title=APP_TITLE, confidence=0.6)
+        except ImageNotFoundException:
+            gold = pyautogui.locateOnWindow(TRADINGPOST_GOLD2, title=APP_TITLE, confidence=0.6)
         # Give time for screen to refresh
-        time.sleep(1)
-        highlightSection(os.path.basename(TRADINGPOST_GOLD1), gold)
+        pyautogui.sleep(1)
         pyautogui.click(gold)
 
-        click_image(TRADINGPOST_BACK, grayscale=False, confidence=0.6)
-        click_image(MM_HOME, grayscale=False, confidence=0.6)
+        click(TRADINGPOST_BACK, confidence=0.6)
+        click(MM_HOME, confidence=0.6)
         # give time for gold to replenish
-        time.sleep(7)
+        pyautogui.sleep(7)
+
+        # Guild random requests
+        # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
+        if x % 24 == 0:
+            log.info('Random requests...')
+            click(MM_DRAKENBERG, confidence=0.6)
+            scroll_screen('left', 1)
+            pyautogui.sleep(0.5)
+            click(DRAKENBERG_GUILD)
+            click(GUILD_REQUESTS)
+            click(GUILD_HANDLE)
+            click(MM_DRAKENBERG, _highlight_image=False)
+            click(GUILD_BACK, confidence=0.9)
+
+        # Roam if possible. Free try every 9 mins. 21 = 9*60/26
+        if x % 21 == 0:
+            scroll_screen('right', 1)
+            pyautogui.sleep(1)
+            click(ENTER_ROAMING)
+            # Give time for screen to refresh
+            pyautogui.sleep(0.5)
+            click(ROAMING_GO)
+            pyautogui.sleep(1)
+
+            # roaming has outcomes when u click on GO
+            # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
+            # 2. roaming available:     go -> ok diagloue -> click ok -> back
+            roaming_ok = None
+            try:
+                roaming_ok = pyautogui.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
+                pyautogui.click(roaming_ok)
+            except ImageNotFoundException as e:
+                # When this is no roaming available, a dialog appears
+                # click anywhere to dismiss it.
+                click(ROAMING_GO, _highlight_image=False)
+
+            # Click on back to continue
+            click(ROAMING_BACK)
+
+            # serve in inn. Free try every 20 mins. 47 = 20*60/26
+        if x % 47 == 0:
+            log.info('Serve...')
+            # Enter village
+            pyautogui.sleep(1)
+            click(MM_VILLAGE, confidence=0.45)
+            # Enter kitchen
+            pyautogui.sleep(1)
+            click(ENTER_KITCHEN)
+            # Press serve button.
+            click(KITCHEN_SERVE)
+            # If success, click serve again to dismiss.
+            # If failed, click serve again to dismiss error.
+            click(KITCHEN_SERVE, _highlight_image=False, dx=-1)
+            click(KITCHEN_SERVE, _highlight_image=False, dx=-1)
+            # Back out of inn
+            click_image(KITCHEN_BACK)
 
         elapsed = time.time() - start
         log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')
@@ -81,10 +93,10 @@ def collect_trading_post_gold(maxtimes=30):
 
 # Assume your are in drakenberg screen.
 def run_roaming():
-    click_image(DRAKENBERG_ROAMING)
-    time.sleep(1)
+    click_image(ENTER_ROAMING)
+    pyautogui.sleep(1)
     click_image(ROAMING_GO)
-    time.sleep(1.5)
+    pyautogui.sleep(1.5)
     location = match_image(ROAMING_CANCEL, confidence=0.6)
     if location is None:
         #  ROAMING CANCEL not found, click on OK
@@ -117,11 +129,11 @@ def run_stage():
 
         # clear events. The events icon seems hard to locate directly. Colors?
         xtemp = pyautogui.locateOnScreen(STAGE_EVENTS_X, grayscale=True, confidence=0.5)
-        highlightSection('eventx', xtemp)
+        highlightimage('eventx', xtemp)
         ytemp = pyautogui.locateOnScreen(STAGE_EVENTS_Y, grayscale=True, confidence=0.5)
-        highlightSection('eventy', ytemp)
+        highlightimage('eventy', ytemp)
         log.info(f'Events is at {xtemp.left}, {ytemp.top}')
-        highlightSection('events', (50, 50, xtemp.left, ytemp.top))
+        highlightimage('events', (50, 50, xtemp.left, ytemp.top))
         pyautogui.click(xtemp.left, ytemp.top)
         click_image(STAGE_AUTOHANDLE)
         click_image(EVENTS_CONTINUE)
@@ -147,7 +159,7 @@ def run_stage():
         wait_for_image(MM_DRAKENBERG_TRADINGPOST)
         wait_for_image(TRADINGPOST_GOLD1)
         # pause for gold to replenish
-        time.sleep(6)
+        pyautogui.sleep(6)
         wait_for_image(TRADINGPOST_BACK)
 
 
@@ -163,9 +175,9 @@ def run_kitchen():
     scroll_screen('right', 2)
 
     # enter kitchen and serve
-    while not match_image(VILLAGE_KITCHEN):
+    while not match_image(ENTER_KITCHEN):
         scroll_screen('left', 1)
-    click_image(VILLAGE_KITCHEN)
+    click_image(ENTER_KITCHEN)
 
     # if there are jewels collect them
     if wait_for_image(KITCHEN_ORDER_JEWELS):
@@ -174,7 +186,7 @@ def run_kitchen():
 
     # if guests available in queue, serve
     while not match_image(KITCHEN_GUESTS_AVAILABLE):
-        time.sleep(1)
+        pyautogui.sleep(1)
 
     click_image(KITCHEN_SERVE)
 
@@ -190,7 +202,7 @@ def run_guild():
     click_image(GUILD_REQUESTS)
     click_image(GUILD_HANDLE)
     # let requests finish
-    time.sleep(2)
+    pyautogui.sleep(2)
     click_image(GUILD_CANCEL)
 
 
@@ -210,7 +222,7 @@ def grind():
     click_image(MM_VILLAGE)
 
     # enter kitchen and serve
-    click_image(VILLAGE_KITCHEN)
+    click_image(ENTER_KITCHEN)
 
     # if guests available in queue, serve
     if wait_for_image(KITCHEN_GUESTS_AVAILABLE):
@@ -219,7 +231,7 @@ def grind():
         # sometimes dialog doesn't popup. Bluestacks bz?
         if wait_for_image(KITCHEN_SERVE):
             # if the match above is wrong, a dialog will pop up after a little pause.
-            time.sleep(1.5)
+            pyautogui.sleep(1.5)
             # cancel pic is centered above it, so we click on the background
             click_image(KITCHEN_CANCEL, grayscale=False)
 
@@ -242,7 +254,7 @@ def grind():
 
     # home = pyautogui.locateOnScreen(MM_HOME, grayscale=True, confidence=0.5)
     # log.info(f'Drag from {home.left, home.top - 6 * home.height} to {home.left + 6 * home.width, home.top - 6 * home.height}')
-    # time.sleep(1)
+    # pyautogui.sleep(1)
     # pyautogui.moveTo(home.left, home.top - 6 * home.height)
     # pyautogui.mouseDown(button='left')
     # pyautogui.dragTo(home.left + 6 * home.width, home.top - 6 * home.height,1, button='left')
@@ -250,7 +262,7 @@ def grind():
 
 def run_school():
     # add check for location.
-    if match_image(VILLAGE_KITCHEN):
+    if match_image(ENTER_KITCHEN):
         scroll_screen('right', 1)
     click_image(VILLAGE_SCHOOL)
     # start on the home screen
@@ -282,7 +294,7 @@ def test():
 
     log.debug(loc)
     pyautogui.moveTo(loc.left, loc.top)
-    time.sleep(1.5)
+    pyautogui.sleep(1.5)
 
 
 # Select the function based on the user input
@@ -311,4 +323,4 @@ while True:
         print("Invalid input, quiting...")
         exit()
 
-    time.sleep(3)
+    pyautogui.sleep(3)

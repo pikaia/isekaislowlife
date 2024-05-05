@@ -17,7 +17,7 @@ class Point2D:
         self.y = y
 
 
-def highlightSection(title, rect, color='red', duration=3):
+def highlightimage(title, rect, color='red', duration=3):
     win = Tk()
     win.title = title
     # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/geometry.html
@@ -55,7 +55,7 @@ def match_image(image, grayscale=True, confidence=0.5):
     try:
         log.debug('looking for ' + image)
         location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=confidence)
-        highlightSection('app', location)
+        highlightimage('app', location)
 
         log.info(f'Found {image} at {location}')
         return location
@@ -71,12 +71,12 @@ def wait_for_image(image):
         try:
             log.debug('looking for ' + image)
             location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=True, confidence=0.5)
-            highlightSection(os.path.basename(image), location)
+            highlightimage(os.path.basename(image), location)
             log.debug('Found ' + image)
             return True
         except Exception as e:
             log.debug(f'Not Found {image}. Exception: {repr(e)}')
-            time.sleep(1)
+            pyautogui.sleep(1)
             log.debug('.'),
             x += 1
             if x > 5:
@@ -139,13 +139,13 @@ def click_image(image, grayscale=True, confidence=0.5):
             # location = pyautogui.locateOnScreen(image, 1, grayscale=grayscale, confidence=confidence)
             location = pyautogui.locateOnWindow(image, APP_TITLE, grayscale=grayscale, confidence=confidence)
             # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
-            highlightSection(os.path.basename(image), location)
+            highlightimage(os.path.basename(image), location)
             pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
             log.info(
                 f'Click ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
             return location
         except Exception as e:
-            time.sleep(1)
+            pyautogui.sleep(1)
             log.debug(repr(e))
 
     log.debug('Found ' + image + ' at:' + repr(location))
@@ -167,13 +167,13 @@ def click_image_one_of(image1, image2, grayscale=True, confidence=0.5):
                 location = pyautogui.locateOnScreen(image2, 1, grayscale=grayscale, confidence=confidence)
 
             # highlight(x=location.left, y=location.top, width=location.width, height=location.height)
-            highlightSection(os.path.basename(image), location)
+            highlightimage(os.path.basename(image), location)
             pyautogui.click(int(location.left + location.width / 2), int(location.top + location.height / 2))
             log.info(
                 f'Click ({int(location.left + location.width / 2)}, {int(location.top + location.height / 2)}) {image}')
             return location
         except Exception as e:
-            time.sleep(1)
+            pyautogui.sleep(1)
             log.debug(repr(e))
 
     log.debug('Found ' + image + ' at:' + repr(location))
@@ -192,29 +192,41 @@ log.warning(pyautogui.position())
 # python should default to where the script lives
 log.warning('ROOT: ' + os.getcwd())
 
+LOC = {}
+
+
+# wdx = width offset
+def click(image, title=APP_TITLE, confidence=0.5, _highlight_image=True, _click_image=True, dx=0):
+    if image in LOC:
+        loc = LOC.get(image)
+    else:
+        loc = pyautogui.locateOnWindow(image=image, title=title, confidence=confidence)
+        log.info(f'Click ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) {image}')
+        LOC[image] = loc
+    if _highlight_image:
+        highlightimage(os.path.basename(image), loc)
+    if _click_image:
+        point = pyautogui.center(loc)
+        pyautogui.click(point.x + dx * loc.width, point.y)
+    pyautogui.sleep(1)
+    return loc
+
 
 def scroll_screen(direction, times):
+    home = click(MM_HOME, confidence=0.5, _highlight_image=False, _click_image=False)
+
     if direction == 'left':
         for i in range(times):
-            # to drag screen left, start from the right
-            home = pyautogui.locateOnWindow(MM_HOME, APP_TITLE, grayscale=True, confidence=0.5)
             #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
             pyautogui.mouseDown(home.left + 20 + home.width * 6, home.top - home.height * 6)
             # 5 homes to right. duration is needed
             pyautogui.moveTo(x=home.left + 20, y=home.top - home.height * 6, duration=0.5)
-            pyautogui.mouseUp()
-
-            time.sleep(2)
     else:
         for i in range(times):
-            # to drag screen right, start from the left
-            home = pyautogui.locateOnWindow(MM_HOME, APP_TITLE, grayscale=True, confidence=0.5)
             # to drag screen right, start from the left. +5 to keep off the edge.
             pyautogui.mouseDown(home.left + 20, home.top - home.height * 6)
             #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
-            # pyautogui.dragTo(x=home.left + 20 + home.width * 6, y=home.top - home.height * 6, duration=0.5,
-            #                  button='left')
             pyautogui.moveTo(x=home.left + 20 + home.width * 6, y=home.top - home.height * 6, duration=0.5)
-            pyautogui.mouseUp()
 
-            time.sleep(2)
+    pyautogui.mouseUp()
+    pyautogui.sleep(2)
