@@ -63,6 +63,16 @@ def create_tables():
             );
         ALTER TABLE IF EXISTS slowlife.guild
             OWNER to pik;
+        """,
+        """ CREATE TABLE IF NOT EXISTS slowlife.gods_guild (
+                guild_name text NOT NULL, 
+                member_name text NOT NULL,
+                member_class text NOT NULL,
+                power integer,
+                last_update timestamp with time zone NOT NULL
+            );
+        ALTER TABLE IF EXISTS slowlife.gods_guild
+            OWNER to pik;
         """)
 
     try:
