@@ -1,5 +1,8 @@
 APP_TITLE = 'BlueStacks App Player'
 
+# global toggles
+LOG_PAUSES = True
+
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
 MM_HOME = '../resources/mainmenu/home.png'
@@ -20,6 +23,9 @@ ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'
 SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
 SCHOOL_BELOW_PUPILS = '../resources/mainmenu/village/school/below_pupils.png'
 SCHOOL_BACK = '../resources/mainmenu/village/school/back.png'
+
+ENTER_FISHING = '../resources/mainmenu/village/enter_fishing.png'
+FISHING_COLLECT_BAIT = '../resources/mainmenu/village/fish/collect_bait.png'
 
 VILLAGE_SCHOOL = '../resources/mainmenu/village/school.png'
 ENTER_KITCHEN = '../resources/mainmenu/village/enter_kitchen.png'
@@ -54,14 +60,85 @@ STAGE_AUTOHANDLE = '../resources/mainmenu/village/drakenberg/stage/events/autoha
 CAPTURE_FULL_APP = '../resources/ss/data/source/building/full_app.png'
 CAPTURE_MINI_APP = '../resources/ss/data/source/building/mini_app.png'
 
-
 BUILDINGS = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station', 'patisserie',
              'archery range', 'clinic', 'market street', 'bank', 'tailor shop', 'sports park', 'museum', 'theatre']
 
 # Files used to drive capture
 SOURCE_BUILDING_FOLDER = '../resources/ss/data/source/building'
 SOURCE_BUILDING_EARNINGS = SOURCE_BUILDING_FOLDER + '/earnings.png'
-SOURCE_BUILDING_NEXT = SOURCE_BUILDING_FOLDER + '/next_building.png'
+SOURCE_BUILDING_NEXT = SOURCE_BUILDING_FOLDER + '/next.png'
 
 # Images generated
 CAPTURE_BUILDING_FOLDER = '../resources/ss/data/generated/building'
+
+KITCHEN_STATIONS = ['oven', 'staple counter', 'big cooking pot', 'meat counter', 'frying pan', 'hydroponic tank',
+                    'fermenting vat', 'fish tank', 'sushi counter', 'dungeon entrance']
+
+# Files used to drive capture
+SOURCE_KITCHEN_FOLDER = '../resources/ss/data/source/kitchen'
+SOURCE_KITCHEN_NEXT = SOURCE_KITCHEN_FOLDER + '/next.png'
+
+# Images generated
+CAPTURE_KITCHEN_FOLDER = '../resources/ss/data/generated/kitchen'
+
+CAPTURE_FISHES_FOLDER = '../resources/ss/data/generated/fishes'
+FISHES = ['axolotol',
+          'pirarucu',
+          'gold pirarucu',
+          'star anglerfish',
+          'drakenburg monster',
+          'sperm whale',
+          'giant squid',
+          'helicoprion',
+          'smooth hammerhead',
+          'mosasaurs',
+          'megakarp',
+          'aligator snapping turtle',
+          'hermit crab',
+          'piranhape',
+          'giant catfish',
+          'colorful bubble puffer',
+          'anglerfish',
+          'nubibranch',
+          'bubble globefish',
+          'marlin',
+          'megalodon',
+          'dumbo octopus',
+          'mola mola',
+          'angelfish',
+          'bubble puffer',
+          'sun carp',
+          'turtoise',
+          'betta',
+          'piranha',
+          'elecrtic eel',
+          'bigmouth buffalo',
+          'dorado',
+          'lightning lionfish',
+          'tuna',
+          'turritosis dohrnii',
+          'striped seahorse',
+          'clownfish',
+          'mahi-mahi',
+          'redeye bass',
+          'lobster',
+          'horned frog',
+          'flower crab',
+          'sturgeon',
+          'spotted gar',
+          'longnose gar',
+          'rainbow trout',
+          'giant oarfish',
+          'sardine',
+          'turritopsis',
+          'lionfish',
+          'aquafrog',
+          'snakehead',
+          'carp',
+          'oyster',
+          'guppy',
+          'ayu sweetfish',
+          'blue sweetfish',
+          'sea anemone',
+          'tubuca arcuata',
+          'starfish']

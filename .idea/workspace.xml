@@ -4,8 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Refactor to cleanup code.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Delete old files relocated to new folders.">
+      <change afterPath="$PROJECT_DIR$/slowlife/capture/fishing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/capture/kitchen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/next.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/db/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/db/ocr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/fishing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/full_app.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/full_app.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/mini_app.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/mini_app.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/next_building.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/next.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,27 +60,40 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.buildings (1).executor": "Run",
+    "Python.buildings.executor": "Run",
+    "Python.createtables.executor": "Run",
     "Python.cv.executor": "Run",
+    "Python.fishing.executor": "Run",
     "Python.game (1).executor": "Run",
     "Python.game.executor": "Run",
+    "Python.kitchen.executor": "Run",
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.ocr (1).executor": "Debug",
+    "Python.ocr.executor": "Run",
     "Python.utils.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/projects/isekaibot/pythonProject1/slowlife/common/utils.py",
+    "last_opened_file_path": "C:/projects/isekaibot/pythonProject1/slowlife/capture",
     "settings.editor.selected.configurable": "preferences.externalTools"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\capture" />
       <recent name="C:\projects\isekaibot\pythonProject1\slowlife\resources" />
       <recent name="C:\projects\isekaibot\pythonProject1" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\common" />
+      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\db" />
+      <recent name="C:\projects\isekaibot\pythonProject1\slowlife\capture" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.game (1)">
-    <configuration name="cv" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.game">
+    <configuration name="buildings (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -78,11 +102,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cv.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/buildings.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -91,7 +115,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="game (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="fishing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythonProject1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/fishing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,7 +159,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="kitchen" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -122,33 +168,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="login2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythonProject1" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/login2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/kitchen.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,7 +203,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="ocr (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -188,11 +212,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/common" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/db" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/common/utils.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/db/ocr.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -203,11 +227,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.game (1)" />
-        <item itemvalue="Python.utils" />
         <item itemvalue="Python.game" />
-        <item itemvalue="Python.cv" />
-        <item itemvalue="Python.login2" />
+        <item itemvalue="Python.kitchen" />
+        <item itemvalue="Python.fishing" />
+        <item itemvalue="Python.ocr (1)" />
+        <item itemvalue="Python.buildings (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -307,97 +331,63 @@
       <option name="project" value="LOCAL" />
       <updated>1714876453673</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fix db example">
+      <option name="closed" value="true" />
+      <created>1714912275221</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1714912275221</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add more tables: player, guild.">
+      <option name="closed" value="true" />
+      <created>1714913700376</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1714913700376</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add table for gods guild.">
+      <option name="closed" value="true" />
+      <created>1714920162139</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1714920162139</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Moved generated/soue image folders. Reuse code from utils.">
+      <option name="closed" value="true" />
+      <created>1714936358752</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1714936358752</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Moved generated/soue image folders. Reuse code from utils.">
+      <option name="closed" value="true" />
+      <created>1714936455869</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1714936455869</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Delete old files relocated to new folders.">
+      <option name="closed" value="true" />
+      <created>1714936555301</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1714936555301</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="16bd4cfe-c24e-4f66-9a6b-a79a9550b556" value="TOOL_WINDOW" />
-        <entry key="38d99349-765a-48f4-9ab4-f8fe53308a5a" value="TOOL_WINDOW" />
-        <entry key="aa1a6a8f-0f95-45de-aabd-657303bceb10" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="16bd4cfe-c24e-4f66-9a6b-a79a9550b556">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="structure">
-                    <value>
-                      <list>
-                        <option value="dir:C:/projects/isekaibot/pythonProject1/slowlife/resources" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-            </State>
-          </value>
-        </entry>
-        <entry key="38d99349-765a-48f4-9ab4-f8fe53308a5a">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="roots">
-                    <value>
-                      <list>
-                        <option value="$PROJECT_DIR$" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-            </State>
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
             <State />
-          </value>
-        </entry>
-        <entry key="aa1a6a8f-0f95-45de-aabd-657303bceb10">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="roots">
-                    <value>
-                      <list>
-                        <option value="$PROJECT_DIR$" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-            </State>
           </value>
         </entry>
       </map>
@@ -413,7 +403,12 @@
     <MESSAGE value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
     <MESSAGE value="Sync repo" />
     <MESSAGE value="Refactor to cleanup code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor to cleanup code." />
+    <MESSAGE value="Fix db example" />
+    <MESSAGE value="Add more tables: player, guild." />
+    <MESSAGE value="Add table for gods guild." />
+    <MESSAGE value="Moved generated/soue image folders. Reuse code from utils." />
+    <MESSAGE value="Delete old files relocated to new folders." />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete old files relocated to new folders." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -429,12 +424,12 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cv.py</url>
+          <url>file://$PROJECT_DIR$/slowlife/common/cv.py</url>
           <line>33</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cv.py</url>
+          <url>file://$PROJECT_DIR$/slowlife/common/cv.py</url>
           <line>28</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
@@ -457,6 +452,11 @@
           <url>file://$PROJECT_DIR$/game.py</url>
           <line>194</line>
           <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/capture/fishing.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="84" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

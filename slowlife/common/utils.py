@@ -1,19 +1,52 @@
 import logging.handlers
 import os
 import sys
+import time
+from datetime import timedelta
 from tkinter import *
+from typing import Optional
 
 import numpy as np
 import pyautogui as pag
 import wx
 
-from slowlife.resources.constants import APP_TITLE, MM_HOME
+from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+h = logging.StreamHandler(sys.stdout)
+h.setLevel(logging.DEBUG)
+h.setFormatter(formatter)
+log.addHandler(h)
+
+log.warning(pag.position())
+
+# python should default to where the script lives
+log.warning('ROOT: ' + os.getcwd())
+
+# Init cache for locations of images on bluestacks window
+LOC = {}
+
+# init run timer
+start = time.time()
 
 
 class Point2D:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+
+def elapsed_time(description, listofitems):
+    elapsed = time.time() - start
+    log.info(f'# {description} = {len(listofitems)}. Time taken = {str(timedelta(seconds=elapsed))}')
+
+
+def log_sleep(where: str, duration: float):
+    if LOG_PAUSES:
+        log.info(f'{where}: Pausing for {duration} second...')
+        pag.sleep(duration)
 
 
 def highlightimage(title, rect, color='red', duration=3):
@@ -178,36 +211,41 @@ def click_image_one_of(image1, image2, grayscale=True, confidence=0.5):
     log.debug('Found ' + image + ' at:' + repr(location))
 
 
-log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-h = logging.StreamHandler(sys.stdout)
-h.setLevel(logging.DEBUG)
-h.setFormatter(formatter)
-log.addHandler(h)
-
-log.warning(pag.position())
-
-# python should default to where the script lives
-log.warning('ROOT: ' + os.getcwd())
-
-LOC = {}
-
-
-# wdx = width offset
-def click(image, title=APP_TITLE, confidence=0.5, _highlight_image=True, _click_image=True, dx=0):
-    if image in LOC:
-        loc = LOC.get(image)
+# Copy the position of one to another.
+def cloneposition(original, other, dx: int = None):
+    loc = LOC[original]
+    if dx is None:
+        LOC[other] = LOC[original]
     else:
-        loc = pag.locateOnWindow(image=image, title=title, confidence=confidence)
-        log.info(f'Click ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) {image}')
-        LOC[image] = loc
+        LOC[other] = (loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+
+
+# When target image is provided, dx = width offset, When shifted save derived location.
+# when taget image is None, ignore.
+# _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
+def click(original_image, title=APP_TITLE, confidence=0.5, _highlight_image=True, _click_image=True,
+          _derive: Optional[dict] = None):
+    # When not clicked return box (left, top, width, height).
+    if original_image in LOC:
+        loc = LOC.get(original_image)
+    else:
+        loc = pag.locateOnWindow(image=original_image, title=title, confidence=confidence, grayscale=True)
+        log.info(f'Click ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) {original_image}')
+        LOC[original_image] = loc
+
+    if _derive is not None and _derive.get('target_image') is not None:
+        dx = _derive['dx']
+        loc = (loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+        LOC[_derive['target_image']] = loc
+
     if _highlight_image:
-        highlightimage(os.path.basename(image), loc)
+        highlightimage(os.path.basename(original_image), loc)
+
     if _click_image:
-        point = pag.center(loc)
-        pag.click(point.x + dx * loc.width, point.y)
+        # when clicked, return point (left, top)
+        pag.click(pag.center(loc))
     pag.sleep(1)
+
     return loc
 
 
