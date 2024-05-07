@@ -1,7 +1,12 @@
 APP_TITLE = 'BlueStacks App Player'
 
 # global toggles
-LOG_PAUSES = True
+LOG_PAUSES = False
+COLLECT_COLD = True
+RANDOM_REQUESTS = False
+ROAMING = False
+KITCHEN = True
+HIGHLIGHT_MATCH = False
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
@@ -10,8 +15,8 @@ MM_VILLAGE = '../resources/mainmenu/village.png'
 MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
 
 MM_DRAKENBERG_TRADINGPOST = '../resources/mainmenu/village/drakenberg/enter_trading_post.png'
-TRADINGPOST_GOLD1 = '../resources/mainmenu/village/drakenberg/trading_post/gold.png'
-TRADINGPOST_GOLD2 = '../resources/mainmenu/village/drakenberg/trading_post/gold_available.png'
+TRADINGPOST_GOLD1 = '../resources/mainmenu/village/drakenberg/trading_post/gold2.png'
+TRADINGPOST_GOLD2 = '../resources/mainmenu/village/drakenberg/trading_post/gold1.png'
 TRADINGPOST_BACK = '../resources/mainmenu/village/drakenberg/trading_post/back.png'
 
 ENTER_ROAMING = '../resources/mainmenu/village/drakenberg/roaming.png'

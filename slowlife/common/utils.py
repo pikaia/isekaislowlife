@@ -46,7 +46,7 @@ def elapsed_time(description, listofitems):
 def log_sleep(where: str, duration: float):
     if LOG_PAUSES:
         log.info(f'{where}: Pausing for {duration} second...')
-        pag.sleep(duration)
+    pag.sleep(duration)
 
 
 def highlightimage(title, rect, color='red', duration=3):
@@ -230,7 +230,10 @@ def click(original_image, title=APP_TITLE, confidence=0.5, _highlight_image=True
         loc = LOC.get(original_image)
     else:
         loc = pag.locateOnWindow(image=original_image, title=title, confidence=confidence, grayscale=True)
-        log.info(f'Click ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) {original_image}')
+        if _click_image:
+            log.info(f'Click {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+        else:
+            log.info(f'Located {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
         LOC[original_image] = loc
 
     if _derive is not None and _derive.get('target_image') is not None:

@@ -3,13 +3,6 @@ from pyautogui import ImageNotFoundException
 from slowlife.common.utils import *
 from slowlife.resources.constants import *
 
-# flags to toggle various parts of the loop
-COLLECT_COLD = True
-RANDOM_REQUESTS = False
-ROAMING = False
-KITCHEN = True
-HIGHLIGHT_MATCH = False
-
 
 # to start:
 # 1. start on any screen with main menu below.
@@ -36,9 +29,9 @@ def collect_trading_post_gold(maxtimes=30):
             # Also it may be one of 2 possible images.
             gold = None
             try:
-                gold = pag.locateOnWindow(TRADINGPOST_GOLD1, title=APP_TITLE, confidence=0.6)
+                gold = pag.locateOnWindow(TRADINGPOST_GOLD1, title=APP_TITLE, confidence=0.48)
             except ImageNotFoundException:
-                gold = pag.locateOnWindow(TRADINGPOST_GOLD2, title=APP_TITLE, confidence=0.6)
+                gold = pag.locateOnWindow(TRADINGPOST_GOLD2, title=APP_TITLE, confidence=0.55)
             # Give time for screen to refresh
             log_sleep('COLLECT_COLD', 1)
             pag.click(gold)
@@ -86,7 +79,8 @@ def collect_trading_post_gold(maxtimes=30):
             click(ROAMING_BACK, _highlight_image=HIGHLIGHT_MATCH)
 
         # serve in inn. Free try every 20 mins. 47 = 20*60/26
-        if ENTER_KITCHEN and (x % 47 == 0):
+        # if ENTER_KITCHEN and (x % 47 == 0):
+        if ENTER_KITCHEN:
             log.info('Enter village...')
             # Enter village
             log_sleep('Village', 1)
