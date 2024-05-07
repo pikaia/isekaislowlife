@@ -1,7 +1,52 @@
 from pyautogui import ImageNotFoundException
 
 from slowlife.common.utils import *
-from slowlife.resources.constants import *
+from slowlife.resources.constants import (HIGHLIGHT_MATCH,
+                                          MM_DRAKENBERG,
+                                          COLLECT_COLD,
+                                          MM_DRAKENBERG_TRADINGPOST,
+                                          TRADINGPOST_GOLD1,
+                                          TRADINGPOST_GOLD2,
+                                          TRADINGPOST_BACK,
+                                          RANDOM_REQUESTS,
+                                          DRAKENBERG_GUILD, GUILD_REQUESTS,
+                                          GUILD_HANDLE,
+                                          GUILD_BACK,
+                                          ROAMING,
+                                          ENTER_ROAMING,
+                                          ROAMING_GO,
+                                          ROAMING_OK,
+                                          ROAMING_BACK,
+                                          ENTER_KITCHEN,
+                                          MM_VILLAGE,
+                                          ENTER_FISHING,
+                                          FISHING_COLLECT_BAIT,
+                                          KITCHEN_SERVE,
+                                          KITCHEN_BACK,
+                                          ROAMING_CANCEL,
+                                          DRAKENBERG_STAGE, STAGE_GO,
+                                          STAGE_CHALLENGE,
+                                          STAGE_EVENTS_X,
+                                          STAGE_EVENTS_Y,
+                                          STAGE_AUTOHANDLE,
+                                          EVENTS_CONTINUE,
+                                          CHALLENGE_EMPTY,
+                                          CHALLENGE_GOLD,
+                                          CHALLENGE_NEGOTIATE,
+                                          CHALLENGE_CONTINUE,
+                                          CHALLENGE_ITEM,
+                                          KITCHEN_ORDER_JEWELS,
+                                          KITCHEN_OK,
+                                          KITCHEN_GUESTS_AVAILABLE,
+                                          GUILD_CANCEL,
+                                          KITCHEN_CANCEL,
+                                          VILLAGE_SCHOOL,
+                                          SCHOOL_BACK,
+                                          SCHOOL_EDUCATE,
+                                          SCHOOL_BELOW_PUPILS)
+
+
+# from slowlife.resources.constants import *
 
 
 # to start:
@@ -27,16 +72,7 @@ def collect_trading_post_gold(maxtimes=30):
 
             # Need higher confidence to match small image(?)
             # Also it may be one of 2 possible images.
-            gold = None
-            try:
-                gold = pag.locateOnWindow(TRADINGPOST_GOLD1, title=APP_TITLE, confidence=0.48)
-            except ImageNotFoundException:
-                gold = pag.locateOnWindow(TRADINGPOST_GOLD2, title=APP_TITLE, confidence=0.55)
-            # Give time for screen to refresh
-            log_sleep('COLLECT_COLD', 1)
-            pag.click(gold)
-            pag.sleep(1)  # to see gold is cleared
-
+            click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], title=APP_TITLE, confidence=0.48)
             click(TRADINGPOST_BACK, confidence=0.6, _highlight_image=HIGHLIGHT_MATCH)
             click(MM_HOME, confidence=0.6, _highlight_image=HIGHLIGHT_MATCH)
 

@@ -1,3 +1,4 @@
+import collections
 import logging.handlers
 import os
 import sys
@@ -11,6 +12,9 @@ import pyautogui as pag
 import wx
 
 from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES
+
+Box = collections.namedtuple('Box', 'left top width height')
+Point = collections.namedtuple('Point', 'x y')
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)
@@ -217,7 +221,21 @@ def cloneposition(original, other, dx: int = None):
     if dx is None:
         LOC[other] = LOC[original]
     else:
-        LOC[other] = (loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+        LOC[other] = Box(loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+
+
+# if a list is provided, locate the first match.
+# When target image is provided, dx = width offset, When shifted save derived location.
+# when taget image is None, ignore.
+# _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
+def click_list(original_image_list: list, title=APP_TITLE, confidence=0.5, _highlight_image=True, _click_image=True,
+               _derive: Optional[dict] = None):
+    for original_image in original_image_list:
+        loc = click(original_image, title, confidence, _highlight_image, _click_image)
+        if loc is None:
+            continue
+        else:
+            return loc
 
 
 # When target image is provided, dx = width offset, When shifted save derived location.
@@ -229,16 +247,21 @@ def click(original_image, title=APP_TITLE, confidence=0.5, _highlight_image=True
     if original_image in LOC:
         loc = LOC.get(original_image)
     else:
-        loc = pag.locateOnWindow(image=original_image, title=title, confidence=confidence, grayscale=True)
-        if _click_image:
-            log.info(f'Click {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
-        else:
-            log.info(f'Located {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
-        LOC[original_image] = loc
+        #  if can't find, move on to next in list.
+        try:
+            loc = pag.locateOnWindow(image=original_image, title=title, confidence=confidence, grayscale=True)
+        except pag.ImageNotFoundException as e:
+            return None
+
+    if _click_image:
+        log.info(f'Click {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+    else:
+        log.info(f'Located {original_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+    LOC[original_image] = loc
 
     if _derive is not None and _derive.get('target_image') is not None:
         dx = _derive['dx']
-        loc = (loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+        loc = Box(loc.left + dx * loc.width, loc.top, loc.width, loc.height)
         LOC[_derive['target_image']] = loc
 
     if _highlight_image:
