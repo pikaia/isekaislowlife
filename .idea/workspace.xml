@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Add images for fishing.">
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold2.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Use named tuple to fix bug in using regular tuple. Generalize clik function.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_available.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_zero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/full_app.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/full_app.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/mini_app.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/building/mini_app.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -395,7 +387,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715027085914</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Consolidate constants. Fix logging of sleep.">
+      <option name="closed" value="true" />
+      <created>1715093055835</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1715093055835</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Rename gold image. Change to prepare to match a list.">
+      <option name="closed" value="true" />
+      <created>1715093114556</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1715093114556</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Use named tuple to fix bug in using regular tuple. Generalize clik function.">
+      <option name="closed" value="true" />
+      <created>1715104122183</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1715104122183</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -426,7 +442,10 @@
     <MESSAGE value="Delete old files relocated to new folders." />
     <MESSAGE value="Collect fishing bait. Consolidate some code for matching images." />
     <MESSAGE value="Add images for fishing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add images for fishing." />
+    <MESSAGE value="Consolidate constants. Fix logging of sleep." />
+    <MESSAGE value="Rename gold image. Change to prepare to match a list." />
+    <MESSAGE value="Use named tuple to fix bug in using regular tuple. Generalize clik function." />
+    <option name="LAST_COMMIT_MESSAGE" value="Use named tuple to fix bug in using regular tuple. Generalize clik function." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -475,6 +494,11 @@
           <url>file://$PROJECT_DIR$/slowlife/capture/fishing.py</url>
           <line>21</line>
           <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>154</line>
+          <option name="timeStamp" value="105" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

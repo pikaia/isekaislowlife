@@ -36,12 +36,6 @@ LOC = {}
 start = time.time()
 
 
-class Point2D:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-
 def elapsed_time(description, listofitems):
     elapsed = time.time() - start
     log.info(f'# {description} = {len(listofitems)}. Time taken = {str(timedelta(seconds=elapsed))}')
@@ -247,7 +241,7 @@ def click(original_image, title=APP_TITLE, confidence=0.5, _highlight_image=True
     if original_image in LOC:
         loc = LOC.get(original_image)
     else:
-        #  if can't find, move on to next in list.
+        # if we can't find, move on to next in list.
         try:
             loc = pag.locateOnWindow(image=original_image, title=title, confidence=confidence, grayscale=True)
         except pag.ImageNotFoundException as e:

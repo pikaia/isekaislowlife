@@ -1,6 +1,21 @@
+import time
+from datetime import timedelta
+
+import pyautogui as pag
 from pyautogui import ImageNotFoundException
 
-from slowlife.common.utils import *
+from slowlife.common.utils import (log,
+                                   click,
+                                   log_sleep,
+                                   start,
+                                   Point,
+                                   cloneposition,
+                                   click_list,
+                                   scroll_screen,
+                                   click_image,
+                                   match_image,
+                                   wait_for_image,
+                                   highlightimage)
 from slowlife.resources.constants import (HIGHLIGHT_MATCH,
                                           MM_DRAKENBERG,
                                           COLLECT_COLD,
@@ -43,10 +58,9 @@ from slowlife.resources.constants import (HIGHLIGHT_MATCH,
                                           VILLAGE_SCHOOL,
                                           SCHOOL_BACK,
                                           SCHOOL_EDUCATE,
-                                          SCHOOL_BELOW_PUPILS)
-
-
-# from slowlife.resources.constants import *
+                                          SCHOOL_BELOW_PUPILS,
+                                          MM_HOME,
+                                          APP_TITLE)
 
 
 # to start:
@@ -315,12 +329,10 @@ def grind():
     pag.click(back.left + int(back.width / 2), back.top - back.height)
     click_image(SCHOOL_EDUCATE)
 
-    # home = pag.locateOnScreen(MM_HOME, grayscale=True, confidence=0.5)
-    # log.info(f'Drag from {home.left, home.top - 6 * home.height} to {home.left + 6 * home.width, home.top - 6 * home.height}')
-    # pag.sleep(1)
-    # pag.moveTo(home.left, home.top - 6 * home.height)
-    # pag.mouseDown(button='left')
-    # pag.dragTo(home.left + 6 * home.width, home.top - 6 * home.height,1, button='left')
+    # home = pag.locateOnScreen(MM_HOME, grayscale=True, confidence=0.5) log.info(f'Drag from {home.left, home.top -
+    # 6 * home.height} to {home.left + 6 * home.width, home.top - 6 * home.height}') pag.sleep(1) pag.moveTo(
+    # home.left, home.top - 6 * home.height) pag.mouseDown(button='left') pag.dragTo(home.left + 6 * home.width,
+    # home.top - 6 * home.height,1, button='left')
 
 
 def run_school():
@@ -343,21 +355,12 @@ def run_school():
     pupils = []
     below_5pupils = match_image(SCHOOL_BELOW_PUPILS)
     for i in range(0, 4):
-        pupils.append(Point2D(pupil_x + below_5pupils.width / 5 * i, pupil_y))
+        pupils.append(Point(pupil_x + below_5pupils.width / 5 * i, pupil_y))
 
     # Click on pupil and educate
     for j in range(0, 3):
         pag.click(pupils[j].x, pupils[j].y)
         click_image(SCHOOL_EDUCATE)
-
-
-def test():
-    loc = pag.locateOnScreen(KITCHEN_GUESTS_AVAILABLE, grayscale=True,
-                             confidence=0.8)
-
-    log.debug(loc)
-    pag.moveTo(loc.left, loc.top)
-    pag.sleep(1.5)
 
 
 # Select the function based on the user input
