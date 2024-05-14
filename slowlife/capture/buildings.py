@@ -30,13 +30,13 @@ for bldg in BUILDINGS:
                    imageFilename=f'{CAPTURE_BUILDING_FOLDER}/{bldg}_operation.png'.replace(' ', '_'))
 
     # Display earnings breakout
-    click(SOURCE_BUILDING_EARNINGS, confidence=0.7, _highlight_image=HIGHLIGHT)
+    click(SOURCE_BUILDING_EARNINGS, confidence=0.7, _highlight=HIGHLIGHT)
     # Save each buildings in resources/ss/data/generated/buildings
     pag.screenshot(region=mini_region, imageFilename=f'{CAPTURE_BUILDING_FOLDER}/{bldg}.png'.replace(' ', '_'))
     # Dismiss screen
     pag.click(app.right - 10, app.bottom - app.top - 70 - 60 - 10)
     # Click on arrow to go to next buildings
-    click(SOURCE_BUILDING_NEXT, confidence=0.7, _highlight_image=HIGHLIGHT)
+    click(SOURCE_BUILDING_NEXT, confidence=0.7, _highlight=HIGHLIGHT)
 
 elapsed = time.time() - start
 log.info(f'# buildings = {len(BUILDINGS)}. Time taken = {str(timedelta(seconds=elapsed))}')

@@ -2,11 +2,12 @@ APP_TITLE = 'BlueStacks App Player'
 
 # global toggles
 LOG_PAUSES = False
-COLLECT_COLD = True
-RANDOM_REQUESTS = False
-ROAMING = False
+COLLECT_GOLD = True
+RANDOM_REQUESTS = True
+ROAMING = True
 KITCHEN = True
-HIGHLIGHT_MATCH = False
+SCHOOL = False
+HIGHLIGHT = False
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
@@ -25,8 +26,8 @@ ROAMING_OK = '../resources/mainmenu/village/drakenberg/roaming/ok.png'
 ROAMING_CANCEL = '../resources/mainmenu/village/drakenberg/roaming/cancel.png'
 ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'
 
+ENTER_SCHOOL = '../resources/mainmenu/village/enter_school.png'
 SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
-SCHOOL_BELOW_PUPILS = '../resources/mainmenu/village/school/below_pupils.png'
 SCHOOL_BACK = '../resources/mainmenu/village/school/back.png'
 
 ENTER_FISHING = '../resources/mainmenu/village/enter_fishing.png'
@@ -41,7 +42,7 @@ KITCHEN_ORDER_JEWELS = '../resources/mainmenu/village/kitchen/order_jewels.png'
 KITCHEN_CANCEL = '../resources/mainmenu/village/kitchen/cancel.png'
 KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_available.png'
 
-DRAKENBERG_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
+ENTER_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
 GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'
 GUILD_HANDLE = '../resources/mainmenu/village/drakenberg/guild/handle.png'
 GUILD_REQUESTS = '../resources/mainmenu/village/drakenberg/guild/random_requests.png'
