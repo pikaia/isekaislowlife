@@ -40,7 +40,7 @@ from slowlife.resources.constants import (HIGHLIGHT,
                                           APP_TITLE,
                                           KITCHEN,
                                           SCHOOL,
-                                          ENTER_SCHOOL)
+                                          ENTER_SCHOOL, STAGE, MM_STAGE, STAGE_FULLAUTO, STAGE_START)
 
 
 # to start:
@@ -182,9 +182,24 @@ def collect_trading_post_gold(maxtimes=30):
 
             # Back out of inn
             # click(KITCHEN_BACK, _highlight=HIGHLIGHT)
+        # give time for staging to run and gold to accumulate
+        log.info('Wait 7 seconds for gold to regenerate...')
+        pag.sleep(7)
 
-        # give time for gold to replenish
-        log_sleep('LAST_LOOP', 7)
+        if STAGE and (x + 1) % 10 == 0:
+            log.info('Run stages...')
+            # Enter village
+            log_sleep('Stage', 10)
+            click(MM_STAGE, _highlight=HIGHLIGHT)
+            click(STAGE_FULLAUTO, _highlight=HIGHLIGHT)
+            click(STAGE_START, _highlight=HIGHLIGHT)
+            # Click to the fight of full auto to cancel.
+            # give time for staging to run and gold to accumulate
+            log.info('Wait 10 seconds for stage to run...')
+            pag.sleep(5)
+            click(STAGE_FULLAUTO, _highlight=HIGHLIGHT, _derive={'target_image': 'CANCEL_STAGE', 'dx': 1})
+            click('CANCEL_STAGE', _highlight=HIGHLIGHT)
+
 
     elapsed = time.time() - start
     log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')

@@ -5,7 +5,7 @@ import sys
 import time
 from datetime import timedelta
 from tkinter import *
-from typing import Optional, NamedTuple
+from typing import Optional
 
 import pyautogui as pag
 import wx
@@ -117,7 +117,11 @@ def click(image, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=T
             if match_optional:
                 return None
             else:
-                log.error(f'Cant find {image}: {e.__cause__}')
+                # Take screenshot to clarify where we are stuck.
+                # app = paw.getWindowsWithTitle(APP_TITLE)[0]
+                # p = Path('../log/error.png').resolve()
+                # log.error(f'Cant find {image}: {e.__cause__}. See {p}')
+                # pag.screenshot(region=app, imageFilename='../log/error.png')
                 exit(-1)
 
     if _click:

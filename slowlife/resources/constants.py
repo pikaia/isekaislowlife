@@ -8,12 +8,16 @@ ROAMING = True
 KITCHEN = True
 SCHOOL = False
 HIGHLIGHT = False
+STAGE = True
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
 MM_HOME = '../resources/mainmenu/home.png'
 MM_VILLAGE = '../resources/mainmenu/village.png'
 MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
+MM_STAGE = '../resources/mainmenu/stage.png'
+STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
+STAGE_START = '../resources/mainmenu/stage/start.png'
 
 MM_DRAKENBERG_TRADINGPOST = '../resources/mainmenu/village/drakenberg/enter_trading_post.png'
 TRADINGPOST_GOLD1 = '../resources/mainmenu/village/drakenberg/trading_post/gold2.png'
