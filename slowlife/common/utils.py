@@ -10,7 +10,7 @@ from typing import Optional, NamedTuple
 import pyautogui as pag
 import wx
 
-from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES
+from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT
 
 # Construct used types
 Box = collections.namedtuple('Box', 'left top width height')
@@ -89,12 +89,12 @@ def cloneposition(original, other, dx: int = 0, dy: int = 0) -> None:
 
 # if a list is provided, locate the first match.
 # When target image is provided, dx = width offset, When shifted save derived location.
-# when taget image is None, ignore.
+# when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click_list(original_image_list: list, title=APP_TITLE, confidence=0.5, _highlight=True, _click=True,
+def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=True,
                _derive: Optional[dict] = None) -> Optional[Box]:
-    for original_image in original_image_list:
-        loc = click(original_image, title, confidence, _highlight, _click)
+    for image in aliases:
+        loc = click(image, title, confidence, _highlight, _click)
         if loc is None:
             continue
         else:
@@ -104,8 +104,8 @@ def click_list(original_image_list: list, title=APP_TITLE, confidence=0.5, _high
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when taget image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click(image, title=APP_TITLE, confidence=0.5, _highlight=True, _click=True,
-          _derive: Optional[dict] = None) -> Optional[Box]:
+def click(image, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=True,
+          _derive: Optional[dict] = None, match_optional=False) -> Optional[Box]:
     # When not clicked return box (left, top, width, height).
     if image in LOC:
         loc = LOC.get(image)
@@ -113,9 +113,12 @@ def click(image, title=APP_TITLE, confidence=0.5, _highlight=True, _click=True,
         # if we can't find, move on to next in list.
         try:
             loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
-        except pag.ImageNotFoundException:
-            log.error(f'Cant find {image}')
-            return None
+        except pag.ImageNotFoundException as e:
+            if match_optional:
+                return None
+            else:
+                log.error(f'Cant find {image}: {e.__cause__}')
+                exit(-1)
 
     if _click:
         log.info(f'Click {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')

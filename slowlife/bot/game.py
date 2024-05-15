@@ -1,4 +1,3 @@
-import os
 import time
 from datetime import timedelta
 
@@ -27,14 +26,14 @@ from slowlife.resources.constants import (HIGHLIGHT,
                                           ROAMING_GO,
                                           ROAMING_OK,
                                           ROAMING_BACK,
-                                          ENTER_KITCHEN,
+                                          ENTER_KITCHEN1,
+                                          ENTER_KITCHEN2,
                                           MM_VILLAGE,
                                           ENTER_FISHING,
                                           FISHING_COLLECT_BAIT,
                                           KITCHEN_SERVE,
                                           KITCHEN_BACK,
                                           KITCHEN_ORDER_JEWELS,
-                                          KITCHEN_OK,
                                           SCHOOL_BACK,
                                           SCHOOL_EDUCATE,
                                           MM_HOME,
@@ -85,7 +84,7 @@ def collect_trading_post_gold(maxtimes=30):
             click(GUILD_REQUESTS, _highlight=HIGHLIGHT)
             click(GUILD_HANDLE, _highlight=HIGHLIGHT)
             click(MM_DRAKENBERG, _highlight=HIGHLIGHT)
-            click(GUILD_BACK, confidence=0.9)
+            click(GUILD_BACK, confidence=0.85, _highlight=HIGHLIGHT)
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
         if ROAMING:
@@ -108,6 +107,8 @@ def collect_trading_post_gold(maxtimes=30):
                 # When this is no roaming available, a dialog appears
                 # click anywhere to dismiss it.
                 click(ROAMING_GO, _highlight=HIGHLIGHT)
+                # Sometimes when we roam we get a dialog box.
+                click(ROAMING_OK, _highlight=HIGHLIGHT, match_optional=True)
 
             # Click on back to continue
             click(ROAMING_BACK, _highlight=HIGHLIGHT)
@@ -162,24 +163,25 @@ def collect_trading_post_gold(maxtimes=30):
             # Enter kitchen
             log.info('Enter Inn...')
             log_sleep('KITCHEN', 1)
-            click(ENTER_KITCHEN, _highlight=HIGHLIGHT)
+            click_list([ENTER_KITCHEN1, ENTER_KITCHEN2], title=APP_TITLE, confidence=0.48,
+                       _highlight=HIGHLIGHT)
             # Press serve button.
             click(KITCHEN_SERVE, _highlight=HIGHLIGHT)
             # calc where to click to dismiss dialog.
             click(KITCHEN_SERVE, _highlight=HIGHLIGHT, _derive={'target_image': 'empty area', 'dx': -1},
-                  _click=False)
-            # If success, click serve again to dismiss.
-            # If failed, click serve again to dismiss error.
-            click('empty area', _highlight=HIGHLIGHT)
+                  _click=True)
+            # If success, click next to serve again to dismiss.
+            # If failed, click next to click serve again to dismiss error.
+            # click('empty area', _highlight=HIGHLIGHT)
             click('empty area', _highlight=HIGHLIGHT)
 
             # clear jewels
             pag.sleep(7)
             click(KITCHEN_ORDER_JEWELS, _highlight=HIGHLIGHT)
-            click(KITCHEN_OK, _highlight=HIGHLIGHT)
+            click(KITCHEN_BACK, _highlight=HIGHLIGHT)
 
             # Back out of inn
-            click(KITCHEN_BACK, _highlight=HIGHLIGHT)
+            # click(KITCHEN_BACK, _highlight=HIGHLIGHT)
 
         # give time for gold to replenish
         log_sleep('LAST_LOOP', 7)
