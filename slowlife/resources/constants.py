@@ -4,20 +4,36 @@ APP_TITLE = 'BlueStacks App Player'
 LOG_PAUSES = False
 COLLECT_GOLD = True
 RANDOM_REQUESTS = True
-ROAMING = True
+ROAMING = False
 KITCHEN = True
 SCHOOL = False
 HIGHLIGHT = False
-STAGE = True
+STAGE = False
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
 MM_HOME = '../resources/mainmenu/home.png'
 MM_VILLAGE = '../resources/mainmenu/village.png'
 MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
+
+# Farmstead
+FARMSTEAD = '../resources/mainmenu/village/farmstead.png'
+
+# Banquet
+ENTER_BANQUET = '../resources/mainmenu/village/drakenberg/enter_banquet.png'
+ATTEND = '../resources/mainmenu/village/drakenberg/banquet/attend.png'
+ATTEND_PARTY = '../resources/mainmenu/village/drakenberg/banquet/attend_party.png'
+SIT = '../resources/mainmenu/village/drakenberg/banquet/sit.png'
+
+# Stage
 MM_STAGE = '../resources/mainmenu/stage.png'
 STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
 STAGE_START = '../resources/mainmenu/stage/start.png'
+
+# Fountain of wishes
+MM_FOUNTAIN = '../resources/mainmenu/fountain_of_wishes.png'
+FOUNTAIN_10 = '../resources/mainmenu/fountain_of_wishes/fountain10.png'
+FOUNTAIN_1 = '../resources/mainmenu/fountain_of_wishes/fountain1.png'
 
 MM_DRAKENBERG_TRADINGPOST = '../resources/mainmenu/village/drakenberg/enter_trading_post.png'
 TRADINGPOST_GOLD1 = '../resources/mainmenu/village/drakenberg/trading_post/gold2.png'
@@ -48,6 +64,9 @@ KITCHEN_CANCEL = '../resources/mainmenu/village/kitchen/cancel.png'
 KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_available.png'
 
 ENTER_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
+ENTER_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation.png'
+BASIC_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation/basic_donation.png'
+DONATION = '../resources/mainmenu/village/drakenberg/guild/donation.png'
 GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'
 GUILD_HANDLE = '../resources/mainmenu/village/drakenberg/guild/handle.png'
 GUILD_REQUESTS = '../resources/mainmenu/village/drakenberg/guild/random_requests.png'

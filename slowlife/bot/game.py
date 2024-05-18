@@ -10,8 +10,7 @@ from slowlife.common.utils import (log,
                                    start,
                                    cloneposition,
                                    click_list)
-from slowlife.resources.constants import (HIGHLIGHT,
-                                          MM_DRAKENBERG,
+from slowlife.resources.constants import (MM_DRAKENBERG,
                                           COLLECT_GOLD,
                                           MM_DRAKENBERG_TRADINGPOST,
                                           TRADINGPOST_GOLD1,
@@ -40,7 +39,15 @@ from slowlife.resources.constants import (HIGHLIGHT,
                                           APP_TITLE,
                                           KITCHEN,
                                           SCHOOL,
-                                          ENTER_SCHOOL, STAGE, MM_STAGE, STAGE_FULLAUTO, STAGE_START)
+                                          ENTER_SCHOOL,
+                                          STAGE,
+                                          MM_STAGE,
+                                          STAGE_FULLAUTO,
+                                          STAGE_START,
+                                          MM_FOUNTAIN, FOUNTAIN_10, FOUNTAIN_1,
+                                          FARMSTEAD,
+                                          ENTER_BANQUET, ATTEND, ATTEND_PARTY, SIT,
+                                          ENTER_DONATION, BASIC_DONATION)
 
 
 # to start:
@@ -48,14 +55,23 @@ from slowlife.resources.constants import (HIGHLIGHT,
 # 2. if trading pot gold is maxed out, clear it first.
 # 3. in the village make sure inn and fish are on the screen.
 def collect_trading_post_gold(maxtimes=30):
+    # 1.
+    #   click('../resources/mainmenu/village/drakenberg/roaming/skip.png', _highlight=True, _clicks=1)
+    #   click('../resources/mainmenu/village/drakenberg/roaming/select.png', _highlight=True, _clicks=1)
+    #   empty
+    #   back
+    # 2.
+    #   skip
+    #   empty
+    #   back
     # Save commonly needed positions.
-    click(MM_HOME, confidence=0.6, _click=False, _highlight=HIGHLIGHT)
+    click(MM_HOME, confidence=0.6, _clicks=0)
     # Back button is in same position on different screens
     cloneposition(MM_HOME, 'BACK')
     cloneposition(MM_HOME, 'NOTHING', dx=3)
-    click(MM_DRAKENBERG, _click=False, _highlight=HIGHLIGHT)
+    click(MM_DRAKENBERG, _clicks=0)
     # village is to the right of home.
-    click(MM_HOME, _derive={'target_image': MM_VILLAGE, 'dx': 1}, _click=False, _highlight=HIGHLIGHT)
+    click(MM_HOME, _derive={'target_image': MM_VILLAGE, 'dx': 1}, _clicks=0)
     pag.sleep(2)
 
     for x in range(0, maxtimes):
@@ -63,55 +79,79 @@ def collect_trading_post_gold(maxtimes=30):
             # assume main menu is displayed.
             # On the left 'Post' is visible, one the right Guil'
             log.info(f'Collecting gold {x}/{maxtimes}...')
-            click(MM_DRAKENBERG, _highlight=HIGHLIGHT)
-            click(MM_DRAKENBERG_TRADINGPOST, _highlight=HIGHLIGHT)
+            click(MM_DRAKENBERG)
+            click(MM_DRAKENBERG_TRADINGPOST)
 
             # Need higher confidence to match small image(?)
             # Also it may be one of 2 possible images.
-            click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], title=APP_TITLE, confidence=0.48,
-                       _highlight=HIGHLIGHT)
-            click(TRADINGPOST_BACK, confidence=0.6, _highlight=HIGHLIGHT)
-            click(MM_HOME, confidence=0.6, _highlight=HIGHLIGHT)
+            click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], title=APP_TITLE, confidence=0.48)
+            click(TRADINGPOST_BACK, confidence=0.6)
+
+        # Check for Banquets.
+        log_sleep('Pause for banquet to be visible', 1)
+        click(ENTER_BANQUET)
+        click(ATTEND, confidence=0.6)
+        if click(ATTEND_PARTY, confidence=0.6, match_optional=True) is None:
+            # Dismiss dialogue
+            click('BACK')
+        else:
+            click(SIT)
+            click('BACK')
+        # Leave Banquet
+        click('BACK')
+
+        click(MM_HOME, confidence=0.6)
 
         # Guild random requests
         # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
         if RANDOM_REQUESTS:
-            log.info('Random requests...')
-            click(MM_DRAKENBERG, confidence=0.6, _highlight=HIGHLIGHT)
+            log.info('Donations and Random requests...')
+            click(MM_DRAKENBERG, confidence=0.6)
             # scroll_screen('left', 1)
             log_sleep('RANDOM_REQUESTS1', 0.5)
-            click(ENTER_GUILD, _highlight=HIGHLIGHT)
-            click(GUILD_REQUESTS, _highlight=HIGHLIGHT)
-            click(GUILD_HANDLE, _highlight=HIGHLIGHT)
-            click(MM_DRAKENBERG, _highlight=HIGHLIGHT)
-            click(GUILD_BACK, confidence=0.85, _highlight=HIGHLIGHT)
+            click(ENTER_GUILD)
+
+            # Try to donate.
+            click(ENTER_DONATION)
+            click(BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
+            # dismiss congratulation screen
+            click('MAKE_BASIC_DONATION')
+
+            # Exit donation screen
+            click('BACK')
+
+            click(GUILD_REQUESTS)
+            click(GUILD_HANDLE)
+            click(MM_DRAKENBERG)
+            click(GUILD_BACK, confidence=0.85)
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
         if ROAMING:
             # scroll_screen('right', 1)
             pag.sleep(1)
-            click(ENTER_ROAMING, _highlight=HIGHLIGHT)
+            click(ENTER_ROAMING)
             # Give time for screen to refresh
             log_sleep('ROAMING', 0.5)
-            click(ROAMING_GO, _highlight=HIGHLIGHT)
+            click(ROAMING_GO)
             log_sleep('ROAMING', 1)
 
             # roaming has outcomes when u click on GO
             # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
-            # 2. roaming available:     go -> ok diagloue -> click ok -> back
-            roaming_ok = None
+            # 2. roaming available:     go -> ok dialogue -> click ok -> back
+            # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _clicks=0)
             try:
                 roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
                 pag.click(roaming_ok)
             except ImageNotFoundException as e:
                 # When this is no roaming available, a dialog appears
                 # click anywhere to dismiss it.
-                click(ROAMING_GO, _highlight=HIGHLIGHT)
+                click(ROAMING_GO)
                 # Sometimes when we roam we get a dialog box.
-                click(ROAMING_OK, _highlight=HIGHLIGHT, match_optional=True)
+                click(ROAMING_OK, match_optional=True)
 
             # Click on back to continue
-            click(ROAMING_BACK, _highlight=HIGHLIGHT)
+            click(ROAMING_BACK)
+            pag.sleep(1)
 
         # serve in inn. Free try every 20 mins. 47 = 20*60/26
         # if ENTER_KITCHEN and (x % 47 == 0):
@@ -119,15 +159,18 @@ def collect_trading_post_gold(maxtimes=30):
             log.info('Enter village...')
             # Enter village
             log_sleep('Village', 1)
-            click(MM_VILLAGE, confidence=0.45, _highlight=HIGHLIGHT)
+            click(MM_VILLAGE, confidence=0.45)
+
+            # Get some gold from Farmstead
+            click(FARMSTEAD, confidence=0.45, _clicks=20)
 
             # serve in inn. Free try every 20 mins. 47 = 20*60/26
             # if ENTER_KITCHEN and (x % 47 == 0):
             if SCHOOL:
                 log.info('Enter school...')
-                click(ENTER_SCHOOL, _highlight=HIGHLIGHT)
+                click(ENTER_SCHOOL)
 
-                click(SCHOOL_BACK, _highlight=HIGHLIGHT, _click=False, confidence=0.7)
+                click(SCHOOL_BACK, _clicks=0, confidence=0.7)
                 # Students are 1 row above the back button
                 cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
                 cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
@@ -153,53 +196,64 @@ def collect_trading_post_gold(maxtimes=30):
 
             # Collect fishing bait
             log.info('Collect bait...')
-            click(ENTER_FISHING, _highlight=HIGHLIGHT)
-            click(FISHING_COLLECT_BAIT, _highlight=HIGHLIGHT)
+            click(ENTER_FISHING)
+            click(FISHING_COLLECT_BAIT)
             # Dismiss any popup
-            click('NOTHING', _highlight=HIGHLIGHT)
+            click('NOTHING')
 
-            click('BACK', _highlight=HIGHLIGHT)
+            click('BACK')
 
             # Enter kitchen
             log.info('Enter Inn...')
             log_sleep('KITCHEN', 1)
-            click_list([ENTER_KITCHEN1, ENTER_KITCHEN2], title=APP_TITLE, confidence=0.48,
-                       _highlight=HIGHLIGHT)
+            click_list([ENTER_KITCHEN1, ENTER_KITCHEN2], title=APP_TITLE, confidence=0.48)
             # Press serve button.
-            click(KITCHEN_SERVE, _highlight=HIGHLIGHT)
+            click(KITCHEN_SERVE)
             # calc where to click to dismiss dialog.
-            click(KITCHEN_SERVE, _highlight=HIGHLIGHT, _derive={'target_image': 'empty area', 'dx': -1},
-                  _click=True)
+            click(KITCHEN_SERVE, _derive={'target_image': 'empty area', 'dx': -1}, _clicks=1)
             # If success, click next to serve again to dismiss.
             # If failed, click next to click serve again to dismiss error.
-            # click('empty area', _highlight=HIGHLIGHT)
-            click('empty area', _highlight=HIGHLIGHT)
+            # click('empty area')
+            click('empty area')
 
             # clear jewels
             pag.sleep(7)
-            click(KITCHEN_ORDER_JEWELS, _highlight=HIGHLIGHT)
-            click(KITCHEN_BACK, _highlight=HIGHLIGHT)
+            click(KITCHEN_ORDER_JEWELS)
+            click(KITCHEN_BACK)
 
             # Back out of inn
-            # click(KITCHEN_BACK, _highlight=HIGHLIGHT)
+            # click(KITCHEN_BACK)
         # give time for staging to run and gold to accumulate
         log.info('Wait 7 seconds for gold to regenerate...')
+
+        # Fountain
+        click(MM_HOME)
         pag.sleep(7)
+        # Home screen has sight delay.
+        click(MM_FOUNTAIN)
+        click(FOUNTAIN_10, _pause=2)
+        # click(MM_FOUNTAIN, confidence=0.6)
+        # click(FOUNTAIN_10, confidence=0.6)
+        # Back is located in same spot on most screens
+        click('BACK')
+        click(FOUNTAIN_1)
+        # Back is located in same spot on most screens
+        click('BACK')
+        # Leave fountain
+        click('BACK')
 
         if STAGE and (x + 1) % 10 == 0:
             log.info('Run stages...')
             # Enter village
-            log_sleep('Stage', 10)
-            click(MM_STAGE, _highlight=HIGHLIGHT)
-            click(STAGE_FULLAUTO, _highlight=HIGHLIGHT)
-            click(STAGE_START, _highlight=HIGHLIGHT)
+            click(MM_STAGE)
+            click(STAGE_FULLAUTO)
+            click(STAGE_START)
             # Click to the fight of full auto to cancel.
             # give time for staging to run and gold to accumulate
             log.info('Wait 10 seconds for stage to run...')
-            pag.sleep(5)
-            click(STAGE_FULLAUTO, _highlight=HIGHLIGHT, _derive={'target_image': 'CANCEL_STAGE', 'dx': 1})
-            click('CANCEL_STAGE', _highlight=HIGHLIGHT)
-
+            pag.sleep(10)
+            click(STAGE_FULLAUTO, _derive={'target_image': 'CANCEL_STAGE', 'dx': 1})
+            click('CANCEL_STAGE')
 
     elapsed = time.time() - start
     log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')

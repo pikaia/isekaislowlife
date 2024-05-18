@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Entering kitchen can be 2 different images.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Add fountain.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_banquet.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_banquet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +62,7 @@
     "Python.cv.executor": "Run",
     "Python.fishing.executor": "Run",
     "Python.game (1).executor": "Run",
-    "Python.game.executor": "Run",
+    "Python.game.executor": "Debug",
     "Python.kitchen.executor": "Run",
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
@@ -436,7 +439,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715784643708</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Add staging. 52 mins for 2 stages, 221 points.">
+      <option name="closed" value="true" />
+      <created>1715813676627</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1715813676627</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Add fountain.">
+      <option name="closed" value="true" />
+      <created>1716049317752</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1716049317752</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -473,7 +492,9 @@
     <MESSAGE value="Clean up imports" />
     <MESSAGE value="Add roaming and random requests without needing to scroll the screen by arranging drakenberg so that trading post and guild are both clickable." />
     <MESSAGE value="Entering kitchen can be 2 different images." />
-    <option name="LAST_COMMIT_MESSAGE" value="Entering kitchen can be 2 different images." />
+    <MESSAGE value="Add staging. 52 mins for 2 stages, 221 points." />
+    <MESSAGE value="Add fountain." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add fountain." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -524,14 +545,14 @@
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/common/utils.py</url>
-          <line>153</line>
-          <option name="timeStamp" value="127" />
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>136</line>
+          <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>191</line>
-          <option name="timeStamp" value="131" />
+          <line>227</line>
+          <option name="timeStamp" value="140" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

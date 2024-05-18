@@ -3,6 +3,7 @@ import logging.handlers
 import os
 import sys
 import time
+import typing
 from datetime import timedelta
 from tkinter import *
 from typing import Optional
@@ -102,10 +103,10 @@ def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLI
 
 
 # When target image is provided, dx = width offset, When shifted save derived location.
-# when taget image is None, ignore.
+# when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click(image, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=True,
-          _derive: Optional[dict] = None, match_optional=False) -> Optional[Box]:
+def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
+          _clicks: int = 1, _derive: Optional[typing.Dict[str, float]] = None, match_optional=False) -> Optional[Box]:
     # When not clicked return box (left, top, width, height).
     if image in LOC:
         loc = LOC.get(image)
@@ -122,9 +123,10 @@ def click(image, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=T
                 # p = Path('../log/error.png').resolve()
                 # log.error(f'Cant find {image}: {e.__cause__}. See {p}')
                 # pag.screenshot(region=app, imageFilename='../log/error.png')
+                log.error(f'Unable to find {image}...')
                 exit(-1)
 
-    if _click:
+    if _clicks != 0:
         log.info(f'Click {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
     else:
         log.info(f'Located {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
@@ -138,16 +140,16 @@ def click(image, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=T
     if _highlight:
         highlight(os.path.basename(image), loc)
 
-    if _click:
+    if _clicks != 0:
         # when clicked, return point (left, top)
-        pag.click(pag.center(loc))
-    pag.sleep(1)
+        pag.click(pag.center(loc), clicks=_clicks)
+    pag.sleep(_pause)
 
     return loc
 
 
 def scroll_screen(direction, times):
-    home = click(MM_HOME, confidence=0.5, _highlight=False, _click=False)
+    home = click(MM_HOME, confidence=0.5, _highlight=False, _clicks=False)
 
     if direction == 'left':
         for i in range(times):
