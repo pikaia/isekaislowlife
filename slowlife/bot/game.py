@@ -40,7 +40,8 @@ from slowlife.resources.constants import (HIGHLIGHT,
                                           APP_TITLE,
                                           KITCHEN,
                                           SCHOOL,
-                                          ENTER_SCHOOL, STAGE, MM_STAGE, STAGE_FULLAUTO, STAGE_START)
+                                          ENTER_SCHOOL, STAGE, MM_STAGE, STAGE_FULLAUTO, STAGE_START, MM_FOUNTAIN,
+                                          FOUNTAIN_10, FOUNTAIN_1)
 
 
 # to start:
@@ -48,6 +49,15 @@ from slowlife.resources.constants import (HIGHLIGHT,
 # 2. if trading pot gold is maxed out, clear it first.
 # 3. in the village make sure inn and fish are on the screen.
 def collect_trading_post_gold(maxtimes=30):
+    # 1.
+    #   click('../resources/mainmenu/village/drakenberg/roaming/skip.png', _highlight=True, _click=True)
+    #   click('../resources/mainmenu/village/drakenberg/roaming/select.png', _highlight=True, _click=True)
+    #   empty
+    #   back
+    # 2.
+    #   skip
+    #   empty
+    #   back
     # Save commonly needed positions.
     click(MM_HOME, confidence=0.6, _click=False, _highlight=HIGHLIGHT)
     # Back button is in same position on different screens
@@ -98,8 +108,8 @@ def collect_trading_post_gold(maxtimes=30):
 
             # roaming has outcomes when u click on GO
             # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
-            # 2. roaming available:     go -> ok diagloue -> click ok -> back
-            roaming_ok = None
+            # 2. roaming available:     go -> ok dialogue -> click ok -> back
+            # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _highlight=True, _click=False)
             try:
                 roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
                 pag.click(roaming_ok)
@@ -112,6 +122,7 @@ def collect_trading_post_gold(maxtimes=30):
 
             # Click on back to continue
             click(ROAMING_BACK, _highlight=HIGHLIGHT)
+            pag.sleep(1)
 
         # serve in inn. Free try every 20 mins. 47 = 20*60/26
         # if ENTER_KITCHEN and (x % 47 == 0):
@@ -186,20 +197,34 @@ def collect_trading_post_gold(maxtimes=30):
         log.info('Wait 7 seconds for gold to regenerate...')
         pag.sleep(7)
 
+        # Fountain
+        click(MM_HOME)
+        # Home screen has sight delay.
+        log_sleep('Wait for fountain', 2)
+        click(MM_FOUNTAIN)
+        click(FOUNTAIN_10)
+        # click(MM_FOUNTAIN, confidence=0.6,  _highlight=HIGHLIGHT)
+        # click(FOUNTAIN_10, confidence=0.6,  _highlight=HIGHLIGHT)
+        # Back is located in same spot on most screens
+        click('BACK')
+        click(FOUNTAIN_1)
+        # Back is located in same spot on most screens
+        click('BACK')
+        # Leave fountain
+        click('BACK')
+
         if STAGE and (x + 1) % 10 == 0:
             log.info('Run stages...')
             # Enter village
-            log_sleep('Stage', 10)
             click(MM_STAGE, _highlight=HIGHLIGHT)
             click(STAGE_FULLAUTO, _highlight=HIGHLIGHT)
             click(STAGE_START, _highlight=HIGHLIGHT)
             # Click to the fight of full auto to cancel.
             # give time for staging to run and gold to accumulate
             log.info('Wait 10 seconds for stage to run...')
-            pag.sleep(5)
+            pag.sleep(10)
             click(STAGE_FULLAUTO, _highlight=HIGHLIGHT, _derive={'target_image': 'CANCEL_STAGE', 'dx': 1})
             click('CANCEL_STAGE', _highlight=HIGHLIGHT)
-
 
     elapsed = time.time() - start
     log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')
