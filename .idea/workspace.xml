@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Add fountain.">
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/treat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_banquet.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_banquet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +58,7 @@
     "Python.cv.executor": "Run",
     "Python.fishing.executor": "Run",
     "Python.game (1).executor": "Run",
-    "Python.game.executor": "Debug",
+    "Python.game.executor": "Run",
     "Python.kitchen.executor": "Run",
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
