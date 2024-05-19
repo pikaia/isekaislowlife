@@ -1,5 +1,5 @@
 /slowlife/db/database.ini
 /slowlife/resources/ss/data/generated/
 /resources/
-/__pycache__/*
+*/__pycache__/*
 .idea/**/workspace.xml

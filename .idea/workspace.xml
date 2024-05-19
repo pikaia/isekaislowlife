@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Add fountain.">
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/treat.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Take care of fountain. Automate guild donations. Attend Banquets.">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -451,7 +450,31 @@
       <option name="project" value="LOCAL" />
       <updated>1716049317752</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Take care of fountain. Automate guild donations. Attend Banquets.">
+      <option name="closed" value="true" />
+      <created>1716148345187</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1716148345187</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Take care of fountain. Automate guild donations. Attend Banquets.">
+      <option name="closed" value="true" />
+      <created>1716148364545</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1716148364545</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Take care of fountain. Automate guild donations. Attend Banquets.">
+      <option name="closed" value="true" />
+      <created>1716148613482</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1716148613482</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -490,7 +513,8 @@
     <MESSAGE value="Entering kitchen can be 2 different images." />
     <MESSAGE value="Add staging. 52 mins for 2 stages, 221 points." />
     <MESSAGE value="Add fountain." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add fountain." />
+    <MESSAGE value="Take care of fountain. Automate guild donations. Attend Banquets." />
+    <option name="LAST_COMMIT_MESSAGE" value="Take care of fountain. Automate guild donations. Attend Banquets." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
