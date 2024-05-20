@@ -2,13 +2,18 @@ APP_TITLE = 'BlueStacks App Player'
 
 # global toggles
 LOG_PAUSES = False
+HIGHLIGHT = False
+LOG_IMAGE = '../log/error.png'
+
 COLLECT_GOLD = True
 RANDOM_REQUESTS = True
-ROAMING = False
 KITCHEN = True
+ROAMING = True
 SCHOOL = False
-HIGHLIGHT = False
 STAGE = False
+FOUNTAIN = True
+BANQUET = True
+DONATE = True
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'

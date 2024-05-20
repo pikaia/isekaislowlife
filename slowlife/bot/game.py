@@ -15,23 +15,19 @@ from slowlife.resources.constants import (MM_DRAKENBERG,
                                           MM_DRAKENBERG_TRADINGPOST,
                                           TRADINGPOST_GOLD1,
                                           TRADINGPOST_GOLD2,
-                                          TRADINGPOST_BACK,
                                           RANDOM_REQUESTS,
                                           ENTER_GUILD, GUILD_REQUESTS,
                                           GUILD_HANDLE,
-                                          GUILD_BACK,
                                           ROAMING,
                                           ENTER_ROAMING,
                                           ROAMING_GO,
                                           ROAMING_OK,
-                                          ROAMING_BACK,
                                           ENTER_KITCHEN1,
                                           ENTER_KITCHEN2,
                                           MM_VILLAGE,
                                           ENTER_FISHING,
                                           FISHING_COLLECT_BAIT,
                                           KITCHEN_SERVE,
-                                          KITCHEN_BACK,
                                           KITCHEN_ORDER_JEWELS,
                                           SCHOOL_BACK,
                                           SCHOOL_EDUCATE,
@@ -44,10 +40,10 @@ from slowlife.resources.constants import (MM_DRAKENBERG,
                                           MM_STAGE,
                                           STAGE_FULLAUTO,
                                           STAGE_START,
-                                          MM_FOUNTAIN, FOUNTAIN_10, FOUNTAIN_1,
+                                          FOUNTAIN, MM_FOUNTAIN, FOUNTAIN_10, FOUNTAIN_1,
                                           FARMSTEAD,
-                                          ENTER_BANQUET, ATTEND, ATTEND_PARTY, SIT,
-                                          ENTER_DONATION, BASIC_DONATION)
+                                          BANQUET, ENTER_BANQUET, ATTEND, ATTEND_PARTY, SIT,
+                                          DONATE, ENTER_DONATION, BASIC_DONATION)
 
 
 # to start:
@@ -55,6 +51,9 @@ from slowlife.resources.constants import (MM_DRAKENBERG,
 # 2. if trading pot gold is maxed out, clear it first.
 # 3. in the village make sure inn and fish are on the screen.
 def collect_trading_post_gold(maxtimes=30):
+    # Limit donation to 4 times.
+    dontated_times = 0
+
     # 1.
     #   click('../resources/mainmenu/village/drakenberg/roaming/skip.png', _highlight=True, _clicks=1)
     #   click('../resources/mainmenu/village/drakenberg/roaming/select.png', _highlight=True, _clicks=1)
@@ -85,20 +84,21 @@ def collect_trading_post_gold(maxtimes=30):
             # Need higher confidence to match small image(?)
             # Also it may be one of 2 possible images.
             click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], title=APP_TITLE, confidence=0.48)
-            click(TRADINGPOST_BACK, confidence=0.6)
+            click('BACK')
 
         # Check for Banquets.
-        log_sleep('Pause for banquet to be visible', 1)
-        click(ENTER_BANQUET)
-        click(ATTEND, confidence=0.6)
-        if click(ATTEND_PARTY, confidence=0.6, match_optional=True) is None:
-            # Dismiss dialogue
+        if BANQUET:
+            log_sleep('Pause for banquet to be visible', 1)
+            click(ENTER_BANQUET)
+            click(ATTEND, confidence=0.6)
+            if click(ATTEND_PARTY, confidence=0.6, match_optional=True) is None:
+                # Dismiss dialogue
+                click('BACK')
+            else:
+                click(SIT)
+                click('BACK')
+            # Leave Banquet
             click('BACK')
-        else:
-            click(SIT)
-            click('BACK')
-        # Leave Banquet
-        click('BACK')
 
         click(MM_HOME, confidence=0.6)
 
@@ -112,18 +112,20 @@ def collect_trading_post_gold(maxtimes=30):
             click(ENTER_GUILD)
 
             # Try to donate.
-            click(ENTER_DONATION)
-            click(BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
-            # dismiss congratulation screen
-            click('MAKE_BASIC_DONATION')
+            if DONATE and dontated_times < 4:
+                click(ENTER_DONATION)
+                dontated_times += 1
+                click(BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
+                # dismiss congratulation screen
+                click('MAKE_BASIC_DONATION')
 
-            # Exit donation screen
-            click('BACK')
+                # Exit donation screen
+                click('BACK')
 
             click(GUILD_REQUESTS)
             click(GUILD_HANDLE)
             click(MM_DRAKENBERG)
-            click(GUILD_BACK, confidence=0.85)
+            click('BACK')
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
         if ROAMING:
@@ -150,7 +152,7 @@ def collect_trading_post_gold(maxtimes=30):
                 click(ROAMING_OK, match_optional=True)
 
             # Click on back to continue
-            click(ROAMING_BACK)
+            click('BACK')
             pag.sleep(1)
 
         # serve in inn. Free try every 20 mins. 47 = 20*60/26
@@ -170,7 +172,7 @@ def collect_trading_post_gold(maxtimes=30):
                 log.info('Enter school...')
                 click(ENTER_SCHOOL)
 
-                click(SCHOOL_BACK, _clicks=0, confidence=0.7)
+                click('BACK')
                 # Students are 1 row above the back button
                 cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
                 cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
@@ -219,28 +221,28 @@ def collect_trading_post_gold(maxtimes=30):
             # clear jewels
             pag.sleep(7)
             click(KITCHEN_ORDER_JEWELS)
-            click(KITCHEN_BACK)
+            click('BACK')
 
             # Back out of inn
             # click(KITCHEN_BACK)
         # give time for staging to run and gold to accumulate
-        log.info('Wait 7 seconds for gold to regenerate...')
-
-        # Fountain
         click(MM_HOME)
+        log.info('Wait 7 seconds for gold to regenerate...')
         pag.sleep(7)
-        # Home screen has sight delay.
-        click(MM_FOUNTAIN)
-        click(FOUNTAIN_10, _pause=2)
-        # click(MM_FOUNTAIN, confidence=0.6)
-        # click(FOUNTAIN_10, confidence=0.6)
-        # Back is located in same spot on most screens
-        click('BACK')
-        click(FOUNTAIN_1)
-        # Back is located in same spot on most screens
-        click('BACK')
-        # Leave fountain
-        click('BACK')
+
+        if FOUNTAIN:
+            # Fountain
+            # Home screen has sight delay.
+            click(MM_FOUNTAIN, _pause=2)
+            click(FOUNTAIN_10)
+            # click(MM_FOUNTAIN, confidence=0.6)
+            # click(FOUNTAIN_10, confidence=0.6)
+            # Back is located in same spot on most screens
+            click('BACK')
+            click(FOUNTAIN_1)
+            # Back is located in same spot on most screens.
+            # Second click to leave fountain
+            click('BACK', _clicks=2, _pause=1)
 
         if STAGE and (x + 1) % 10 == 0:
             log.info('Run stages...')

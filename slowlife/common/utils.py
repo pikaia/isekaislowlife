@@ -5,13 +5,15 @@ import sys
 import time
 import typing
 from datetime import timedelta
-from tkinter import *
+from tkinter import Tk
 from typing import Optional
 
 import pyautogui as pag
+import pygetwindow
 import wx
+from PIL import Image
 
-from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT
+from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE
 
 # Construct used types
 Box = collections.namedtuple('Box', 'left top width height')
@@ -29,6 +31,8 @@ log.warning(pag.position())
 
 # python should default to where the script lives
 log.warning('ROOT: ' + os.getcwd())
+
+app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
 
 # Init cache for locations of images on bluestacks window
 LOC = {}
@@ -107,7 +111,6 @@ def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLI
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
 def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
           _clicks: int = 1, _derive: Optional[typing.Dict[str, float]] = None, match_optional=False) -> Optional[Box]:
-    # When not clicked return box (left, top, width, height).
     if image in LOC:
         loc = LOC.get(image)
     else:
@@ -118,13 +121,21 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
             if match_optional:
                 return None
             else:
-                # Take screenshot to clarify where we are stuck.
-                # app = paw.getWindowsWithTitle(APP_TITLE)[0]
-                # p = Path('../log/error.png').resolve()
-                # log.error(f'Cant find {image}: {e.__cause__}. See {p}')
-                # pag.screenshot(region=app, imageFilename='../log/error.png')
                 log.error(f'Unable to find {image}...')
-                exit(-1)
+                # Retry on time.
+                try:
+                    log.error(f'Retry 1x to find {image}...')
+                    loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
+                    # on Retry highlight match
+                    highlight(os.path.basename(image), loc)
+                except pag.ImageNotFoundException as e:
+                    # Take screenshot to clarify where we are stuck.
+                    pag.screenshot(region=(app.left, app.top, app.right - app.left, app.bottom - app.top),
+                                   imageFilename=LOG_IMAGE)
+                    # display it.
+                    img = Image.open(LOG_IMAGE)
+                    img.show()
+            exit(-1)
 
     if _clicks != 0:
         log.info(f'Click {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
@@ -142,7 +153,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
 
     if _clicks != 0:
         # when clicked, return point (left, top)
-        pag.click(pag.center(loc), clicks=_clicks)
+        pag.click(pag.center(loc), clicks=_clicks, interval=0.5)
     pag.sleep(_pause)
 
     return loc
