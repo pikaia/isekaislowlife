@@ -46,6 +46,8 @@ TRADINGPOST_BACK = '../resources/mainmenu/village/drakenberg/trading_post/back.p
 
 ENTER_ROAMING = '../resources/mainmenu/village/drakenberg/roaming.png'
 ROAMING_GO = '../resources/mainmenu/village/drakenberg/roaming/go.png'
+ROAMING_USE = '../resources/mainmenu/village/drakenberg/roaming/use.png'
+ROAMING_NO_STAMINA = '../resources/mainmenu/village/drakenberg/roaming/no_stamina.png'
 ROAMING_OK = '../resources/mainmenu/village/drakenberg/roaming/ok.png'
 ROAMING_CANCEL = '../resources/mainmenu/village/drakenberg/roaming/cancel.png'
 ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'

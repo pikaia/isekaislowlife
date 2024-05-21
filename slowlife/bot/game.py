@@ -2,7 +2,6 @@ import time
 from datetime import timedelta
 
 import pyautogui as pag
-from pyautogui import ImageNotFoundException
 
 from slowlife.common.utils import (log,
                                    click,
@@ -42,7 +41,8 @@ from slowlife.resources.constants import (COLLECT_GOLD,
                                           FOUNTAIN, MM_FOUNTAIN, FOUNTAIN_1,
                                           FARMSTEAD,
                                           BANQUET, ENTER_BANQUET, ATTEND, ATTEND_PARTY, TAKE_SIT,
-                                          DONATE, ENTER_DONATION, BASIC_DONATION, DONATED)
+                                          DONATE, ENTER_DONATION, BASIC_DONATION, DONATED, ROAMING_USE,
+                                          ROAMING_NO_STAMINA)
 
 
 # to start:
@@ -62,20 +62,29 @@ def collect_trading_post_gold(maxtimes=30):
     #   skip
     #   empty
     #   back
-    # Save commonly needed positions.
+    # Save fixed positions.
     click(MM_HOME, confidence=0.6, _clicks=0)
     # Back button is in same position on different screens
     cloneposition(MM_HOME, 'BACK')
     cloneposition(MM_HOME, 'NOTHING', dx=3)
     cloneposition(MM_HOME, 'DRAKENBERG', dx=4)
-    # village is to the right of home.
+
+    # Register other Drakenberg locations
+    click('DRAKENBERG')
+    click(MM_DRAKENBERG_TRADINGPOST, confidence=0.6, _clicks=0)
+    click(ENTER_BANQUET, _clicks=0)
+    click(ENTER_ROAMING, _clicks=0)
+    click(ENTER_GUILD, _clicks=0)
+
+    # Main menu
     click(MM_HOME, _derive={'target_image': MM_VILLAGE, 'dx': 1}, _clicks=0)
+    click(MM_STAGE, confidence=0.6, _clicks=0)
     pag.sleep(2)
 
     for x in range(0, maxtimes):
         if COLLECT_GOLD:
             # assume main menu is displayed.
-            # On the left 'Post' is visible, one the right Guil'
+            # On the left 'Post' is visible, one the right 'Guild'
             log.info(f'Collecting gold {x}/{maxtimes}...')
             click('DRAKENBERG')
             click(MM_DRAKENBERG_TRADINGPOST)
@@ -99,25 +108,26 @@ def collect_trading_post_gold(maxtimes=30):
             # Leave Banquet
             click('BACK')
 
-        click(MM_HOME, confidence=0.6)
+        click(MM_HOME)
+
+        click('DRAKENBERG')
 
         # Guild random requests
         # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
         if RANDOM_REQUESTS:
             log.info('Donations and Random requests...')
-            click('DRAKENBERG', confidence=0.6)
             # scroll_screen('left', 1)
-            log_sleep('RANDOM_REQUESTS1', 0.5)
-            click(ENTER_GUILD)
 
             # Try to donate.
             if DONATE and donated_times < 4:
+                log_sleep('RANDOM_REQUESTS1', 0.5)
+                click(ENTER_GUILD)
                 click(ENTER_DONATION)
                 try:
                     pag.locateOnWindow(image=DONATED, title=APP_TITLE, confidence=0.6, grayscale=True)
                     log.info('Max donations reached. Skip donations.')
                     donated_times = 5
-                except pag.ImageNotFoundException as e:
+                except pag.ImageNotFoundException:
                     log.info('Donations not finished yet.')
                     donated_times += 1
 
@@ -126,14 +136,14 @@ def collect_trading_post_gold(maxtimes=30):
                     # dismiss congratulation screen
                     click('MAKE_BASIC_DONATION')
 
-            # Exit donation screen
-            click('BACK')
-            pag.sleep(1)
+                # Exit donation screen
+                click('BACK')
+                pag.sleep(1)
 
-            click(GUILD_REQUESTS)
-            click(GUILD_HANDLE)
-            click('DRAKENBERG')
-            click('BACK')
+                click(GUILD_REQUESTS)
+                click(GUILD_HANDLE)
+                click('DRAKENBERG')
+                click('BACK')
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
         if ROAMING:
@@ -146,20 +156,32 @@ def collect_trading_post_gold(maxtimes=30):
             log_sleep('ROAMING', 1)
 
             # roaming has outcomes when u click on GO
-            # 1. roaming not available: go -> error dialogue -> click go again to dismiss -> back
+            # 1. roaming not available: go -> No stamina -> click go again to dismiss -> back to go
             # 2. roaming available:     go -> ok dialogue -> click ok -> back
             # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _clicks=0)
             try:
-                roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
-                pag.click(roaming_ok)
-            except ImageNotFoundException as e:
+                pag.locateOnWindow(ROAMING_NO_STAMINA, APP_TITLE)
                 # When this is no roaming available, a dialog appears
-                # click anywhere to dismiss it.
+                # click anywhere (e.g. GO) to dismiss it.
                 click(ROAMING_GO)
-                # Sometimes when we roam we get a dialog box.
-                click(ROAMING_OK, match_optional=True)
+            except pag.ImageNotFoundException:
+                log.info('No stamina dialogue not found. Checking for Roaming OK.')
+                pag.sleep(1)
+                try:
+                    roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
+                    pag.click(roaming_ok)
+                except pag.ImageNotFoundException:
+                    log.info('Roaming ok button not found. Check for use button.')
+                    pag.sleep(1)
+                    try:
+                        roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
+                        pag.click(roaming_use)
+                    except pag.ImageNotFoundException:
+                        log.error('Unexpected path not currently supported')
+                        raise NotImplementedError('Unexpected popup. Needs to handle this case.')
 
             # Click on back to continue
+            pag.sleep(1)
             click('BACK')
             pag.sleep(1)
 

@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Reuse BACK button location. Fix error screenshot.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/sit.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/sit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/donated.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/donated.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/random_requests.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/random_requests.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -496,7 +493,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716223933973</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure.">
+      <option name="closed" value="true" />
+      <created>1716274371514</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1716274371514</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -512,7 +517,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="initital checkin" />
     <MESSAGE value="Refactor into modules" />
     <MESSAGE value="Add roaming to script" />
     <MESSAGE value="Images for scripts" />
@@ -537,7 +541,8 @@
     <MESSAGE value="Add fountain." />
     <MESSAGE value="Take care of fountain. Automate guild donations. Attend Banquets." />
     <MESSAGE value="Reuse BACK button location. Fix error screenshot." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reuse BACK button location. Fix error screenshot." />
+    <MESSAGE value="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure." />
+    <option name="LAST_COMMIT_MESSAGE" value="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -589,8 +594,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>237</line>
-          <option name="timeStamp" value="136" />
+          <line>162</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>179</line>
+          <option name="timeStamp" value="150" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

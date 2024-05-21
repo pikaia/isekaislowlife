@@ -113,13 +113,15 @@ def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLI
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
 def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
           _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
-          match_optional=False) -> Optional[Box]:
-    if image in LOC:
+          match_optional=False, _use_cache: bool = True) -> Optional[Box]:
+    if _use_cache and image in LOC:
         loc = LOC.get(image)
+        log.info(f'Using cached {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
     else:
         # if we can't find, move on to next in list.
         try:
             loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
+            log.info(f'Found {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
         except pag.ImageNotFoundException as e:
             if match_optional:
                 return None
@@ -149,8 +151,16 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
     LOC[image] = loc
 
     if _derive is not None and _derive.get('target_image') is not None:
-        dx = _derive['dx']
-        loc = Box(loc.left + dx * loc.width, loc.top, loc.width, loc.height)
+        if 'dx' in _derive:
+            dx = _derive['dx']
+        else:
+            dx = 0
+        if 'dy' in _derive:
+            dy = _derive['dy']
+        else:
+            dy = 0
+
+        loc = Box(loc.left + dx * loc.width, loc.top + dy * loc.height, loc.width, loc.height)
         LOC[_derive['target_image']] = loc
 
     if _highlight:
