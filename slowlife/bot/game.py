@@ -10,8 +10,7 @@ from slowlife.common.utils import (log,
                                    start,
                                    cloneposition,
                                    click_list)
-from slowlife.resources.constants import (MM_DRAKENBERG,
-                                          COLLECT_GOLD,
+from slowlife.resources.constants import (COLLECT_GOLD,
                                           MM_DRAKENBERG_TRADINGPOST,
                                           TRADINGPOST_GOLD1,
                                           TRADINGPOST_GOLD2,
@@ -40,10 +39,10 @@ from slowlife.resources.constants import (MM_DRAKENBERG,
                                           MM_STAGE,
                                           STAGE_FULLAUTO,
                                           STAGE_START,
-                                          FOUNTAIN, MM_FOUNTAIN, FOUNTAIN_10, FOUNTAIN_1,
+                                          FOUNTAIN, MM_FOUNTAIN, FOUNTAIN_1,
                                           FARMSTEAD,
-                                          BANQUET, ENTER_BANQUET, ATTEND, ATTEND_PARTY, SIT,
-                                          DONATE, ENTER_DONATION, BASIC_DONATION)
+                                          BANQUET, ENTER_BANQUET, ATTEND, ATTEND_PARTY, TAKE_SIT,
+                                          DONATE, ENTER_DONATION, BASIC_DONATION, DONATED)
 
 
 # to start:
@@ -52,7 +51,7 @@ from slowlife.resources.constants import (MM_DRAKENBERG,
 # 3. in the village make sure inn and fish are on the screen.
 def collect_trading_post_gold(maxtimes=30):
     # Limit donation to 4 times.
-    dontated_times = 0
+    donated_times = 0
 
     # 1.
     #   click('../resources/mainmenu/village/drakenberg/roaming/skip.png', _highlight=True, _clicks=1)
@@ -68,7 +67,7 @@ def collect_trading_post_gold(maxtimes=30):
     # Back button is in same position on different screens
     cloneposition(MM_HOME, 'BACK')
     cloneposition(MM_HOME, 'NOTHING', dx=3)
-    click(MM_DRAKENBERG, _clicks=0)
+    cloneposition(MM_HOME, 'DRAKENBERG', dx=4)
     # village is to the right of home.
     click(MM_HOME, _derive={'target_image': MM_VILLAGE, 'dx': 1}, _clicks=0)
     pag.sleep(2)
@@ -78,7 +77,7 @@ def collect_trading_post_gold(maxtimes=30):
             # assume main menu is displayed.
             # On the left 'Post' is visible, one the right Guil'
             log.info(f'Collecting gold {x}/{maxtimes}...')
-            click(MM_DRAKENBERG)
+            click('DRAKENBERG')
             click(MM_DRAKENBERG_TRADINGPOST)
 
             # Need higher confidence to match small image(?)
@@ -95,7 +94,7 @@ def collect_trading_post_gold(maxtimes=30):
                 # Dismiss dialogue
                 click('BACK')
             else:
-                click(SIT)
+                click(TAKE_SIT, confidence=0.6)
                 click('BACK')
             # Leave Banquet
             click('BACK')
@@ -106,25 +105,34 @@ def collect_trading_post_gold(maxtimes=30):
         # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
         if RANDOM_REQUESTS:
             log.info('Donations and Random requests...')
-            click(MM_DRAKENBERG, confidence=0.6)
+            click('DRAKENBERG', confidence=0.6)
             # scroll_screen('left', 1)
             log_sleep('RANDOM_REQUESTS1', 0.5)
             click(ENTER_GUILD)
 
             # Try to donate.
-            if DONATE and dontated_times < 4:
+            if DONATE and donated_times < 4:
                 click(ENTER_DONATION)
-                dontated_times += 1
-                click(BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
-                # dismiss congratulation screen
-                click('MAKE_BASIC_DONATION')
+                try:
+                    pag.locateOnWindow(image=DONATED, title=APP_TITLE, confidence=0.6, grayscale=True)
+                    log.info('Max donations reached. Skip donations.')
+                    donated_times = 5
+                except pag.ImageNotFoundException as e:
+                    log.info('Donations not finished yet.')
+                    donated_times += 1
 
-                # Exit donation screen
-                click('BACK')
+                if donated_times < 4:
+                    click(BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
+                    # dismiss congratulation screen
+                    click('MAKE_BASIC_DONATION')
+
+            # Exit donation screen
+            click('BACK')
+            pag.sleep(1)
 
             click(GUILD_REQUESTS)
             click(GUILD_HANDLE)
-            click(MM_DRAKENBERG)
+            click('DRAKENBERG')
             click('BACK')
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
@@ -226,19 +234,19 @@ def collect_trading_post_gold(maxtimes=30):
             # Back out of inn
             # click(KITCHEN_BACK)
         # give time for staging to run and gold to accumulate
-        click(MM_HOME)
-        log.info('Wait 7 seconds for gold to regenerate...')
-        pag.sleep(7)
+        pag.sleep(3)
+        click(MM_HOME, _clicks=2, _pause=2)
+        pag.sleep(4)
 
         if FOUNTAIN:
             # Fountain
             # Home screen has sight delay.
             click(MM_FOUNTAIN, _pause=2)
-            click(FOUNTAIN_10)
+            # click(FOUNTAIN_10)
             # click(MM_FOUNTAIN, confidence=0.6)
             # click(FOUNTAIN_10, confidence=0.6)
             # Back is located in same spot on most screens
-            click('BACK')
+            # click('BACK')
             click(FOUNTAIN_1)
             # Back is located in same spot on most screens.
             # Second click to leave fountain

@@ -12,14 +12,13 @@ ROAMING = True
 SCHOOL = False
 STAGE = False
 FOUNTAIN = True
-BANQUET = True
+BANQUET = False
 DONATE = True
 
 # Main script for collecting gold, roaming, random requests, inn serve,
 MAIN_MENU = '../resources/mainmenu/'
 MM_HOME = '../resources/mainmenu/home.png'
 MM_VILLAGE = '../resources/mainmenu/village.png'
-MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
 
 # Farmstead
 FARMSTEAD = '../resources/mainmenu/village/farmstead.png'
@@ -28,7 +27,7 @@ FARMSTEAD = '../resources/mainmenu/village/farmstead.png'
 ENTER_BANQUET = '../resources/mainmenu/village/drakenberg/enter_banquet.png'
 ATTEND = '../resources/mainmenu/village/drakenberg/banquet/attend.png'
 ATTEND_PARTY = '../resources/mainmenu/village/drakenberg/banquet/attend_party.png'
-SIT = '../resources/mainmenu/village/drakenberg/banquet/sit.png'
+TAKE_SIT = '../resources/mainmenu/village/drakenberg/banquet/sit.png'
 
 # Stage
 MM_STAGE = '../resources/mainmenu/stage.png'
@@ -70,6 +69,7 @@ KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_availab
 
 ENTER_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
 ENTER_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation.png'
+DONATED = '../resources/mainmenu/village/drakenberg/guild/donation/donated.png'
 BASIC_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation/basic_donation.png'
 DONATION = '../resources/mainmenu/village/drakenberg/guild/donation.png'
 GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'

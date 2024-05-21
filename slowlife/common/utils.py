@@ -13,7 +13,7 @@ import pygetwindow
 import wx
 from PIL import Image
 
-from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE
+from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE, ENTER_GUILD
 
 # Construct used types
 Box = collections.namedtuple('Box', 'left top width height')
@@ -35,7 +35,7 @@ log.warning('ROOT: ' + os.getcwd())
 app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
 
 # Init cache for locations of images on bluestacks window
-LOC = {}
+LOC: typing.Dict[str, Box] = {}
 
 # init run timer
 start = time.time()
@@ -52,9 +52,9 @@ def log_sleep(where: str, duration: float):
     pag.sleep(duration)
 
 
-def highlight(title, rect, color='red', duration=3) -> None:
+def highlight(caption, rect, color='red', duration=3) -> None:
     win = Tk()
-    win.title = title
+    win.title = caption
     # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/geometry.html
     # A geometry string has this general form: 'wxh±x±y'
     # where:
@@ -64,7 +64,7 @@ def highlight(title, rect, color='red', duration=3) -> None:
     # from the right side of the desktop.
     geometry = str(rect[2]) + 'x' + str(rect[3]) + '+' + str(rect[0]) + '+' + str(rect[1])
     win.geometry(geometry)
-    log.debug(f'title={title}, str = {geometry}')
+    log.debug(f'title={caption}, str = {geometry}')
     win.configure(background=color)
     win.overrideredirect(1)
     win.attributes('-alpha', 0.3)
@@ -87,9 +87,11 @@ def box_match(x, y, width, height):
 
 
 # Copy the position of one to another.
-def cloneposition(original, other, dx: int = 0, dy: int = 0) -> None:
+def cloneposition(original, clone, dx: int = 0, dy: int = 0, _highlight: bool = False) -> None:
     loc = LOC[original]
-    LOC[other] = Box(loc.left + (dx * loc.width), loc.top + (dy * loc.height), loc.width, loc.height)
+    LOC[clone] = Box(loc.left + (dx * loc.width), loc.top + (dy * loc.height), loc.width, loc.height)
+    if _highlight:
+        highlight(caption=f'{original}->{clone}', rect=LOC[clone])
 
 
 # if a list is provided, locate the first match.
@@ -110,7 +112,8 @@ def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLI
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
 def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
-          _clicks: int = 1, _derive: Optional[typing.Dict[str, float]] = None, match_optional=False) -> Optional[Box]:
+          _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
+          match_optional=False) -> Optional[Box]:
     if image in LOC:
         loc = LOC.get(image)
     else:
@@ -125,6 +128,8 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
                 # Retry on time.
                 try:
                     log.error(f'Retry 1x to find {image}...')
+                    if image == ENTER_GUILD:
+                        log.error(f'Please position Drakenberg screen so that Post and Guil are visible')
                     loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
                     # on Retry highlight match
                     highlight(os.path.basename(image), loc)
