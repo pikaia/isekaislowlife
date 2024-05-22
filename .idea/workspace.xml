@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -501,7 +498,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716274371514</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped.">
+      <option name="closed" value="true" />
+      <created>1716329396878</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1716329396878</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -517,7 +522,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refactor into modules" />
     <MESSAGE value="Add roaming to script" />
     <MESSAGE value="Images for scripts" />
     <MESSAGE value="Add roaming" />
@@ -542,7 +546,8 @@
     <MESSAGE value="Take care of fountain. Automate guild donations. Attend Banquets." />
     <MESSAGE value="Reuse BACK button location. Fix error screenshot." />
     <MESSAGE value="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure." />
-    <option name="LAST_COMMIT_MESSAGE" value="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure." />
+    <MESSAGE value="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -591,16 +596,6 @@
           <url>file://$PROJECT_DIR$/slowlife/capture/fishing.py</url>
           <line>21</line>
           <option name="timeStamp" value="84" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>162</line>
-          <option name="timeStamp" value="147" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>179</line>
-          <option name="timeStamp" value="150" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
