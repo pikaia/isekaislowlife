@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Refactor script into smaller routines to avoid bugs.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/treat.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/treat.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,30 +51,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.buildings (1).executor": "Run",
-    "Python.buildings.executor": "Run",
-    "Python.constants.executor": "Run",
-    "Python.createtables.executor": "Run",
-    "Python.cv.executor": "Run",
-    "Python.fishing.executor": "Run",
-    "Python.game (1).executor": "Run",
-    "Python.game.executor": "Run",
-    "Python.kitchen.executor": "Run",
-    "Python.login2.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.ocr (1).executor": "Debug",
-    "Python.ocr.executor": "Run",
-    "Python.utils.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/projects/isekaibot/pythonProject1/slowlife/capture",
-    "settings.editor.selected.configurable": "preferences.externalTools"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.buildings (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.buildings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.constants.executor&quot;: &quot;Run&quot;,
+    &quot;Python.createtables.executor&quot;: &quot;Run&quot;,
+    &quot;Python.cv.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fishing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.kitchen.executor&quot;: &quot;Run&quot;,
+    &quot;Python.login2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ocr (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Python.ocr.executor&quot;: &quot;Run&quot;,
+    &quot;Python.utils.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/isekaibot/pythonProject1/slowlife/capture&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\isekaibot\pythonProject1\slowlife\capture" />
@@ -506,7 +510,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716329396878</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Refactor script into smaller routines to avoid bugs.">
+      <option name="closed" value="true" />
+      <created>1716338258307</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1716338258307</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,7 +534,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add roaming to script" />
     <MESSAGE value="Images for scripts" />
     <MESSAGE value="Add roaming" />
     <MESSAGE value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
@@ -547,7 +558,8 @@
     <MESSAGE value="Reuse BACK button location. Fix error screenshot." />
     <MESSAGE value="Check if max donations done and skip.&#10;Replace DRAKENBERG pag match with calc.&#10;Fix BANQUET sit.&#10;Fix Fountain. Clicking on Home doesnt always work. Click twice to ensure." />
     <MESSAGE value="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped." />
+    <MESSAGE value="Refactor script into smaller routines to avoid bugs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor script into smaller routines to avoid bugs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

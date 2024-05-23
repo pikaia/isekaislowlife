@@ -13,7 +13,7 @@ import pygetwindow
 import wx
 from PIL import Image
 
-from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE, ENTER_GUILD
+from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE, DRAKENBERG_GUILD
 
 # Construct used types
 Box = collections.namedtuple('Box', 'left top width height')
@@ -130,7 +130,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
                 # Retry on time.
                 try:
                     log.error(f'Retry 1x to find {image}...')
-                    if image == ENTER_GUILD:
+                    if image == DRAKENBERG_GUILD:
                         log.error(f'Please position Drakenberg screen so that Post and Guil are visible')
                     loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
                     # on Retry highlight match
