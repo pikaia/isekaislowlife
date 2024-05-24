@@ -43,7 +43,7 @@ VILLAGE_KITCHEN2 = '../resources/mainmenu/village/enter_kitchen2.png'
 BANQUET_ATTEND = '../resources/mainmenu/village/drakenberg/banquet/attend.png'
 BANQUET_MONEY_FULL = '../resources/mainmenu/village/drakenberg/banquet/gift_money_full.png'
 BANQUET_ATTEND_PARTY = '../resources/mainmenu/village/drakenberg/banquet/attend_party.png'
-BANQUET_TAKE_SIT = '../resources/mainmenu/village/drakenberg/banquet/sit.png'
+BANQUET_TAKE_SIT = '../resources/mainmenu/village/drakenberg/banquet/take_sit.png'
 
 # Stage
 STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
@@ -70,6 +70,7 @@ SCHOOL_BACK = '../resources/mainmenu/village/school/back.png'
 FISHING_COLLECT_BAIT = '../resources/mainmenu/village/fish/collect_bait.png'
 
 KITCHEN_SERVE = '../resources/mainmenu/village/kitchen/serve.png'
+KITCHEN_USE_INN_PAMPHLET = '../resources/mainmenu/village/kitchen/use.png'
 KITCHEN_BACK = '../resources/mainmenu/village/kitchen/back.png'
 KITCHEN_OK = '../resources/mainmenu/village/kitchen/ok.png'
 KITCHEN_ORDER_JEWELS = '../resources/mainmenu/village/kitchen/order_jewels.png'

@@ -38,7 +38,7 @@ from slowlife.resources.constants import (APP_TITLE,
 
                                           FOUNTAIN_1,
 
-                                          KITCHEN_SERVE, KITCHEN_ORDER_JEWELS,
+                                          KITCHEN_SERVE, KITCHEN_ORDER_JEWELS, KITCHEN_USE_INN_PAMPHLET,
 
                                           SCHOOL_BACK, SCHOOL_EDUCATE,
 
@@ -263,14 +263,20 @@ def do_collect_bait():
     log.info('Enter Inn...')
     log_sleep('KITCHEN', 1)
     click_list([VILLAGE_KITCHEN1, VILLAGE_KITCHEN2], title=APP_TITLE, confidence=0.48)
-    # Press serve button.
+    # Press serve button
     click(KITCHEN_SERVE)
-    # calc where to click to dismiss dialog.
-    click(KITCHEN_SERVE, _derive={'target_image': 'empty area', 'dx': -1}, _clicks=1)
-    # If success, click next to serve again to dismiss.
-    # If failed, click next to click serve again to dismiss error.
-    # click('empty area')
-    click('empty area')
+    try:
+        # Click use to use 1 inn pamphlet
+        kitchen_use = pag.locateOnWindow(KITCHEN_USE_INN_PAMPHLET, APP_TITLE, confidence=0.65)
+        pag.click(kitchen_use)
+    except pag.ImageNotFoundException:
+        log.info('Use button not found. It implies no in pamphlets available.')
+        # calc where to click to dismiss dialog.
+        click(KITCHEN_SERVE, _derive={'target_image': 'empty area', 'dx': -1}, _clicks=1)
+        # If success, click next to serve again to dismiss.
+        # If failed, click next to click serve again to dismiss error.
+        # click('empty area')
+        click('empty area')
     # clear jewels
     pag.sleep(7)
     click(KITCHEN_ORDER_JEWELS)
@@ -291,9 +297,9 @@ def do_banquet(banquet_done: bool) -> bool:
         else:
             # click twice. money gifts full will pop up.
             pag.sleep(0.5)
-            click(BANQUET_TAKE_SIT, confidence=0.6, _clicks=2)
+            click(BANQUET_TAKE_SIT, confidence=0.65, _clicks=2)
             try:
-                banquet_money_full = pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.9)
+                pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.9)
                 banquet_done = True
             except pag.ImageNotFoundException:
                 log.info('Choose a gift dialogue not found. It implies we are able to seat and thus not done yet.')

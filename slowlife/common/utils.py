@@ -27,10 +27,10 @@ h.setLevel(logging.DEBUG)
 h.setFormatter(formatter)
 log.addHandler(h)
 
-log.warning(pag.position())
+log.info(pag.position())
 
 # python should default to where the script lives
-log.warning('ROOT: ' + os.getcwd())
+log.info('ROOT: ' + os.getcwd())
 
 app = pygetwindow.getWindowsWithTitle(APP_TITLE)[0]
 
@@ -90,6 +90,8 @@ def box_match(x, y, width, height):
 def cloneposition(original, clone, dx: int = 0, dy: int = 0, _highlight: bool = False) -> None:
     loc = LOC[original]
     LOC[clone] = Box(loc.left + (dx * loc.width), loc.top + (dy * loc.height), loc.width, loc.height)
+    log.info(
+        f'Cloned {clone} from {original} @ ({int(LOC[clone].left + LOC[clone].width / 2)}, {int(LOC[clone].top + LOC[clone].height / 2)}) ')
     if _highlight:
         highlight(caption=f'{original}->{clone}', rect=LOC[clone])
 
