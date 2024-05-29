@@ -4,13 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1, Reorg constants into groups. Change names to parent_child eg VILLAGE_FARMSTEAD instead of FARMSTEAD.&#10;2. Skip donations or banquets when they are done.&#10;3. To avoid using matching, calc more places during initialization.">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection.">
+      <change afterPath="$PROJECT_DIR$/slowlife/common/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/augustine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/susie_skip.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/chest.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/orders/deliver.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/sit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/take_sit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/no_stamina.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/no_stamina.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_school.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_school.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/order_jewels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/orders_deliver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/school/pupils_row.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/back.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +78,7 @@
     "Python.main.executor": "Run",
     "Python.ocr (1).executor": "Debug",
     "Python.ocr.executor": "Run",
-    "Python.utils.executor": "Debug",
+    "Python.utils.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -198,7 +209,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ocr (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -207,11 +218,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/db" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/common" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/db/ocr.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/common/utils.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -223,10 +234,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.game" />
+        <item itemvalue="Python.utils" />
         <item itemvalue="Python.constants" />
         <item itemvalue="Python.kitchen" />
         <item itemvalue="Python.fishing" />
-        <item itemvalue="Python.ocr (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -526,7 +537,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716463942232</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection.">
+      <option name="closed" value="true" />
+      <created>1716513835362</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1716513835362</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -542,7 +561,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add roaming" />
     <MESSAGE value="Finished adding roaming to script. Dragging screen left was tricky. pyautogui seems to have a bad state from the previous drag to the right." />
     <MESSAGE value="Sync repo" />
     <MESSAGE value="Refactor to cleanup code." />
@@ -567,7 +585,8 @@
     <MESSAGE value="Fixed 2 bugs. When using cache our mental model and the actual may get out of sync. When we turned off the donations, the code following it not where it is expecting. With the cache, mismatches are no longer caught. The long if blocks led to a bug where a part of the block wasn't indented. The braces in java would have helped." />
     <MESSAGE value="Refactor script into smaller routines to avoid bugs." />
     <MESSAGE value="1, Reorg constants into groups. Change names to parent_child eg VILLAGE_FARMSTEAD instead of FARMSTEAD.&#10;2. Skip donations or banquets when they are done.&#10;3. To avoid using matching, calc more places during initialization." />
-    <option name="LAST_COMMIT_MESSAGE" value="1, Reorg constants into groups. Change names to parent_child eg VILLAGE_FARMSTEAD instead of FARMSTEAD.&#10;2. Skip donations or banquets when they are done.&#10;3. To avoid using matching, calc more places during initialization." />
+    <MESSAGE value="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -619,13 +638,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>174</line>
-          <option name="timeStamp" value="90" />
+          <line>418</line>
+          <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>173</line>
-          <option name="timeStamp" value="91" />
+          <line>396</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>378</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>451</line>
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/common/utils.py</url>
+          <line>252</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>168</line>
+          <option name="timeStamp" value="142" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

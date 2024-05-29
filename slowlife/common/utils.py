@@ -1,7 +1,6 @@
 import collections
 import logging.handlers
 import os
-import sys
 import time
 import typing
 from datetime import timedelta
@@ -12,7 +11,9 @@ import pyautogui as pag
 import pygetwindow
 import wx
 from PIL import Image
+from pyscreeze import PyScreezeException
 
+from slowlife.common.logger import CustomFormatter
 from slowlife.resources.constants import APP_TITLE, MM_HOME, LOG_PAUSES, HIGHLIGHT, LOG_IMAGE, DRAKENBERG_GUILD
 
 # Construct used types
@@ -21,12 +22,18 @@ Point = collections.namedtuple('Point', 'x y')
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-h = logging.StreamHandler(sys.stdout)
-h.setLevel(logging.DEBUG)
-h.setFormatter(formatter)
-log.addHandler(h)
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# h = logging.StreamHandler(sys.stdout)
+# h.setLevel(logging.DEBUG)
+# h.setFormatter(formatter)
+# log.addHandler(h)
 
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+ch.setFormatter(CustomFormatter())
+log.addHandler(ch)
 log.info(pag.position())
 
 # python should default to where the script lives
@@ -52,7 +59,7 @@ def log_sleep(where: str, duration: float):
     pag.sleep(duration)
 
 
-def highlight(caption, rect, color='red', duration=3) -> None:
+def highlight(caption: str, rect, color='red', duration=3) -> None:
     win = Tk()
     win.title = caption
     # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/geometry.html
@@ -86,6 +93,10 @@ def box_match(x, y, width, height):
     dc.DrawRectangle(x, y, width, height)
 
 
+def add_loc(key, location: Box) -> None:
+    LOC[key] = location
+
+
 # Copy the position of one to another.
 def cloneposition(original, clone, dx: int = 0, dy: int = 0, _highlight: bool = False) -> None:
     loc = LOC[original]
@@ -100,10 +111,10 @@ def cloneposition(original, clone, dx: int = 0, dy: int = 0, _highlight: bool = 
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLIGHT, _click=True,
-               _derive: Optional[dict] = None) -> Optional[Box]:
+def click_list(aliases: list, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
+               _click=True, _derive: Optional[dict] = None) -> Optional[Box]:
     for image in aliases:
-        loc = click(image, title, confidence, _highlight, _click)
+        loc = click(image, title, confidence, _highlight, _click, match_optional=True)
         if loc is None:
             continue
         else:
@@ -115,7 +126,7 @@ def click_list(aliases: list, title=APP_TITLE, confidence=0.5, _highlight=HIGHLI
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
 def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
           _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
-          match_optional=False, _use_cache: bool = True) -> Optional[Box]:
+          match_optional=False, _use_cache: bool = True, _interval: float = 0.5) -> Optional[Box]:
     if _use_cache and image in LOC:
         loc = LOC.get(image)
         log.info(f'Using cached {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
@@ -132,6 +143,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
                 # Retry on time.
                 try:
                     log.error(f'Retry 1x to find {image}...')
+                    log.warning('CHECK IF THE IMAGE NEEDS TO BE RECAPTURED.')
                     if image == DRAKENBERG_GUILD:
                         log.error(f'Please position Drakenberg screen so that Post and Guil are visible')
                     loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
@@ -170,7 +182,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
 
     if _clicks != 0:
         # when clicked, return point (left, top)
-        pag.click(pag.center(loc), clicks=_clicks, interval=0.5)
+        pag.click(pag.center(loc), clicks=_clicks, interval=_interval)
     pag.sleep(_pause)
 
     return loc
@@ -182,9 +194,9 @@ def scroll_screen(direction, times):
     if direction == 'left':
         for i in range(times):
             #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
-            start = Box(left=home.left + 20 + home.width * 6, top=home.top - home.height * 6, width=10, height=10)
-            pag.mouseDown(start.top, start.left)
-            highlight('start', start)
+            start_box = Box(left=home.left + 20 + home.width * 6, top=home.top - home.height * 6, width=10, height=10)
+            pag.mouseDown(start_box.top, start_box.left)
+            highlight('start', start_box)
             # 5 homes to right. duration is needed
             stop = Box(left=home.left + 20, top=home.top - home.height * 6, width=10, height=10)
             pag.moveTo(x=stop.left, y=stop.top, duration=0.5)
@@ -192,9 +204,9 @@ def scroll_screen(direction, times):
     else:
         for i in range(times):
             # to drag screen right, start from the left. +5 to keep off the edge.
-            start = Box(left=home.left + 20, top=home.top - home.height * 6, width=10, height=10)
-            pag.mouseDown(start.top, start.left)
-            highlight('start', start)
+            start_box = Box(left=home.left + 20, top=home.top - home.height * 6, width=10, height=10)
+            pag.mouseDown(start_box.top, start_box.left)
+            highlight('start', start_box)
             #  move to the right 5 homes to the right. drag it left horizontally, duration is needed
             stop = Box(left=home.left + 20 + home.width * 6, top=home.top - home.height * 6, width=10, height=10)
             pag.moveTo(x=stop.left, y=stop.top, duration=0.5)
@@ -202,3 +214,41 @@ def scroll_screen(direction, times):
 
     pag.mouseUp()
     pag.sleep(2)
+
+
+def choose_path(test_image1: str, image_ok1, image_ok2: str):
+    try:
+        pag.locateOnWindow(test_image1, APP_TITLE, grayscale=True, confidence=0.9)
+        log.warning(f'test_image1 not available. Skipping.')
+        # When this is no roaming available, a dialog appears
+        # click anywhere (e.g. GO) to dismiss it.
+        click(image_ok1)
+        click(image_ok2)
+    except pag.ImageNotFoundException:
+        log.info('No stamina dialogue not found. Checking for Roaming OK.')
+        pag.sleep(1)
+
+
+def displayed(image: str, confidence: float = 0.5) -> bool:
+    try:
+        pag.locateOnWindow(image, APP_TITLE, confidence=confidence)
+        return True
+    except pag.ImageNotFoundException:
+        return False
+
+
+def locate_all_on_window(image, title, **kwargs):
+    """
+    TODO
+    """
+    matchingWindows = pygetwindow.getWindowsWithTitle(title)
+    if len(matchingWindows) == 0:
+        raise PyScreezeException('Could not find a window with %s in the title' % (title))
+    elif len(matchingWindows) > 1:
+        raise PyScreezeException(
+            'Found multiple windows with %s in the title: %s' % (title, [str(win) for win in matchingWindows])
+        )
+
+    win = matchingWindows[0]
+    win.activate()
+    return pag.locateAll(image, region=(win.left, win.top, win.width, win.height), **kwargs)

@@ -10,11 +10,12 @@ COLLECT_GOLD = True
 RANDOM_REQUESTS = True
 KITCHEN = True
 ROAMING = True
-SCHOOL = False
+SCHOOL = True
 STAGE = False
 FOUNTAIN = True
 BANQUET = True
 DONATE = True
+AUTO_GRADUATE = True
 
 # Main menu
 MAIN_MENU = '../resources/mainmenu/'
@@ -39,11 +40,26 @@ VILLAGE_SCHOOL = '../resources/mainmenu/village/enter_school.png'
 VILLAGE_KITCHEN1 = '../resources/mainmenu/village/enter_kitchen1.png'
 VILLAGE_KITCHEN2 = '../resources/mainmenu/village/enter_kitchen2.png'
 
+VILLAGE_GARDEN1 = '../resources/mainmenu/village/enter_magic_garden1.png'
+VILLAGE_GARDEN2 = '../resources/mainmenu/village/enter_magic_garden2.png'
+GARDEN_QUICK_HARVEST = '../resources/mainmenu/village/magic_garden/quick_harvest.png'
+GARDEN_QUICK_SOW = '../resources/mainmenu/village/magic_garden/quick_sow.png'
+GARDEN_CHEST = '../resources/mainmenu/village/magic_garden/chest.png'
+GARDEN_CAVE = '../resources/mainmenu/village/magic_garden/cave.png'
+GARDEN_ASSIGN = '../resources/mainmenu/village/magic_garden/assign.png'
+GARDEN_QUICK_ASSIGN = '../resources/mainmenu/village/magic_garden/quick_assign.png'
+GARDEN_CONFIRM = '../resources/mainmenu/village/magic_garden/confirm.png'
+GARDEN_ORDERS_FILLED = '../resources/mainmenu/village/magic_garden/orders_filled.png'
+ORDERS_DELIVER = '../resources/mainmenu/village/magic_garden/orders/deliver.png'
+ORDERS_LEVEL = '../resources/mainmenu/village/magic_garden/orders/order_level.png'
+
 # Banquet
 BANQUET_ATTEND = '../resources/mainmenu/village/drakenberg/banquet/attend.png'
+BANQUET_ALREADY_ATTENDED = '../resources/mainmenu/village/drakenberg/banquet/already_attended.png'
+BANQUET_NONE_HOSTED = '../resources/mainmenu/village/drakenberg/banquet/none_hosted.png'
 BANQUET_MONEY_FULL = '../resources/mainmenu/village/drakenberg/banquet/gift_money_full.png'
 BANQUET_ATTEND_PARTY = '../resources/mainmenu/village/drakenberg/banquet/attend_party.png'
-BANQUET_TAKE_SIT = '../resources/mainmenu/village/drakenberg/banquet/take_sit.png'
+BANQUET_TAKE_SEAT = '../resources/mainmenu/village/drakenberg/banquet/take_seat.png'
 
 # Stage
 STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
@@ -64,8 +80,16 @@ ROAMING_OK = '../resources/mainmenu/village/drakenberg/roaming/ok.png'
 ROAMING_CANCEL = '../resources/mainmenu/village/drakenberg/roaming/cancel.png'
 ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'
 
+ROAMING_SKIP = '../resources/mainmenu/village/drakenberg/roaming/susie_skip.png'
+ROAMING_SELECT = '../resources/mainmenu/village/drakenberg/roaming/select_sadoko.png'
+ROAMING_TREAT = '../resources/mainmenu/village/drakenberg/roaming/treat.png'
+
 SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
-SCHOOL_BACK = '../resources/mainmenu/village/school/back.png'
+SCHOOL_USE_ITEM = '../resources/mainmenu/village/school/school_use_item.png'
+SCHOOL_BACK = '../resources/mainmenu/village/school/school_back.png'
+SCHOOL_GRADUATE = '../resources/mainmenu/village/school/graduate.png'
+GRADUATE_OK = '../resources/mainmenu/village/school/graduate_ok.png'
+GRADUATE_FORM_UNION = '../resources/mainmenu/village/school/graduate_form_union.png'
 
 FISHING_COLLECT_BAIT = '../resources/mainmenu/village/fish/collect_bait.png'
 
@@ -73,7 +97,8 @@ KITCHEN_SERVE = '../resources/mainmenu/village/kitchen/serve.png'
 KITCHEN_USE_INN_PAMPHLET = '../resources/mainmenu/village/kitchen/use.png'
 KITCHEN_BACK = '../resources/mainmenu/village/kitchen/back.png'
 KITCHEN_OK = '../resources/mainmenu/village/kitchen/ok.png'
-KITCHEN_ORDER_JEWELS = '../resources/mainmenu/village/kitchen/order_jewels.png'
+KITCHEN_ORDER_JEWELS1 = '../resources/mainmenu/village/kitchen/order_jewels1.png'
+KITCHEN_ORDER_JEWELS2 = '../resources/mainmenu/village/kitchen/order_jewels2.png'
 KITCHEN_CANCEL = '../resources/mainmenu/village/kitchen/cancel.png'
 KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_available.png'
 
@@ -85,6 +110,8 @@ GUILD_BACK = '../resources/mainmenu/village/drakenberg/guild/back.png'
 
 DONATION_DONATED = '../resources/mainmenu/village/drakenberg/guild/donation/donated.png'
 DONATION_BASIC_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation/basic_donation.png'
+DONATION_OPENED = '../resources/mainmenu/village/drakenberg/guild/donation/opened.png'
+DONATION_CLOSED = '../resources/mainmenu/village/drakenberg/guild/donation/closed.png'
 
 STAGE_CHALLENGE = '../resources/mainmenu/village/drakenberg/stage/challenge.png'
 CHALLENGE_EMPTY = '../resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png'

@@ -8,11 +8,13 @@ from slowlife.common.utils import (log,
                                    log_sleep,
                                    start,
                                    cloneposition,
-                                   click_list)
+                                   click_list,
+                                   add_loc, choose_path, highlight, displayed, locate_all_on_window)
 
 from slowlife.resources.constants import (APP_TITLE,
 
                                           COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE,
+                                          AUTO_GRADUATE,
 
                                           MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG,
 
@@ -22,7 +24,7 @@ from slowlife.resources.constants import (APP_TITLE,
                                           VILLAGE_SCHOOL,
 
                                           DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING,
-                                          DRAKENBERG_BANQUET,
+                                          DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED, BANQUET_ALREADY_ATTENDED,
 
                                           TRADINGPOST_GOLD1, TRADINGPOST_GOLD2,
 
@@ -38,55 +40,54 @@ from slowlife.resources.constants import (APP_TITLE,
 
                                           FOUNTAIN_1,
 
-                                          KITCHEN_SERVE, KITCHEN_ORDER_JEWELS, KITCHEN_USE_INN_PAMPHLET,
+                                          KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2,
+                                          KITCHEN_USE_INN_PAMPHLET,
 
-                                          SCHOOL_BACK, SCHOOL_EDUCATE,
+                                          SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM,
+                                          SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_FORM_UNION,
 
-                                          BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SIT,
+                                          BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
 
-                                          GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL
+                                          GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
+                                          DONATION_OPENED, DONATION_CLOSED,
+
+                                          ROAMING_SKIP, ROAMING_SELECT, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
+
+                                          GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
+                                          GARDEN_CAVE,
+
+                                          ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
+                                          GARDEN_CONFIRM
                                           )
+
+# Limit donation to 4 times.
+donations_done: bool = False
+
+# Limit banquet to 4 times.
+banquet_done: bool = False
+
+# Limit banquet to 4 times.
+school_initialized: bool = False
 
 
 # to start:
 # 1. start on any screen with main menu below.
 # 2. if trading pot gold is maxed out, clear it first.
 # 3. in the village make sure inn and fish are on the screen.
-def collect_trading_post_gold(maxtimes=30):
-    # Limit donation to 4 times.
-    donations_done: bool = False
-
-    # Limit banquet to 4 times.
-    banquet_done: bool = False
-
-    # Save fixed positions.
-    click(MM_HOME, confidence=0.6, _clicks=0, _highlight=True)
-
-    # Back button is in same position on different screens
-    cloneposition(MM_HOME, 'BACK', _highlight=True)
-    cloneposition(MM_HOME, MM_VILLAGE, dx=1, _highlight=True)
-    cloneposition(MM_HOME, 'NOTHING', dx=3, _highlight=True)
-    cloneposition(MM_HOME, MM_STAGE, dx=3, _highlight=True)
-    cloneposition(MM_HOME, MM_DRAKENBERG, dx=4, _highlight=False)
-
-    # Register other Drakenberg locations
-    click(MM_DRAKENBERG, _highlight=True)
-    click(DRAKENBERG_TRADINGPOST, confidence=0.6, _clicks=0, _highlight=True)
-    click(DRAKENBERG_BANQUET, _clicks=0, _highlight=True)
-    click(DRAKENBERG_ROAMING, _clicks=0, _highlight=True)
-    click(DRAKENBERG_GUILD, _clicks=0, _highlight=True)
+def collect_trading_post_gold(maxtimes: int = 30):
+    register_locations()
 
     for x in range(0, maxtimes):
         do_collect_gold(maxtimes, x)
 
         # Check for Banquets.
-        if BANQUET: banquet_done = do_banquet(banquet_done)
+        if BANQUET: do_banquet()
 
         click(MM_HOME)
 
         click(MM_DRAKENBERG)
 
-        donations_done = do_guild(donations_done)
+        do_guild()
 
         # Roam if possible. Free try every 9 mins. 21 = 9*60/26
         do_roaming()
@@ -96,14 +97,16 @@ def collect_trading_post_gold(maxtimes=30):
         if KITCHEN:
             do_farmstead()
 
+            do_magic_farm()
+
             # serve in inn. Free try every 20 mins. 47 = 20*60/26
             # if ENTER_KITCHEN and (x % 47 == 0):
             do_school()
 
             do_collect_bait()
 
-            # Back out of inn
-            # click(KITCHEN_BACK)
+            do_kitchen()
+
         # give time for staging to run and gold to accumulate
         pag.sleep(3)
         click(MM_HOME, _clicks=2, _pause=2)
@@ -115,6 +118,23 @@ def collect_trading_post_gold(maxtimes=30):
 
     elapsed = time.time() - start
     log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')
+
+
+def register_locations():
+    # Save fixed positions.
+    click(MM_HOME, confidence=0.6, _clicks=0, _highlight=False)
+    # Back button is in same position on different screens
+    cloneposition(MM_HOME, 'BACK', _highlight=False)
+    cloneposition(MM_HOME, MM_VILLAGE, dx=1, _highlight=False)
+    cloneposition(MM_HOME, 'NOTHING', dx=3, _highlight=False)
+    cloneposition(MM_HOME, MM_STAGE, dx=3, _highlight=False)
+    cloneposition(MM_HOME, MM_DRAKENBERG, dx=4, _highlight=False)
+    # Register other Drakenberg locations
+    click(MM_DRAKENBERG, _highlight=False)
+    click(DRAKENBERG_TRADINGPOST, confidence=0.6, _clicks=0, _highlight=False)
+    click(DRAKENBERG_BANQUET, _clicks=0, _highlight=False)
+    click(DRAKENBERG_ROAMING, _clicks=0, _highlight=False)
+    click(DRAKENBERG_GUILD, _clicks=0, _highlight=False)
 
 
 # We must be in Drakenberg with Trading Post visible.
@@ -136,10 +156,82 @@ def do_collect_gold(maxtimes, x):
 def do_farmstead():
     log.info('Enter village...')
     # Enter village
-    log_sleep('Village', 1)
+    log_sleep(MM_VILLAGE, 1)
     click(MM_VILLAGE, confidence=0.45)
     # Get some gold from Farmstead
-    click(VILLAGE_FARMSTEAD, confidence=0.45, _clicks=20)
+    click(VILLAGE_FARMSTEAD, confidence=0.45, _clicks=50, _interval=0.1)
+
+
+def do_magic_farm() -> None:
+    # magic garden
+    click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2])
+    try:
+        quick_harvest = pag.locateOnWindow(GARDEN_QUICK_HARVEST, APP_TITLE, grayscale=True, confidence=0.8)
+        pag.click(quick_harvest)
+        pag.sleep(1)
+
+        # Handle caves.
+        while displayed(GARDEN_CAVE):
+            log.info('Quick assign a cave')
+            click(GARDEN_CAVE)
+            click(GARDEN_ASSIGN, confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
+            click(GARDEN_CONFIRM, confidence=0.8)
+            click('DISMISS')
+
+        # TODO: Handle chests.
+
+        try:
+            garden_quick_sow = pag.locateOnWindow(GARDEN_QUICK_SOW, APP_TITLE, grayscale=True, confidence=0.8)
+            log.warning('Sowing...')
+            pag.click(garden_quick_sow)
+        except pag.ImageNotFoundException:
+            # no harvest available. exit.
+            log.warning('No sowing needed. Skipping')
+            # Return to village
+            click('BACK')
+            return
+
+        click(GARDEN_ORDERS_FILLED)
+
+        # Click on all deliver buttons. This requires 2 checks.
+        # 1. Click all visible deliver buttons.
+        done = 'ok'
+        while done is None:
+            try:
+                # connect
+                deliver = pag.locateOnWindow(ORDERS_DELIVER, APP_TITLE, grayscale=True, confidence=0.8)
+
+                log.warn('Delivered order')
+                pag.click(deliver)
+                pag.click(deliver)
+                pag.sleep(1)
+            except pag.ImageNotFoundException:
+                break
+
+        # 2. Check the last order below. Drag screeen up a little.
+        orders_level = pag.locateOnWindow(ORDERS_LEVEL, APP_TITLE, grayscale=True, confidence=0.8)
+        x, y = pag.center(orders_level)
+        pag.mouseDown(x, y)
+        pag.moveTo(x, y - 100, duration=0.5)
+        pag.mouseUp()
+
+        try:
+            deliver = pag.locateOnWindow(ORDERS_DELIVER, APP_TITLE, grayscale=True, confidence=0.8)
+            log.warn('Delivered order')
+            pag.click(deliver)
+            pag.click(deliver)
+            pag.sleep(1)
+        except pag.ImageNotFoundException:
+            # Return to village
+            click('BACK')
+            return
+
+    except pag.ImageNotFoundException:
+        log.info('No plants to harvest. Skipping.')
+
+    # Return to village
+    click('BACK')
 
 
 # We must be in Drakenberg
@@ -148,34 +240,74 @@ def do_roaming():
         pag.sleep(1)
         click(DRAKENBERG_ROAMING)
         # Give time for screen to refresh
-        log_sleep('ROAMING', 0.5)
+        log_sleep(DRAKENBERG_ROAMING, 0.5)
         click(ROAMING_GO)
-        log_sleep('ROAMING', 1)
+        log_sleep(DRAKENBERG_ROAMING, 1)
 
         # roaming has outcomes when u click on GO
         # 1. roaming not available: go -> No stamina -> click go again to dismiss -> back to go
         # 2. roaming available:     go -> ok dialogue -> click ok -> back
         # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _clicks=0)
+
+        # choose_path(test_image1=ROAMING_NO_STAMINA, image_ok_click1=ROAMING_GO, imageok_click1='BACK')
+
         try:
-            pag.locateOnWindow(ROAMING_NO_STAMINA, APP_TITLE)
+            pag.locateOnWindow(ROAMING_NO_STAMINA, APP_TITLE, grayscale=True, confidence=0.9)
+            log.warning('No stamina available. Skipping.')
             # When this is no roaming available, a dialog appears
             # click anywhere (e.g. GO) to dismiss it.
             click(ROAMING_GO)
+            # Click on back to continue
+            pag.sleep(1)
+            click('BACK')
+            pag.sleep(1)
+            return
         except pag.ImageNotFoundException:
             log.info('No stamina dialogue not found. Checking for Roaming OK.')
             pag.sleep(1)
+
+        # choose_path(test_image1=ROAMING_OK, ROAMING_OK, 'BACK')
+
+        try:
+            roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
+            pag.click(roaming_ok)
+        except pag.ImageNotFoundException:
+            log.info('Roaming ok button not found. Check for use button.')
+            pag.sleep(1)
             try:
-                roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
-                pag.click(roaming_ok)
+                roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
+                log.warning('Using one stamina...')
+                pag.click(roaming_use)
             except pag.ImageNotFoundException:
-                log.info('Roaming ok button not found. Check for use button.')
-                pag.sleep(1)
+                # Check for cases where we need to select from family
                 try:
-                    roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
-                    pag.click(roaming_use)
+                    roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
+                    pag.click(roaming_ok)
                 except pag.ImageNotFoundException:
-                    log.error('Unexpected path not currently supported')
-                    raise NotImplementedError('Unexpected popup. Needs to handle this case.')
+                    log.info('Roaming ok button not found. Check for skip button.')
+                    pag.sleep(1)
+                    try:
+                        # from Go
+                        # choose_family: Always choose Sadako
+                        # Treat
+                        # Confirm: Click above to dismiss
+                        # Congrats: select below to dismiss
+                        # Go
+                        roaming_skip = pag.locateOnWindow(ROAMING_SKIP, APP_TITLE, grayscale=True, confidence=0.9)
+                        pag.click(roaming_skip)
+                        click(ROAMING_SELECT)
+                        click(ROAMING_TREAT)
+                        click(ROAMING_SKIP)
+                        click('BACK')
+                    except pag.ImageNotFoundException:
+                        log.error('Unexpected path not currently supported')
+                        raise NotImplementedError('Unexpected popup. Needs to handle this case.')
+
+        # click(ROAMING_SKIP, _clicks=1, _highlight=True)
+        # click(ROAMING_SELECT, _clicks=1, _highlight=True)
+        # click(ROAMING_TREAT, _clicks=1, _highlight=True)
+        # click(ROAMING_SKIP, _clicks=1, _highlight=True)
+        # click(BACK, _clicks=1, _highlight=True)
 
         # Click on back to continue
         pag.sleep(1)
@@ -184,28 +316,32 @@ def do_roaming():
 
 
 # We must be in Drakenberg
-def do_guild(donations_done: bool) -> bool:
+def do_guild() -> None:
+    global donations_done
+    if donations_done:
+        log.warning('Donations done. Skipping')
+        return
     # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
     if RANDOM_REQUESTS:
         log.info('Donations and Random requests...')
         # scroll_screen('left', 1)
 
         # Try to donate.
-        if DONATE and not donations_done:
+        if DONATE:
             log_sleep('RANDOM_REQUESTS1', 0.5)
             click(DRAKENBERG_GUILD)
             click(GUILD_DONATION)
             try:
                 pag.locateOnWindow(image=DONATION_DONATED, title=APP_TITLE, confidence=0.6, grayscale=True)
+                log.warning('Max donations reached. Skip donations.')
+                # Turn off going forward
                 donations_done = True
-                log.info('Max donations reached. Skip donations.')
             except pag.ImageNotFoundException:
                 log.info('Donations not finished yet.')
-                donations_done = False
-
-            click(DONATION_BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
-            # dismiss congratulation screen
-            click('MAKE_BASIC_DONATION')
+            if not donations_done:
+                click(DONATION_BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
+                # dismiss congratulation screen
+                click('MAKE_BASIC_DONATION')
 
             # Exit donation screen
             click('BACK')
@@ -216,38 +352,53 @@ def do_guild(donations_done: bool) -> bool:
             click(MM_DRAKENBERG)
             click('BACK')
 
-            return donations_done
+            return
 
 
 # We must be in village
 def do_school():
+    global school_initialized
+
     if SCHOOL:
         log.info('Enter school...')
-        click(VILLAGE_SCHOOL)
+        click(VILLAGE_SCHOOL, confidence=0.9)
+
+        # Students are 1 row above the back button
+        if not school_initialized:
+            click(SCHOOL_BACK, confidence=0.9, _clicks=0)
+            cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
+            cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
+            cloneposition('STUDENT1', 'STUDENT3', dx=2, dy=0)
+            cloneposition('STUDENT1', 'STUDENT4', dx=3, dy=0)
+            cloneposition('STUDENT1', 'STUDENT5', dx=4, dy=0)
+            school_initialized = True
+
+        for student in ['STUDENT1', 'STUDENT2', 'STUDENT3', 'STUDENT4', 'STUDENT5']:
+            click(student)
+            pag.sleep(0.5)
+            # Skip if student is about to graduate.
+            try:
+                pag.locateOnWindow(SCHOOL_EDUCATE, APP_TITLE, grayscale=True, confidence=0.7)
+                click(SCHOOL_EDUCATE)
+                try:
+                    # When use focus candy appear when we click again too soon.
+                    # Skip it.
+                    pag.locateOnWindow(SCHOOL_USE_ITEM, APP_TITLE, grayscale=True, confidence=0.9)
+                    # click anywhere (e.g. GO) to dismiss it.
+                    click(SCHOOL_BACK)
+                except pag.ImageNotFoundException:
+                    log.info('Use accumulated education tokens...')
+                    pag.sleep(2)
+                pag.sleep(1)
+            except pag.ImageNotFoundException:
+                # No Educate button found. Must be abt to graduate. Skip student
+                log.warning(f'Skip {student}. Leave graduation process to manual intervention.')
+                if AUTO_GRADUATE:
+                    click(SCHOOL_GRADUATE)
+                click(GRADUATE_OK)
+                continue
 
         click('BACK')
-        # Students are 1 row above the back button
-        cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
-        cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
-        cloneposition('STUDENT1', 'STUDENT3', dx=2, dy=0)
-        cloneposition('STUDENT1', 'STUDENT4', dx=3, dy=0)
-        cloneposition('STUDENT1', 'STUDENT5', dx=4, dy=0)
-
-        click('STUDENT1')
-        click(SCHOOL_EDUCATE)
-        pag.sleep(1)
-        click('STUDENT2')
-        click(SCHOOL_EDUCATE)
-        pag.sleep(1)
-        click('STUDENT3')
-        click(SCHOOL_EDUCATE)
-        pag.sleep(1)
-        click('STUDENT4')
-        click(SCHOOL_EDUCATE)
-        pag.sleep(1)
-        click('STUDENT5')
-        click(SCHOOL_EDUCATE)
-        pag.sleep(1)
 
 
 # We must be in village
@@ -259,6 +410,9 @@ def do_collect_bait():
     # Dismiss any popup
     click('NOTHING')
     click('BACK')
+
+
+def do_kitchen():
     # Enter kitchen
     log.info('Enter Inn...')
     log_sleep('KITCHEN', 1)
@@ -268,6 +422,7 @@ def do_collect_bait():
     try:
         # Click use to use 1 inn pamphlet
         kitchen_use = pag.locateOnWindow(KITCHEN_USE_INN_PAMPHLET, APP_TITLE, confidence=0.65)
+        log.warning('Using 1 inn pamphlet...')
         pag.click(kitchen_use)
     except pag.ImageNotFoundException:
         log.info('Use button not found. It implies no in pamphlets available.')
@@ -278,36 +433,49 @@ def do_collect_bait():
         # click('empty area')
         click('empty area')
     # clear jewels
-    pag.sleep(7)
-    click(KITCHEN_ORDER_JEWELS)
+    # pag.sleep(7)
+    click_list([KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2], title=APP_TITLE, confidence=0.9)
     click('BACK')
 
 
 # We must be in Drakenberg
-def do_banquet(banquet_done: bool) -> bool:
-    if not banquet_done:
-        log_sleep('Pause for banquet to be visible', 1)
-        click(DRAKENBERG_BANQUET)
-        click(BANQUET_ATTEND, confidence=0.6)
-        banquet_attend_party = click(BANQUET_ATTEND_PARTY, confidence=0.7, match_optional=True)
-        if banquet_attend_party is None:
-            # Dismiss dialogue
-            click('BACK')
-            banquet_done = False
+def do_banquet() -> None:
+    global banquet_done
+    if banquet_done:
+        log.warning('Banquets done. Skipping.')
+        return
+
+    log_sleep('Pause for banquet to be visible', 1)
+    click(DRAKENBERG_BANQUET)
+    click(BANQUET_ATTEND, confidence=0.6)
+    cloneposition(BANQUET_ATTEND, 'DISMISS', dx=-1, dy=1)
+    pag.sleep(0.5)
+
+    if displayed(image=BANQUET_NONE_HOSTED, confidence=0.9):
+        log.warning('No banquets being hosted currently. Skip.')
+    else:
+        if displayed(image=BANQUET_ALREADY_ATTENDED, confidence=0.95):
+            log.warning('No new banquets being hosted currently. Skip.')
         else:
+            banquet_attend_party = pag.locateOnWindow(BANQUET_ATTEND_PARTY, APP_TITLE, confidence=0.95)
+            add_loc(BANQUET_ATTEND_PARTY, banquet_attend_party)
+            click(BANQUET_ATTEND_PARTY)
             # click twice. money gifts full will pop up.
-            pag.sleep(0.5)
-            click(BANQUET_TAKE_SIT, confidence=0.65, _clicks=2)
+            pag.sleep(1)
+            click(BANQUET_TAKE_SEAT, confidence=0.65, _clicks=2)
             try:
-                pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.9)
+                pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.7)
+                log.warning('Banquets done. Skip going forward.')
                 banquet_done = True
             except pag.ImageNotFoundException:
                 log.info('Choose a gift dialogue not found. It implies we are able to seat and thus not done yet.')
-                banquet_done = False
-            click('BACK')
-        # Leave Banquet
-        click('BACK')
-    return banquet_done
+                # click anywhere to dismiss
+                click(BANQUET_TAKE_SEAT)
+
+    # click anywhere to dismiss none hosted dialogue
+    click('DISMISS')
+    # Leave Banquet
+    click('BACK')
 
 
 # We must be in Home
@@ -344,9 +512,42 @@ def do_stage(x):
 
 
 # Select the function based on the user input
+# try:
+#     donation_opened = locate_all_on_window(DONATION_OPENED, APP_TITLE, confidence=0.9)
+#     log.info(donation_opened)
+#     highlight('donation_opened', donation_opened)
+#     log.warning('No new banquets being hosted currently. Skip.')
+#     # click anywhere to dismiss none hosted dialogue
+#     click('DISMISS')
+#     # Leave Banquet
+#     click('BACK')
+# except pag.ImageNotFoundException:
+#     log.info('No found')
+
+# log.info(displayed(image=BANQUET_ALREADY_ATTENDED, confidence=0.95))
+# register_locations()
+# while True:
+#     do_banquet()
 while True:
-    # Get the user input
-    # number = int(
-    #     input("Select a function (0 roam, 1 Gold, 2 Stage, 3 guild, 4 move right, 5 grind, 6 kitchen, 7 school): "))
     collect_trading_post_gold(3000)
     exit()
+    # try:
+    #     banquet_already_attended = pag.locateOnWindow(BANQUET_ALREADY_ATTENDED, APP_TITLE, confidence=0.9)
+    #     highlight('banquet_already_attended', banquet_already_attended)
+    #     log.warning('No new banquets being hosted currently. Skip.')
+    #     # click anywhere to dismiss none hosted dialogue
+    #     click('DISMISS')
+    #     # Leave Banquet
+    #     click('BACK')
+    # except pag.ImageNotFoundException:
+    #     log.info('No found')
+    # log.info('Enter Magic Garden...')
+    # log_sleep('KITCHEN', 1)
+    # # click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], title=APP_TITLE, confidence=0.48, _highlight=True)
+    # # click(GARDEN_QUICK_HARVEST)
+    # # click(GARDEN_QUICK_SOW)
+    # # click('BACK')
+    # Graduate
+    # click_list([SCHOOL_EDUCATE, SCHOOL_GRADUATE], title=APP_TITLE)
+    # click(GRADUATE_OK, _highlight=True)
+    # click(GRADUATE_FORM_UNION, _highlight=True, confidence=0.8)
