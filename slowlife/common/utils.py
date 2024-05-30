@@ -11,6 +11,7 @@ import pyautogui as pag
 import pygetwindow
 import wx
 from PIL import Image
+from PIL import ImageDraw
 from pyscreeze import PyScreezeException
 
 from slowlife.common.logger import CustomFormatter
@@ -124,7 +125,8 @@ def click_list(aliases: list, title: str = APP_TITLE, confidence: float = 0.5, _
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT, _pause: int = 1,
+def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
+          _pause: float = 1.5,
           _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
           match_optional=False, _use_cache: bool = True, _interval: float = 0.5) -> Optional[Box]:
     if _use_cache and image in LOC:
@@ -153,9 +155,12 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
                     # Take screenshot to clarify where we are stuck.
                     pag.screenshot(region=(app.left, app.top, app.right - app.left, app.bottom - app.top),
                                    imageFilename=LOG_IMAGE)
-                    # display it.
+                    # Display image we cant find.
+                    os.system(f'start {image}')
+                    # display where we are when match failed.
                     img = Image.open(LOG_IMAGE)
                     img.show()
+
             exit(-1)
 
     if _clicks != 0:

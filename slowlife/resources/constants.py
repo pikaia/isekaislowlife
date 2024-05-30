@@ -25,13 +25,23 @@ MM_STAGE = '../resources/mainmenu/stage.png'
 MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
 
 # Home
-HOME_FOUNTAIN = '../resources/mainmenu/fountain_of_wishes.png'
+HOME_FOUNTAIN = '../resources/mainmenu/home/fountain_of_wishes.png'
+HOME_FAMILY = '../resources/mainmenu/home/family.png'
+
+FAMILY_AUTO_DATE = '../resources/mainmenu/home/family/auto_date.png'
+FAMILY_GO_EDUCATE = '../resources/mainmenu/home/family/go_educate.png'
+SCHOOL_NAME = '../resources/mainmenu/village/school/name.png'
+NAME_OK = '../resources/mainmenu/village/school/name_ok.png'
+
+# Fountain of wishes
+FOUNTAIN_10 = '../resources/mainmenu/home/fountain_of_wishes/fountain10.png'
+FOUNTAIN_1 = '../resources/mainmenu/home/fountain_of_wishes/fountain1.png'
 
 # Drakenberg regions
-DRAKENBERG_TRADINGPOST = '../resources/mainmenu/village/drakenberg/enter_trading_post.png'
-DRAKENBERG_BANQUET = '../resources/mainmenu/village/drakenberg/enter_banquet.png'
-DRAKENBERG_ROAMING = '../resources/mainmenu/village/drakenberg/roaming.png'
-DRAKENBERG_GUILD = '../resources/mainmenu/village/drakenberg/enter_guild.png'
+DRAKENBERG_TRADINGPOST = '../resources/mainmenu/drakenberg/enter_trading_post.png'
+DRAKENBERG_BANQUET = '../resources/mainmenu/drakenberg/enter_banquet.png'
+DRAKENBERG_ROAMING = '../resources/mainmenu/drakenberg/roaming.png'
+DRAKENBERG_GUILD = '../resources/mainmenu/drakenberg/enter_guild.png'
 
 # Farmstead
 VILLAGE_FARMSTEAD = '../resources/mainmenu/village/farmstead.png'
@@ -52,43 +62,59 @@ GARDEN_CONFIRM = '../resources/mainmenu/village/magic_garden/confirm.png'
 GARDEN_ORDERS_FILLED = '../resources/mainmenu/village/magic_garden/orders_filled.png'
 ORDERS_DELIVER = '../resources/mainmenu/village/magic_garden/orders/deliver.png'
 ORDERS_LEVEL = '../resources/mainmenu/village/magic_garden/orders/order_level.png'
+PLANT_ORDER_NOTICE = '../resources/mainmenu/village/magic_garden/plant_order_notice.png'
+GARDEN_ORDER = '../resources/mainmenu/village/magic_garden/order.png'
 
 # Banquet
-BANQUET_ATTEND = '../resources/mainmenu/village/drakenberg/banquet/attend.png'
-BANQUET_ALREADY_ATTENDED = '../resources/mainmenu/village/drakenberg/banquet/already_attended.png'
-BANQUET_NONE_HOSTED = '../resources/mainmenu/village/drakenberg/banquet/none_hosted.png'
-BANQUET_MONEY_FULL = '../resources/mainmenu/village/drakenberg/banquet/gift_money_full.png'
-BANQUET_ATTEND_PARTY = '../resources/mainmenu/village/drakenberg/banquet/attend_party.png'
-BANQUET_TAKE_SEAT = '../resources/mainmenu/village/drakenberg/banquet/take_seat.png'
+BANQUET_ATTEND = '../resources/mainmenu/drakenberg/banquet/attend.png'
+BANQUET_ALREADY_ATTENDED = '../resources/mainmenu/drakenberg/banquet/already_attended.png'
+BANQUET_HAS_ENDED = '../resources/mainmenu/drakenberg/banquet/banquet_has_ended.png'
+BANQUET_NONE_HOSTED = '../resources/mainmenu/drakenberg/banquet/none_hosted.png'
+BANQUET_MONEY_FULL = '../resources/mainmenu/drakenberg/banquet/gift_money_full.png'
+BANQUET_ATTEND_PARTY = '../resources/mainmenu/drakenberg/banquet/attend_party.png'
+BANQUET_TAKE_SEAT = '../resources/mainmenu/drakenberg/banquet/take_seat.png'
 
 # Stage
 STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
 STAGE_START = '../resources/mainmenu/stage/start.png'
 
-# Fountain of wishes
-FOUNTAIN_10 = '../resources/mainmenu/fountain_of_wishes/fountain10.png'
-FOUNTAIN_1 = '../resources/mainmenu/fountain_of_wishes/fountain1.png'
+TRADINGPOST_GOLD1 = '../resources/mainmenu/drakenberg/trading_post/gold2.png'
+TRADINGPOST_GOLD2 = '../resources/mainmenu/drakenberg/trading_post/gold1.png'
+TRADINGPOST_BACK = '../resources/mainmenu/drakenberg/trading_post/back.png'
 
-TRADINGPOST_GOLD1 = '../resources/mainmenu/village/drakenberg/trading_post/gold2.png'
-TRADINGPOST_GOLD2 = '../resources/mainmenu/village/drakenberg/trading_post/gold1.png'
-TRADINGPOST_BACK = '../resources/mainmenu/village/drakenberg/trading_post/back.png'
+ROAMING_GO = '../resources/mainmenu/drakenberg/roaming/go.png'
+ROAMING_USE = '../resources/mainmenu/drakenberg/roaming/use.png'
+ROAMING_NO_STAMINA = '../resources/mainmenu/drakenberg/roaming/no_stamina.png'
+ROAMING_OK = '../resources/mainmenu/drakenberg/roaming/ok.png'
+ROAMING_CANCEL = '../resources/mainmenu/drakenberg/roaming/cancel.png'
 
-ROAMING_GO = '../resources/mainmenu/village/drakenberg/roaming/go.png'
-ROAMING_USE = '../resources/mainmenu/village/drakenberg/roaming/use.png'
-ROAMING_NO_STAMINA = '../resources/mainmenu/village/drakenberg/roaming/no_stamina.png'
-ROAMING_OK = '../resources/mainmenu/village/drakenberg/roaming/ok.png'
-ROAMING_CANCEL = '../resources/mainmenu/village/drakenberg/roaming/cancel.png'
-ROAMING_BACK = '../resources/mainmenu/village/drakenberg/roaming/back.png'
+ROAMING_SKIP = '../resources/mainmenu/drakenberg/roaming/susie_skip.png'
 
-ROAMING_SKIP = '../resources/mainmenu/village/drakenberg/roaming/susie_skip.png'
-ROAMING_SELECT = '../resources/mainmenu/village/drakenberg/roaming/select_sadoko.png'
-ROAMING_TREAT = '../resources/mainmenu/village/drakenberg/roaming/treat.png'
+ROAMING_ANNE = '../resources/mainmenu/drakenberg/roaming/roaming_anne.png'
+ROAMING_ANNE_SKIP = '../resources/mainmenu/drakenberg/roaming/anne_skip.png'
+TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/tap_to_continue.png'
+SUSIE_TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/susie_tap_to_continue.png'
+ROAMING_BACK = '../resources/mainmenu/drakenberg/roaming/roaming_back.png'
+
+ROAMING_SUSIE = '../resources/mainmenu/drakenberg/roaming/roaming_susie.png'
+SELECT_SADAKO = '../resources/mainmenu/drakenberg/roaming/select_sadako.png'
+ROAMING_TREAT = '../resources/mainmenu/drakenberg/roaming/treat.png'
+
+ROAMING_REIR = '../resources/mainmenu/drakenberg/roaming/roaming_reir.png'
+REIR_NO_THANKS = '../resources/mainmenu/drakenberg/roaming/reir_no_thanks.png'
+
+
+SCHOOL_GO = '../resources/mainmenu/village/school/go.png'
+SCHOOL_OK = '../resources/mainmenu/village/school/notice_ok.png'
 
 SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
+OUT_OF_EDUCATION_POINTS = '../resources/mainmenu/village/school/out_of_education_points.png'
 SCHOOL_USE_ITEM = '../resources/mainmenu/village/school/school_use_item.png'
 SCHOOL_BACK = '../resources/mainmenu/village/school/school_back.png'
+
 SCHOOL_GRADUATE = '../resources/mainmenu/village/school/graduate.png'
 GRADUATE_OK = '../resources/mainmenu/village/school/graduate_ok.png'
+GRADUATE_CONGRATS_OK = '../resources/mainmenu/village/school/graduate_congrats_ok.png'
 GRADUATE_FORM_UNION = '../resources/mainmenu/village/school/graduate_form_union.png'
 
 FISHING_COLLECT_BAIT = '../resources/mainmenu/village/fish/collect_bait.png'
@@ -102,29 +128,29 @@ KITCHEN_ORDER_JEWELS2 = '../resources/mainmenu/village/kitchen/order_jewels2.png
 KITCHEN_CANCEL = '../resources/mainmenu/village/kitchen/cancel.png'
 KITCHEN_GUESTS_AVAILABLE = '../resources/mainmenu/village/kitchen/guests_available.png'
 
-GUILD_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation.png'
-GUILD_CANCEL = '../resources/mainmenu/village/drakenberg/guild/cancel.png'
-GUILD_HANDLE = '../resources/mainmenu/village/drakenberg/guild/handle.png'
-GUILD_REQUESTS = '../resources/mainmenu/village/drakenberg/guild/random_requests.png'
-GUILD_BACK = '../resources/mainmenu/village/drakenberg/guild/back.png'
+GUILD_DONATION = '../resources/mainmenu/drakenberg/guild/donation.png'
+GUILD_CANCEL = '../resources/mainmenu/drakenberg/guild/cancel.png'
+GUILD_HANDLE = '../resources/mainmenu/drakenberg/guild/handle.png'
+GUILD_REQUESTS = '../resources/mainmenu/drakenberg/guild/random_requests.png'
+GUILD_BACK = '../resources/mainmenu/drakenberg/guild/back.png'
 
-DONATION_DONATED = '../resources/mainmenu/village/drakenberg/guild/donation/donated.png'
-DONATION_BASIC_DONATION = '../resources/mainmenu/village/drakenberg/guild/donation/basic_donation.png'
-DONATION_OPENED = '../resources/mainmenu/village/drakenberg/guild/donation/opened.png'
-DONATION_CLOSED = '../resources/mainmenu/village/drakenberg/guild/donation/closed.png'
+DONATION_DONATED = '../resources/mainmenu/drakenberg/guild/donation/donated.png'
+DONATION_BASIC_DONATION = '../resources/mainmenu/drakenberg/guild/donation/basic_donation.png'
+DONATION_OPENED = '../resources/mainmenu/drakenberg/guild/donation/opened.png'
+DONATION_CLOSED = '../resources/mainmenu/drakenberg/guild/donation/closed.png'
 
-STAGE_CHALLENGE = '../resources/mainmenu/village/drakenberg/stage/challenge.png'
-CHALLENGE_EMPTY = '../resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png'
-CHALLENGE_GOLD = '../resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png'
-CHALLENGE_ITEM = '../resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png'
-CHALLENGE_NEGOTIATE = '../resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png'
-CHALLENGE_CONTINUE = '../resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png'
+STAGE_CHALLENGE = '../resources/mainmenu/drakenberg/stage/challenge.png'
+CHALLENGE_EMPTY = '../resources/mainmenu/drakenberg/stage/challenge/items_empty.png'
+CHALLENGE_GOLD = '../resources/mainmenu/drakenberg/stage/challenge/gold_motivation.png'
+CHALLENGE_ITEM = '../resources/mainmenu/drakenberg/stage/challenge/item_motivation.png'
+CHALLENGE_NEGOTIATE = '../resources/mainmenu/drakenberg/stage/challenge/negotiate.png'
+CHALLENGE_CONTINUE = '../resources/mainmenu/drakenberg/stage/challenge/tap_to_continue.png'
 
-STAGE_GO = '../resources/mainmenu/village/drakenberg/stage/go.png'
-EVENTS_CONTINUE = '../resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png'
-STAGE_EVENTS_X = '../resources/mainmenu/village/drakenberg/stage/events_x.png'
-STAGE_EVENTS_Y = '../resources/mainmenu/village/drakenberg/stage/events_y.png'
-STAGE_AUTOHANDLE = '../resources/mainmenu/village/drakenberg/stage/events/autohandle.png'
+STAGE_GO = '../resources/mainmenu/drakenberg/stage/go.png'
+EVENTS_CONTINUE = '../resources/mainmenu/drakenberg/stage/events/tap_to_continue.png'
+STAGE_EVENTS_X = '../resources/mainmenu/drakenberg/stage/events_x.png'
+STAGE_EVENTS_Y = '../resources/mainmenu/drakenberg/stage/events_y.png'
+STAGE_AUTOHANDLE = '../resources/mainmenu/drakenberg/stage/events/autohandle.png'
 
 # shared by all capture modules
 CAPTURE_FULL_APP = '../resources/ss/data/source/building/full_app.png'

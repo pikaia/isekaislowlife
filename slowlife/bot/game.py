@@ -44,20 +44,24 @@ from slowlife.resources.constants import (APP_TITLE,
                                           KITCHEN_USE_INN_PAMPHLET,
 
                                           SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM,
-                                          SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_FORM_UNION,
+                                          SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION,
 
                                           BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
 
                                           GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
                                           DONATION_OPENED, DONATION_CLOSED,
 
-                                          ROAMING_SKIP, ROAMING_SELECT, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
+                                          ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
 
                                           GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
                                           GARDEN_CAVE,
 
                                           ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
-                                          GARDEN_CONFIRM
+                                          GARDEN_CONFIRM, ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
+                                          ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
+                                          ROAMING_REIR, REIR_NO_THANKS, PLANT_ORDER_NOTICE, GARDEN_ORDER, HOME_FAMILY,
+                                          FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, SCHOOL_NAME, NAME_OK, SCHOOL_GO,
+                                          SCHOOL_OK, BANQUET_HAS_ENDED, OUT_OF_EDUCATION_POINTS
                                           )
 
 # Limit donation to 4 times.
@@ -170,29 +174,10 @@ def do_magic_farm() -> None:
         pag.click(quick_harvest)
         pag.sleep(1)
 
-        # Handle caves.
-        while displayed(GARDEN_CAVE):
-            log.info('Quick assign a cave')
-            click(GARDEN_CAVE)
-            click(GARDEN_ASSIGN, confidence=0.8)
-            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
-            click(GARDEN_CONFIRM, confidence=0.8)
-            click('DISMISS')
-
-        # TODO: Handle chests.
-
-        try:
-            garden_quick_sow = pag.locateOnWindow(GARDEN_QUICK_SOW, APP_TITLE, grayscale=True, confidence=0.8)
-            log.warning('Sowing...')
-            pag.click(garden_quick_sow)
-        except pag.ImageNotFoundException:
-            # no harvest available. exit.
-            log.warning('No sowing needed. Skipping')
-            # Return to village
-            click('BACK')
-            return
-
-        click(GARDEN_ORDERS_FILLED)
+        # Ignore notice
+        if displayed(PLANT_ORDER_NOTICE):
+            # Need high confidence to identify right image.
+            click(GARDEN_ORDER, confidence=0.95, _highlight=True)
 
         # Click on all deliver buttons. This requires 2 checks.
         # 1. Click all visible deliver buttons.
@@ -226,6 +211,37 @@ def do_magic_farm() -> None:
             # Return to village
             click('BACK')
             return
+
+        # Handle caves.
+        while displayed(GARDEN_CAVE):
+            log.info('Quick assign a cave')
+            click(GARDEN_CAVE)
+            click(GARDEN_ASSIGN, confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
+            click(GARDEN_CONFIRM, confidence=0.8)
+            click('DISMISS')
+
+        # Handle chests.
+        while displayed(GARDEN_CHEST, confidence=0.8):
+            log.info('Clear a chest')
+            click(GARDEN_CHEST, confidence=0.8)
+            click(GARDEN_ASSIGN, confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
+            click(GARDEN_CONFIRM, confidence=0.8)
+            click('DISMISS')
+
+        try:
+            garden_quick_sow = pag.locateOnWindow(GARDEN_QUICK_SOW, APP_TITLE, grayscale=True, confidence=0.8)
+            log.warning('Sowing...')
+            pag.click(garden_quick_sow)
+        except pag.ImageNotFoundException:
+            # no harvest available. exit.
+            log.warning('No sowing needed. Skipping')
+            # Return to village
+            click('BACK')
+            return
+
+        click(GARDEN_ORDERS_FILLED)
 
     except pag.ImageNotFoundException:
         log.info('No plants to harvest. Skipping.')
@@ -267,6 +283,30 @@ def do_roaming():
             pag.sleep(1)
 
         # choose_path(test_image1=ROAMING_OK, ROAMING_OK, 'BACK')
+
+        # Anne.
+        if displayed(ROAMING_ANNE, confidence=0.8):
+            click(ROAMING_ANNE_SKIP, confidence=0.9)
+            click(TAP_TO_CONTINUE, confidence=0.9)
+            click(ROAMING_BACK, confidence=0.8)
+            return
+
+        # susie
+        if displayed(ROAMING_SUSIE, confidence=0.8):
+            click(ROAMING_ANNE_SKIP, confidence=0.9)
+            click(SELECT_SADAKO)
+            click(ROAMING_TREAT, confidence=0.8)
+            click(ROAMING_ANNE_SKIP, confidence=0.9)
+            click(SUSIE_TAP_TO_CONTINUE, confidence=0.9)
+            click(ROAMING_BACK, confidence=0.8)
+            return
+        # reir
+        if displayed(ROAMING_REIR, confidence=0.8):
+            click(ROAMING_ANNE_SKIP, confidence=0.8)
+            click(REIR_NO_THANKS, confidence=0.8)
+            click(SUSIE_TAP_TO_CONTINUE, confidence=0.9)
+            click(ROAMING_BACK, confidence=0.8)
+            return
 
         try:
             roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
@@ -376,10 +416,33 @@ def do_school():
         for student in ['STUDENT1', 'STUDENT2', 'STUDENT3', 'STUDENT4', 'STUDENT5']:
             click(student)
             pag.sleep(0.5)
+
+            # TODO pag matches both name and go. dont use until we have a workaround.
+            # New student
+            if displayed(SCHOOL_GO, confidence=0.8):
+                continue
+                # click(SCHOOL_GO, confidence=0.8)
+                # click(SCHOOL_OK, confidence=0.8)
+                # click(HOME_FAMILY)
+                # click(FAMILY_AUTO_DATE)
+                # click('BACK')
+                # click(FAMILY_GO_EDUCATE)
+                # pag.sleep(1.5)
+
+            if displayed(SCHOOL_NAME, confidence=0.8):
+                continue
+                # click(SCHOOL_NAME, confidence=0.8)
+                # click(NAME_OK, confidence=0.8)
+                # click(SCHOOL_EDUCATE)
+                # click('BACK')
+
             # Skip if student is about to graduate.
             try:
                 pag.locateOnWindow(SCHOOL_EDUCATE, APP_TITLE, grayscale=True, confidence=0.7)
                 click(SCHOOL_EDUCATE)
+                if displayed(OUT_OF_EDUCATION_POINTS):
+                    click('BACK')
+                    continue
                 try:
                     # When use focus candy appear when we click again too soon.
                     # Skip it.
@@ -395,7 +458,8 @@ def do_school():
                 log.warning(f'Skip {student}. Leave graduation process to manual intervention.')
                 if AUTO_GRADUATE:
                     click(SCHOOL_GRADUATE)
-                click(GRADUATE_OK)
+                    click(GRADUATE_OK)
+                    click(GRADUATE_CONGRATS_OK)
                 continue
 
         click('BACK')
@@ -456,6 +520,8 @@ def do_banquet() -> None:
     else:
         if displayed(image=BANQUET_ALREADY_ATTENDED, confidence=0.95):
             log.warning('No new banquets being hosted currently. Skip.')
+        elif displayed(image=BANQUET_HAS_ENDED, confidence=0.8):
+            log.warning('Banquet has ended. Skip.')
         else:
             banquet_attend_party = pag.locateOnWindow(BANQUET_ATTEND_PARTY, APP_TITLE, confidence=0.95)
             add_loc(BANQUET_ATTEND_PARTY, banquet_attend_party)
@@ -528,7 +594,29 @@ def do_stage(x):
 # register_locations()
 # while True:
 #     do_banquet()
+
+
 while True:
+    # school_go = pag.locateOnWindow(SCHOOL_NAME, APP_TITLE, grayscale=True, confidence=0.83)
+    # highlight('school_go', school_go)
+    # if displayed(SCHOOL_GO, confidence=0.9):
+    #     log.info("school go")
+    try:
+        # from Go
+        collect_trading_post_gold(3000)
+        # choose_family: Always choose Sadako
+        # Treat
+        # Confirm: Click above to dismiss
+        # Congrats: select below to dismiss
+        # Go
+        # Need to isolate individual cases. [Anne] skip -> [congrats] dismiss
+        # click(ROAMING_SELECT)
+        # click(ROAMING_TREAT)
+        # click(ROAMING_SKIP)
+    except pag.ImageNotFoundException:
+        log.error('Unexpected path not currently supported')
+        raise NotImplementedError('Unexpected popup. Needs to handle this case.')
+
     collect_trading_post_gold(3000)
     exit()
     # try:
