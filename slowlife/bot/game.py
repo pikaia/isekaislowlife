@@ -16,9 +16,9 @@ from slowlife.resources.constants import (APP_TITLE,
                                           COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE,
                                           AUTO_GRADUATE,
 
-                                          MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG,
+                                          MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG, MM_STORAGE,
 
-                                          HOME_FOUNTAIN,
+                                          HOME_FOUNTAIN, HOME_FAMILY,
 
                                           VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD,
                                           VILLAGE_SCHOOL,
@@ -43,8 +43,9 @@ from slowlife.resources.constants import (APP_TITLE,
                                           KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2,
                                           KITCHEN_USE_INN_PAMPHLET,
 
-                                          SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM,
-                                          SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION,
+                                          SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK,
+                                          GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION, NOTICE_OK, SCHOOL_NAME,
+                                          SCHOOL_GO,
 
                                           BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
 
@@ -52,16 +53,26 @@ from slowlife.resources.constants import (APP_TITLE,
                                           DONATION_OPENED, DONATION_CLOSED,
 
                                           ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
+                                          ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
+                                          ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
+                                          ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
 
                                           GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
                                           GARDEN_CAVE,
-
                                           ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
-                                          GARDEN_CONFIRM, ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
-                                          ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
-                                          ROAMING_REIR, REIR_NO_THANKS, PLANT_ORDER_NOTICE, GARDEN_ORDER, HOME_FAMILY,
-                                          FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, SCHOOL_NAME, NAME_OK, SCHOOL_GO,
-                                          SCHOOL_OK, BANQUET_HAS_ENDED, OUT_OF_EDUCATION_POINTS
+                                          GARDEN_CONFIRM, PLANT_ORDER_NOTICE, GARDEN_ORDER,
+
+                                          FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, BANQUET_HAS_ENDED,
+                                          OUT_OF_EDUCATION_POINTS,
+
+                                          STORAGE_ITEM_TAB, STORAGE_BASIC_HIRE_CARD,
+                                          SCHOOL_NOTICE, CHOOSE_NAME, CHOOSE_NAME_OK, STORAGE_UNIDENTIFIED_INSIGHT,
+
+                                          STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
+                                          STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
+                                          STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
+                                          STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE
+
                                           )
 
 # Limit donation to 4 times.
@@ -124,18 +135,31 @@ def collect_trading_post_gold(maxtimes: int = 30):
     log.info(f'Time taken = {str(timedelta(seconds=elapsed))}')
 
 
+# Save fixed positions.
 def register_locations():
-    # Save fixed positions.
-    click(MM_HOME, confidence=0.6, _clicks=0, _highlight=False)
+    # Register home item
+    click(MM_HOME, _confidence=0.8, _clicks=1, _highlight=False, _pause=2)
+    click(HOME_FOUNTAIN, _confidence=0.8, _clicks=0, _highlight=False)
+    click(HOME_FAMILY, _confidence=0.8, _clicks=0, _highlight=False)
+
     # Back button is in same position on different screens
     cloneposition(MM_HOME, 'BACK', _highlight=False)
     cloneposition(MM_HOME, MM_VILLAGE, dx=1, _highlight=False)
     cloneposition(MM_HOME, 'NOTHING', dx=3, _highlight=False)
     cloneposition(MM_HOME, MM_STAGE, dx=3, _highlight=False)
     cloneposition(MM_HOME, MM_DRAKENBERG, dx=4, _highlight=False)
+    click(MM_STORAGE, _clicks=0, _confidence=0.8)
+
+    # Register village locations
+    click(MM_VILLAGE)
+    click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=0)
+    click_list([VILLAGE_KITCHEN1, VILLAGE_KITCHEN2], _title=APP_TITLE, _confidence=0.48, _clicks=0)
+    click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], _clicks=0)
+    click(VILLAGE_SCHOOL, _confidence=0.9, _clicks=0)
+
     # Register other Drakenberg locations
     click(MM_DRAKENBERG, _highlight=False)
-    click(DRAKENBERG_TRADINGPOST, confidence=0.6, _clicks=0, _highlight=False)
+    click(DRAKENBERG_TRADINGPOST, _confidence=0.6, _clicks=0, _highlight=False)
     click(DRAKENBERG_BANQUET, _clicks=0, _highlight=False)
     click(DRAKENBERG_ROAMING, _clicks=0, _highlight=False)
     click(DRAKENBERG_GUILD, _clicks=0, _highlight=False)
@@ -152,7 +176,7 @@ def do_collect_gold(maxtimes, x):
 
         # Need higher confidence to match small image(?)
         # Also it may be one of 2 possible images.
-        click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], title=APP_TITLE, confidence=0.48)
+        click_list([TRADINGPOST_GOLD1, TRADINGPOST_GOLD2], _title=APP_TITLE, _confidence=0.48)
         click('BACK')
 
 
@@ -161,9 +185,9 @@ def do_farmstead():
     log.info('Enter village...')
     # Enter village
     log_sleep(MM_VILLAGE, 1)
-    click(MM_VILLAGE, confidence=0.45)
+    click(MM_VILLAGE, _confidence=0.45)
     # Get some gold from Farmstead
-    click(VILLAGE_FARMSTEAD, confidence=0.45, _clicks=50, _interval=0.1)
+    click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=50, _interval=0.1)
 
 
 def do_magic_farm() -> None:
@@ -177,7 +201,7 @@ def do_magic_farm() -> None:
         # Ignore notice
         if displayed(PLANT_ORDER_NOTICE):
             # Need high confidence to identify right image.
-            click(GARDEN_ORDER, confidence=0.95, _highlight=True)
+            click(GARDEN_ORDER, _confidence=0.95, _highlight=False)
 
         # Click on all deliver buttons. This requires 2 checks.
         # 1. Click all visible deliver buttons.
@@ -216,18 +240,18 @@ def do_magic_farm() -> None:
         while displayed(GARDEN_CAVE):
             log.info('Quick assign a cave')
             click(GARDEN_CAVE)
-            click(GARDEN_ASSIGN, confidence=0.8)
-            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
-            click(GARDEN_CONFIRM, confidence=0.8)
+            click(GARDEN_ASSIGN, _confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
+            click(GARDEN_CONFIRM, _confidence=0.8)
             click('DISMISS')
 
         # Handle chests.
-        while displayed(GARDEN_CHEST, confidence=0.8):
+        while displayed(GARDEN_CHEST, _confidence=0.8):
             log.info('Clear a chest')
-            click(GARDEN_CHEST, confidence=0.8)
-            click(GARDEN_ASSIGN, confidence=0.8)
-            click(GARDEN_QUICK_ASSIGN, confidence=0.8)
-            click(GARDEN_CONFIRM, confidence=0.8)
+            click(GARDEN_CHEST, _confidence=0.8)
+            click(GARDEN_ASSIGN, _confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
+            click(GARDEN_CONFIRM, _confidence=0.8)
             click('DISMISS')
 
         try:
@@ -285,27 +309,27 @@ def do_roaming():
         # choose_path(test_image1=ROAMING_OK, ROAMING_OK, 'BACK')
 
         # Anne.
-        if displayed(ROAMING_ANNE, confidence=0.8):
-            click(ROAMING_ANNE_SKIP, confidence=0.9)
-            click(TAP_TO_CONTINUE, confidence=0.9)
-            click(ROAMING_BACK, confidence=0.8)
+        if displayed(ROAMING_ANNE, _confidence=0.8):
+            click(ROAMING_ANNE_SKIP, _confidence=0.9)
+            click(TAP_TO_CONTINUE, _confidence=0.9)
+            click(ROAMING_BACK, _confidence=0.8)
             return
 
         # susie
-        if displayed(ROAMING_SUSIE, confidence=0.8):
-            click(ROAMING_ANNE_SKIP, confidence=0.9)
+        if displayed(ROAMING_SUSIE, _confidence=0.8):
+            click(ROAMING_ANNE_SKIP, _confidence=0.9)
             click(SELECT_SADAKO)
-            click(ROAMING_TREAT, confidence=0.8)
-            click(ROAMING_ANNE_SKIP, confidence=0.9)
-            click(SUSIE_TAP_TO_CONTINUE, confidence=0.9)
-            click(ROAMING_BACK, confidence=0.8)
+            click(ROAMING_TREAT, _confidence=0.8)
+            click(ROAMING_ANNE_SKIP, _confidence=0.9)
+            click(SUSIE_TAP_TO_CONTINUE, _confidence=0.9)
+            click(ROAMING_BACK, _confidence=0.8)
             return
         # reir
-        if displayed(ROAMING_REIR, confidence=0.8):
-            click(ROAMING_ANNE_SKIP, confidence=0.8)
-            click(REIR_NO_THANKS, confidence=0.8)
-            click(SUSIE_TAP_TO_CONTINUE, confidence=0.9)
-            click(ROAMING_BACK, confidence=0.8)
+        if displayed(ROAMING_REIR, _confidence=0.8):
+            click(ROAMING_ANNE_SKIP, _confidence=0.8)
+            click(REIR_NO_THANKS, _confidence=0.8)
+            click(SUSIE_TAP_TO_CONTINUE, _confidence=0.9)
+            click(ROAMING_BACK, _confidence=0.8)
             return
 
         try:
@@ -401,11 +425,11 @@ def do_school():
 
     if SCHOOL:
         log.info('Enter school...')
-        click(VILLAGE_SCHOOL, confidence=0.9)
+        click(VILLAGE_SCHOOL, _confidence=0.9)
 
         # Students are 1 row above the back button
         if not school_initialized:
-            click(SCHOOL_BACK, confidence=0.9, _clicks=0)
+            click(SCHOOL_BACK, _confidence=0.9, _clicks=0)
             cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
             cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
             cloneposition('STUDENT1', 'STUDENT3', dx=2, dy=0)
@@ -419,22 +443,21 @@ def do_school():
 
             # TODO pag matches both name and go. dont use until we have a workaround.
             # New student
-            if displayed(SCHOOL_GO, confidence=0.8):
-                continue
-                # click(SCHOOL_GO, confidence=0.8)
-                # click(SCHOOL_OK, confidence=0.8)
-                # click(HOME_FAMILY)
-                # click(FAMILY_AUTO_DATE)
-                # click('BACK')
-                # click(FAMILY_GO_EDUCATE)
-                # pag.sleep(1.5)
+            if displayed(SCHOOL_GO, _confidence=0.8):
+                click(SCHOOL_GO, _confidence=0.8)
+                # GO can be wrongly matched to NAME button.
+                if displayed(SCHOOL_NOTICE, _confidence=0.5):
+                    # Needs high confidence to avoid matching cancel button
+                    click(NOTICE_OK, _confidence=0.95)
+                    click(HOME_FAMILY)
+                    click(FAMILY_AUTO_DATE)
+                    click('BACK')
+                    click(FAMILY_GO_EDUCATE, _confidence=0.8)
+                    pag.sleep(1.5)
 
-            if displayed(SCHOOL_NAME, confidence=0.8):
-                continue
-                # click(SCHOOL_NAME, confidence=0.8)
-                # click(NAME_OK, confidence=0.8)
-                # click(SCHOOL_EDUCATE)
-                # click('BACK')
+            if displayed(SCHOOL_NAME, _confidence=0.8):
+                if displayed(CHOOSE_NAME, _confidence=0.8):
+                    click(CHOOSE_NAME_OK, _confidence=0.8)
 
             # Skip if student is about to graduate.
             try:
@@ -480,7 +503,7 @@ def do_kitchen():
     # Enter kitchen
     log.info('Enter Inn...')
     log_sleep('KITCHEN', 1)
-    click_list([VILLAGE_KITCHEN1, VILLAGE_KITCHEN2], title=APP_TITLE, confidence=0.48)
+    click_list([VILLAGE_KITCHEN1, VILLAGE_KITCHEN2], _title=APP_TITLE, _confidence=0.48)
     # Press serve button
     click(KITCHEN_SERVE)
     try:
@@ -498,7 +521,7 @@ def do_kitchen():
         click('empty area')
     # clear jewels
     # pag.sleep(7)
-    click_list([KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2], title=APP_TITLE, confidence=0.9)
+    click_list([KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2], _title=APP_TITLE, _confidence=0.9)
     click('BACK')
 
 
@@ -511,16 +534,16 @@ def do_banquet() -> None:
 
     log_sleep('Pause for banquet to be visible', 1)
     click(DRAKENBERG_BANQUET)
-    click(BANQUET_ATTEND, confidence=0.6)
+    click(BANQUET_ATTEND, _confidence=0.6)
     cloneposition(BANQUET_ATTEND, 'DISMISS', dx=-1, dy=1)
     pag.sleep(0.5)
 
-    if displayed(image=BANQUET_NONE_HOSTED, confidence=0.9):
+    if displayed(_image=BANQUET_NONE_HOSTED, _confidence=0.9):
         log.warning('No banquets being hosted currently. Skip.')
     else:
-        if displayed(image=BANQUET_ALREADY_ATTENDED, confidence=0.95):
+        if displayed(_image=BANQUET_ALREADY_ATTENDED, _confidence=0.95):
             log.warning('No new banquets being hosted currently. Skip.')
-        elif displayed(image=BANQUET_HAS_ENDED, confidence=0.8):
+        elif displayed(_image=BANQUET_HAS_ENDED, _confidence=0.8):
             log.warning('Banquet has ended. Skip.')
         else:
             banquet_attend_party = pag.locateOnWindow(BANQUET_ATTEND_PARTY, APP_TITLE, confidence=0.95)
@@ -528,7 +551,7 @@ def do_banquet() -> None:
             click(BANQUET_ATTEND_PARTY)
             # click twice. money gifts full will pop up.
             pag.sleep(1)
-            click(BANQUET_TAKE_SEAT, confidence=0.65, _clicks=2)
+            click(BANQUET_TAKE_SEAT, _confidence=0.65, _clicks=2)
             try:
                 pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.7)
                 log.warning('Banquets done. Skip going forward.')
@@ -596,7 +619,74 @@ def do_stage(x):
 #     do_banquet()
 
 
+# Consume storage items. Go through one by one and use those we can.
+# The consumables are in the first 3 rows.
+def do_storage():
+    # Use the item tab to guess the location of the individual items.
+    click(MM_STORAGE)
+    click(STORAGE_ITEM_TAB, _confidence=0.8, _clicks=0)
+    items: list[list[int]] = [[r + c for r in range(5)] for c in range(3)]
+    log.info(items)
+
+    # Capture items.
+    for r in range(3):
+        for c in range(5):
+            items[r][c] = cloneposition(STORAGE_ITEM_TAB, 'item', dx=c * 1.1, dy=(r + 1) * 1.5, _highlight=False)
+            log.info(f'r={r}, c={c}, item[{r}][{c}]={items[r][c]}')
+
+    log.info(items)
+
+    # Display item and try to match our list.
+    for r in range(3):
+        for c in range(5):
+            log.info(f'Checking item at row {r}, column {c}...')
+            pag.click(items[r][c])
+            pag.sleep(0.5)
+            matched = False
+            for needle_name in [STORAGE_UNIDENTIFIED_INSIGHT, STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD,
+                                STORAGE_FAME_CARD, STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
+                                STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION, STORAGE_POTION_OF_FREEDOM,
+                                STORAGE_BASIC_HIRE_CARD
+                                ]:
+                try:
+                    needle = pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
+                    highlight('item', needle)
+                    matched = True
+                    log.info(f'Item identified: {needle_name}...')
+                    break
+                except pag.ImageNotFoundException:
+                    pass
+
+            if not matched:
+                # click again to dismiss item.
+                pag.click(items[r][c])
+            else:
+
+                # click again to dismiss item.
+                pag.click(items[r][c])
+
+                # todo: slide the bar to max
+                # try:
+                #     slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.8)
+                #     log.info('Slide...')
+                # except pag.ImageNotFoundException:
+                #     log.info('Cannot find Slide...')
+
+    log.info('test')
+
+
+# consumables = [STORAGE_PURPLE_POTION, STORAGE_YELLOW_POTION, STORAGE_RED_POTION, STORAGE_BLUE_POTION,
+#                STORAGE_BASIC_HIRE]
+#
+# for item in consumables:
+#     loc = pag.locateOnWindow(item, APP_TITLE, confidence=0.8)
+#     pt = pag.center(loc)
+#     pix = pag.pixel(pt.x, pt.y)
+#     log.info(f'{item}, {loc}, {pix}')
+#     highlight('item', loc)
+
 while True:
+    # do_storage()
     # school_go = pag.locateOnWindow(SCHOOL_NAME, APP_TITLE, grayscale=True, confidence=0.83)
     # highlight('school_go', school_go)
     # if displayed(SCHOOL_GO, confidence=0.9):

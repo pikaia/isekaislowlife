@@ -4,109 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="Lots of new features&#10;1. Add colorized log&#10;2. Add beginnings of auto magic farm harvest/sow. Handle delivery. Incomplete chests.&#10;3. Handle more cases for roaming. Incomplete for susie. Need to simplify.&#10;4. Better school process. Incomplete graduation.">
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/banquet_has_ended.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/anne_skip.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/reir_no_thanks.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_anne.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_reir.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_susie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/select_sadako.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/susie_tap_to_continue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/tap_to_continue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family/auto_date.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family/go_educate.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes/back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes/fountain1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes/fountain10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes/one_time.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/home_position.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/order.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/magic_garden/plant_order_notice.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/go.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/graduate_congrats_ok.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/notice_ok.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/out_of_education_points.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)">
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/basic_hire_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/fame_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/golden_fame_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/item_tab.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_bravery.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_diligence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_erudition.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_inspiration.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/random_potion.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/unidentified_insight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/choose_name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/choose_name_ok.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/school_notice.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/capture/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/capture/buildings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/db/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/db/ocr.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/fountain_of_wishes.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/fountain_of_wishes/back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/fountain_of_wishes/fountain1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/fountain_of_wishes/fountain10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/fountain_of_wishes/one_time.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/already_attended.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/already_attended.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/attend.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/attend.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/attend_party.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/attend_party.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/banquet_test.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/banquet_test.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/gift_money_full.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/gift_money_full.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/none_hosted.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/none_hosted.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/banquet/take_seat.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/take_seat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/challenge.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/challenge.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_banquet.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_banquet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_guild.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_guild.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/enter_trading_post.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_trading_post.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/cancel.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/cancel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/basic_donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/basic_donation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/closed.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/closed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/donate.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donate.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/donated.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donated.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/drag_point.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/drag_point.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/medium_donation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/medium_donation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/opened.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/opened.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/donation/test.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/test.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/handle.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/handle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/quick_handle_checkbox.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/quick_handle_checkbox.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/guild/random_requests.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/random_requests.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/recruit.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/recruit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/augustine.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/augustine.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/cancel.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/cancel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/continue.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/continue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/go.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/go.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/no_stamina.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/no_stamina.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/no_thanks.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/no_thanks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/ok.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/ok.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/reir_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/reir_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/select.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/select.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/select_family.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/select_family.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/select_sadoko.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/skip2.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/skip2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/susie_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/susie_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/treat.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/treat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/roaming/use.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/use.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/gold_motivation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/item_motivation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/items_empty.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/negotiate.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/tap_to_continue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/challenge/too_much.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/challenge/too_much.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/autohandle.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/events/autohandle.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/close.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/events/close.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/events/tap_to_continue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events_x.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/events_x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/events_y.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/events_y.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/stage/go.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/stage/go.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/fixture_left_of_gold.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/fixture_left_of_gold.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold1.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/gold1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold2.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/gold2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_lights.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/gold_lights.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/gold_receptionist.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/gold_receptionist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/negotiate.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/negotiate.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/trading_post/person_below_gold.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/trading_post/person_below_gold.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/drakenberg/village - Shortcut.lnk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,28 +128,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="fishing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythonProject1" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/fishing.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
@@ -296,6 +194,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="ocr" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythonProject1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/db" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/db/ocr.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
@@ -321,10 +241,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.game" />
+        <item itemvalue="Python.ocr" />
         <item itemvalue="Python.utils" />
         <item itemvalue="Python.constants" />
         <item itemvalue="Python.kitchen" />
-        <item itemvalue="Python.fishing" />
       </list>
     </recent_temporary>
   </component>
@@ -640,7 +560,23 @@
       <option name="project" value="LOCAL" />
       <updated>1717011976369</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)">
+      <option name="closed" value="true" />
+      <created>1717111733667</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1717111733667</updated>
+    </task>
+    <task id="LOCAL-00039" summary="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)">
+      <option name="closed" value="true" />
+      <created>1717111755810</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1717111755810</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -656,7 +592,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Sync repo" />
     <MESSAGE value="Refactor to cleanup code." />
     <MESSAGE value="Fix db example" />
     <MESSAGE value="Add more tables: player, guild." />
@@ -681,7 +616,8 @@
     <MESSAGE value="1, Reorg constants into groups. Change names to parent_child eg VILLAGE_FARMSTEAD instead of FARMSTEAD.&#10;2. Skip donations or banquets when they are done.&#10;3. To avoid using matching, calc more places during initialization." />
     <MESSAGE value="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection." />
     <MESSAGE value="Lots of new features&#10;1. Add colorized log&#10;2. Add beginnings of auto magic farm harvest/sow. Handle delivery. Incomplete chests.&#10;3. Handle more cases for roaming. Incomplete for susie. Need to simplify.&#10;4. Better school process. Incomplete graduation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Lots of new features&#10;1. Add colorized log&#10;2. Add beginnings of auto magic farm harvest/sow. Handle delivery. Incomplete chests.&#10;3. Handle more cases for roaming. Incomplete for susie. Need to simplify.&#10;4. Better school process. Incomplete graduation." />
+    <MESSAGE value="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -732,29 +668,59 @@
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>484</line>
-          <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>462</line>
-          <option name="timeStamp" value="129" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/common/utils.py</url>
-          <line>257</line>
+          <line>258</line>
           <option name="timeStamp" value="141" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>601</line>
-          <option name="timeStamp" value="161" />
+          <line>450</line>
+          <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>599</line>
-          <option name="timeStamp" value="162" />
+          <line>459</line>
+          <option name="timeStamp" value="174" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>458</line>
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>448</line>
+          <option name="timeStamp" value="176" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>482</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>257</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>196</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>674</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>668</line>
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>659</line>
+          <option name="timeStamp" value="205" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

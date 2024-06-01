@@ -7,7 +7,7 @@ from PIL import Image
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 # Open the image file
-image = Image.open('../resources/ss/data/generated/kitchen/big_cooking_pot.png')
+image = Image.open('../resources/ss/data/generated/building/apothecary.png')
 
 # Convert the image to grayscale
 image = image.convert("L")
@@ -17,6 +17,9 @@ text = pytesseract.image_to_string(image)
 
 # Print the extracted text to the console
 print(text)
+
+# 1. Earnings is in the row with Earnings:
+pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
 
 types = ['inspiring', 'diligent', 'brave', 'informed', 'unfettered']
 pos = []

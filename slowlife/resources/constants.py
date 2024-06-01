@@ -23,6 +23,20 @@ MM_HOME = '../resources/mainmenu/home.png'
 MM_VILLAGE = '../resources/mainmenu/village.png'
 MM_STAGE = '../resources/mainmenu/stage.png'
 MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
+MM_STORAGE = '../resources/mainmenu/storage.png'
+
+STORAGE_ITEM_TAB = '../resources/mainmenu/storage/item_tab.png'
+STORAGE_UNIDENTIFIED_INSIGHT = '../resources/mainmenu/storage/unidentified_insight.png'
+STORAGE_RANDOM_POTION = '../resources/mainmenu/storage/random_potion.png'
+STORAGE_GOLDEN_FAME_CARD = '../resources/mainmenu/storage/golden_fame_card.png'
+STORAGE_FAME_CARD = '../resources/mainmenu/storage/fame_card.png'
+STORAGE_POTION_OF_INSPIRATION = '../resources/mainmenu/storage/potion_of_inspiration.png'
+STORAGE_POTION_OF_DILIGENCE = '../resources/mainmenu/storage/potion_of_diligence.png'
+STORAGE_POTION_OF_BRAVERY = '../resources/mainmenu/storage/potion_of_bravery.png'
+STORAGE_POTION_OF_ERUDITION = '../resources/mainmenu/storage/potion_of_erudition.png'
+STORAGE_POTION_OF_FREEDOM = '../resources/mainmenu/storage/potion_of_freedom.png'
+STORAGE_BASIC_HIRE_CARD = '../resources/mainmenu/storage/basic_hire_card.png'
+STORAGE_SLIDE = '../resources/mainmenu/storage/slide.png'
 
 # Home
 HOME_FOUNTAIN = '../resources/mainmenu/home/fountain_of_wishes.png'
@@ -31,7 +45,8 @@ HOME_FAMILY = '../resources/mainmenu/home/family.png'
 FAMILY_AUTO_DATE = '../resources/mainmenu/home/family/auto_date.png'
 FAMILY_GO_EDUCATE = '../resources/mainmenu/home/family/go_educate.png'
 SCHOOL_NAME = '../resources/mainmenu/village/school/name.png'
-NAME_OK = '../resources/mainmenu/village/school/name_ok.png'
+CHOOSE_NAME = '../resources/mainmenu/village/school/chooose_name.png'
+CHOOSE_NAME_OK = '../resources/mainmenu/village/school/choose_name_ok.png'
 
 # Fountain of wishes
 FOUNTAIN_10 = '../resources/mainmenu/home/fountain_of_wishes/fountain10.png'
@@ -89,6 +104,7 @@ ROAMING_OK = '../resources/mainmenu/drakenberg/roaming/ok.png'
 ROAMING_CANCEL = '../resources/mainmenu/drakenberg/roaming/cancel.png'
 
 ROAMING_SKIP = '../resources/mainmenu/drakenberg/roaming/susie_skip.png'
+ROAMING_SELECT = '../resources/mainmenu/drakenberg/roaming/select.png'
 
 ROAMING_ANNE = '../resources/mainmenu/drakenberg/roaming/roaming_anne.png'
 ROAMING_ANNE_SKIP = '../resources/mainmenu/drakenberg/roaming/anne_skip.png'
@@ -103,9 +119,9 @@ ROAMING_TREAT = '../resources/mainmenu/drakenberg/roaming/treat.png'
 ROAMING_REIR = '../resources/mainmenu/drakenberg/roaming/roaming_reir.png'
 REIR_NO_THANKS = '../resources/mainmenu/drakenberg/roaming/reir_no_thanks.png'
 
-
 SCHOOL_GO = '../resources/mainmenu/village/school/go.png'
-SCHOOL_OK = '../resources/mainmenu/village/school/notice_ok.png'
+SCHOOL_NOTICE = '../resources/mainmenu/village/school/school_notice.png'
+NOTICE_OK = '../resources/mainmenu/village/school/notice_ok.png'
 
 SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
 OUT_OF_EDUCATION_POINTS = '../resources/mainmenu/village/school/out_of_education_points.png'

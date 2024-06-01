@@ -99,23 +99,25 @@ def add_loc(key, location: Box) -> None:
 
 
 # Copy the position of one to another.
-def cloneposition(original, clone, dx: int = 0, dy: int = 0, _highlight: bool = False) -> None:
+def cloneposition(original, clone, dx: float = 0, dy: float = 0, _highlight: bool = False) -> Box:
     loc = LOC[original]
-    LOC[clone] = Box(loc.left + (dx * loc.width), loc.top + (dy * loc.height), loc.width, loc.height)
+    LOC[clone] = Box(loc.left + int(dx * loc.width), loc.top + int(dy * loc.height), loc.width, loc.height)
     log.info(
         f'Cloned {clone} from {original} @ ({int(LOC[clone].left + LOC[clone].width / 2)}, {int(LOC[clone].top + LOC[clone].height / 2)}) ')
     if _highlight:
         highlight(caption=f'{original}->{clone}', rect=LOC[clone])
+    return LOC[clone]
 
 
 # if a list is provided, locate the first match.
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click_list(aliases: list, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
-               _click=True, _derive: Optional[dict] = None) -> Optional[Box]:
+def click_list(aliases: list, _title: str = APP_TITLE, _confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
+               _clicks: int = 1, _derive: Optional[dict] = None) -> Optional[Box]:
     for image in aliases:
-        loc = click(image, title, confidence, _highlight, _click, match_optional=True)
+        loc = click(_image=image, _title=_title, _confidence=_confidence, _highlight=_highlight, _clicks=_clicks,
+                    match_optional=True)
         if loc is None:
             continue
         else:
@@ -125,38 +127,37 @@ def click_list(aliases: list, title: str = APP_TITLE, confidence: float = 0.5, _
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
-def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
-          _pause: float = 1.5,
-          _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
+def click(_image: str, _title: str = APP_TITLE, _confidence: float = 0.5, _highlight: bool = HIGHLIGHT,
+          _pause: float = 1.5, _clicks: int = 1, _derive: Optional[typing.Dict[str, typing.Union[str, float]]] = None,
           match_optional=False, _use_cache: bool = True, _interval: float = 0.5) -> Optional[Box]:
-    if _use_cache and image in LOC:
-        loc = LOC.get(image)
-        log.info(f'Using cached {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+    if _use_cache and _image in LOC:
+        loc = LOC.get(_image)
+        log.info(f'Using cached {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
     else:
         # if we can't find, move on to next in list.
         try:
-            loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
-            log.info(f'Found {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+            loc = pag.locateOnWindow(image=_image, title=_title, confidence=_confidence, grayscale=True)
+            log.info(f'Found {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
         except pag.ImageNotFoundException as e:
             if match_optional:
                 return None
             else:
-                log.error(f'Unable to find {image}...')
+                log.error(f'Unable to find {_image}...')
                 # Retry on time.
                 try:
-                    log.error(f'Retry 1x to find {image}...')
+                    log.error(f'Retry 1x to find {_image}...')
                     log.warning('CHECK IF THE IMAGE NEEDS TO BE RECAPTURED.')
-                    if image == DRAKENBERG_GUILD:
+                    if _image == DRAKENBERG_GUILD:
                         log.error(f'Please position Drakenberg screen so that Post and Guil are visible')
-                    loc = pag.locateOnWindow(image=image, title=title, confidence=confidence, grayscale=True)
+                    loc = pag.locateOnWindow(image=_image, title=_title, confidence=_confidence, grayscale=True)
                     # on Retry highlight match
-                    highlight(os.path.basename(image), loc)
+                    highlight(os.path.basename(_image), loc)
                 except pag.ImageNotFoundException as e:
                     # Take screenshot to clarify where we are stuck.
                     pag.screenshot(region=(app.left, app.top, app.right - app.left, app.bottom - app.top),
                                    imageFilename=LOG_IMAGE)
                     # Display image we cant find.
-                    os.system(f'start {image}')
+                    os.system(f'start {_image}')
                     # display where we are when match failed.
                     img = Image.open(LOG_IMAGE)
                     img.show()
@@ -164,10 +165,10 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
             exit(-1)
 
     if _clicks != 0:
-        log.info(f'Click {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+        log.info(f'Click {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
     else:
-        log.info(f'Located {image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
-    LOC[image] = loc
+        log.info(f'Located {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+    LOC[_image] = loc
 
     if _derive is not None and _derive.get('target_image') is not None:
         if 'dx' in _derive:
@@ -183,7 +184,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
         LOC[_derive['target_image']] = loc
 
     if _highlight:
-        highlight(os.path.basename(image), loc)
+        highlight(os.path.basename(_image), loc)
 
     if _clicks != 0:
         # when clicked, return point (left, top)
@@ -194,7 +195,7 @@ def click(image: str, title: str = APP_TITLE, confidence: float = 0.5, _highligh
 
 
 def scroll_screen(direction, times):
-    home = click(MM_HOME, confidence=0.5, _highlight=False, _clicks=False)
+    home = click(MM_HOME, _confidence=0.5, _highlight=False, _clicks=False)
 
     if direction == 'left':
         for i in range(times):
@@ -234,9 +235,9 @@ def choose_path(test_image1: str, image_ok1, image_ok2: str):
         pag.sleep(1)
 
 
-def displayed(image: str, confidence: float = 0.5) -> bool:
+def displayed(_image: str, _confidence: float = 0.5) -> bool:
     try:
-        pag.locateOnWindow(image, APP_TITLE, confidence=confidence)
+        pag.locateOnWindow(_image, APP_TITLE, confidence=_confidence)
         return True
     except pag.ImageNotFoundException:
         return False
