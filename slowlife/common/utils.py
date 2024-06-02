@@ -179,8 +179,12 @@ def click(_image: str, _title: str = APP_TITLE, _confidence: float = 0.5, _highl
             dy = _derive['dy']
         else:
             dy = 0
+        if 'dwx' in _derive:
+            dwx = _derive['dwx']
+        else:
+            dwx = 0
 
-        loc = Box(loc.left + dx * loc.width, loc.top + dy * loc.height, loc.width, loc.height)
+        loc = Box(loc.left + int(dx * loc.width), loc.top + int(dy * loc.height), int(dwx*loc.width), loc.height)
         LOC[_derive['target_image']] = loc
 
     if _highlight:

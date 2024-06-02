@@ -4,28 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)">
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/basic_hire_card.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/fame_card.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/golden_fame_card.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/item_tab.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_bravery.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_diligence.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_erudition.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/potion_of_inspiration.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/random_potion.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/unidentified_insight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/choose_name.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/choose_name_ok.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/school_notice.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. First part of storage. Identify consumables.">
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/building_upgrade_blueperint.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/intermediate_hire_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/slide_use.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/capture/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/capture/buildings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/db/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/db/ocr.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/family.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -576,7 +563,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717111755810</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="1. First part of storage. Identify consumables.">
+      <option name="closed" value="true" />
+      <created>1717242588589</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1717242588589</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -592,7 +587,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refactor to cleanup code." />
     <MESSAGE value="Fix db example" />
     <MESSAGE value="Add more tables: player, guild." />
     <MESSAGE value="Add table for gods guild." />
@@ -617,7 +611,8 @@
     <MESSAGE value="1. In Kitchen use inn pamphlet is available.&#10;2. In banquet, improve out of money gift detection." />
     <MESSAGE value="Lots of new features&#10;1. Add colorized log&#10;2. Add beginnings of auto magic farm harvest/sow. Handle delivery. Incomplete chests.&#10;3. Handle more cases for roaming. Incomplete for susie. Need to simplify.&#10;4. Better school process. Incomplete graduation." />
     <MESSAGE value="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)" />
+    <MESSAGE value="1. First part of storage. Identify consumables." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. First part of storage. Identify consumables." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -668,59 +663,29 @@
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/common/utils.py</url>
-          <line>258</line>
-          <option name="timeStamp" value="141" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>450</line>
+          <line>446</line>
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>459</line>
-          <option name="timeStamp" value="174" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>458</line>
-          <option name="timeStamp" value="175" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>448</line>
+          <line>444</line>
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>482</line>
+          <line>478</line>
           <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>257</line>
-          <option name="timeStamp" value="190" />
+          <line>200</line>
+          <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>196</line>
-          <option name="timeStamp" value="192" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>674</line>
-          <option name="timeStamp" value="198" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>668</line>
-          <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>659</line>
-          <option name="timeStamp" value="205" />
+          <line>706</line>
+          <option name="timeStamp" value="221" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

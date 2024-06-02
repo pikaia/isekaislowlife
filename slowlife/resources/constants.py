@@ -16,6 +16,7 @@ FOUNTAIN = True
 BANQUET = True
 DONATE = True
 AUTO_GRADUATE = True
+STORAGE = True
 
 # Main menu
 MAIN_MENU = '../resources/mainmenu/'
@@ -30,6 +31,8 @@ STORAGE_UNIDENTIFIED_INSIGHT = '../resources/mainmenu/storage/unidentified_insig
 STORAGE_RANDOM_POTION = '../resources/mainmenu/storage/random_potion.png'
 STORAGE_GOLDEN_FAME_CARD = '../resources/mainmenu/storage/golden_fame_card.png'
 STORAGE_FAME_CARD = '../resources/mainmenu/storage/fame_card.png'
+STORAGE_EXP_STONE = '../resources/mainmenu/storage/exp_stone.png'
+STORAGE_REFINED_EXPERIENCE_STONE = '../resources/mainmenu/storage/refined_experience_stone.png'
 STORAGE_POTION_OF_INSPIRATION = '../resources/mainmenu/storage/potion_of_inspiration.png'
 STORAGE_POTION_OF_DILIGENCE = '../resources/mainmenu/storage/potion_of_diligence.png'
 STORAGE_POTION_OF_BRAVERY = '../resources/mainmenu/storage/potion_of_bravery.png'
@@ -37,6 +40,10 @@ STORAGE_POTION_OF_ERUDITION = '../resources/mainmenu/storage/potion_of_erudition
 STORAGE_POTION_OF_FREEDOM = '../resources/mainmenu/storage/potion_of_freedom.png'
 STORAGE_BASIC_HIRE_CARD = '../resources/mainmenu/storage/basic_hire_card.png'
 STORAGE_SLIDE = '../resources/mainmenu/storage/slide.png'
+STORAGE_SLIDE_USE = '../resources/mainmenu/storage/slide_use.png'
+STORAGE_USE_ITEM = '../resources/mainmenu/storage/use_item.png'
+STORAGE_BASIC_ELIXIR = '../resources/mainmenu/storage/basic_elixir.png'
+STORAGE_SELECT_IRA = '../resources/mainmenu/storage/select_ira.png'
 
 # Home
 HOME_FOUNTAIN = '../resources/mainmenu/home/fountain_of_wishes.png'
@@ -103,17 +110,16 @@ ROAMING_NO_STAMINA = '../resources/mainmenu/drakenberg/roaming/no_stamina.png'
 ROAMING_OK = '../resources/mainmenu/drakenberg/roaming/ok.png'
 ROAMING_CANCEL = '../resources/mainmenu/drakenberg/roaming/cancel.png'
 
-ROAMING_SKIP = '../resources/mainmenu/drakenberg/roaming/susie_skip.png'
-ROAMING_SELECT = '../resources/mainmenu/drakenberg/roaming/select.png'
-
 ROAMING_ANNE = '../resources/mainmenu/drakenberg/roaming/roaming_anne.png'
 ROAMING_ANNE_SKIP = '../resources/mainmenu/drakenberg/roaming/anne_skip.png'
+ROAMING_SKIP = '../resources/mainmenu/drakenberg/roaming/susie_skip.png'
 TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/tap_to_continue.png'
 SUSIE_TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/susie_tap_to_continue.png'
 ROAMING_BACK = '../resources/mainmenu/drakenberg/roaming/roaming_back.png'
 
 ROAMING_SUSIE = '../resources/mainmenu/drakenberg/roaming/roaming_susie.png'
 SELECT_SADAKO = '../resources/mainmenu/drakenberg/roaming/select_sadako.png'
+ROAMING_SELECT = '../resources/mainmenu/drakenberg/roaming/select.png'
 ROAMING_TREAT = '../resources/mainmenu/drakenberg/roaming/treat.png'
 
 ROAMING_REIR = '../resources/mainmenu/drakenberg/roaming/roaming_reir.png'

@@ -11,69 +11,71 @@ from slowlife.common.utils import (log,
                                    click_list,
                                    add_loc, choose_path, highlight, displayed, locate_all_on_window)
 
-from slowlife.resources.constants import (APP_TITLE,
+from slowlife.resources.constants import (
+    APP_TITLE,
 
-                                          COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE,
-                                          AUTO_GRADUATE,
+    COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE,
+    AUTO_GRADUATE,
 
-                                          MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG, MM_STORAGE,
+    MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG, MM_STORAGE,
 
-                                          HOME_FOUNTAIN, HOME_FAMILY,
+    HOME_FOUNTAIN, HOME_FAMILY,
 
-                                          VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD,
-                                          VILLAGE_SCHOOL,
+    VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD,
+    VILLAGE_SCHOOL,
 
-                                          DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING,
-                                          DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED, BANQUET_ALREADY_ATTENDED,
+    DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING,
+    DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED, BANQUET_ALREADY_ATTENDED,
 
-                                          TRADINGPOST_GOLD1, TRADINGPOST_GOLD2,
+    TRADINGPOST_GOLD1, TRADINGPOST_GOLD2,
 
-                                          GUILD_REQUESTS, GUILD_HANDLE,
+    GUILD_REQUESTS, GUILD_HANDLE,
 
-                                          RANDOM_REQUESTS,
+    RANDOM_REQUESTS,
 
-                                          ROAMING_GO, ROAMING_OK, ROAMING_USE, ROAMING_NO_STAMINA,
+    ROAMING_GO, ROAMING_OK, ROAMING_USE, ROAMING_NO_STAMINA,
 
-                                          STAGE_FULLAUTO, STAGE_START,
+    STAGE_FULLAUTO, STAGE_START,
 
-                                          FISHING_COLLECT_BAIT,
+    FISHING_COLLECT_BAIT,
 
-                                          FOUNTAIN_1,
+    FOUNTAIN_1,
 
-                                          KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2,
-                                          KITCHEN_USE_INN_PAMPHLET,
+    KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2,
+    KITCHEN_USE_INN_PAMPHLET,
 
-                                          SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK,
-                                          GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION, NOTICE_OK, SCHOOL_NAME,
-                                          SCHOOL_GO,
+    SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK,
+    GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION, NOTICE_OK, SCHOOL_NAME,
+    SCHOOL_GO,
 
-                                          BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
+    BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
 
-                                          GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
-                                          DONATION_OPENED, DONATION_CLOSED,
+    GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
+    DONATION_OPENED, DONATION_CLOSED,
 
-                                          ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
-                                          ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
-                                          ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
-                                          ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
+    ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
+    ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
+    ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
+    ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
 
-                                          GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
-                                          GARDEN_CAVE,
-                                          ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
-                                          GARDEN_CONFIRM, PLANT_ORDER_NOTICE, GARDEN_ORDER,
+    GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
+    GARDEN_CAVE,
+    ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
+    GARDEN_CONFIRM, PLANT_ORDER_NOTICE, GARDEN_ORDER,
 
-                                          FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, BANQUET_HAS_ENDED,
-                                          OUT_OF_EDUCATION_POINTS,
+    FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, BANQUET_HAS_ENDED,
+    OUT_OF_EDUCATION_POINTS,
 
-                                          STORAGE_ITEM_TAB, STORAGE_BASIC_HIRE_CARD,
-                                          SCHOOL_NOTICE, CHOOSE_NAME, CHOOSE_NAME_OK, STORAGE_UNIDENTIFIED_INSIGHT,
+    STORAGE_ITEM_TAB, STORAGE_BASIC_HIRE_CARD,
+    SCHOOL_NOTICE, CHOOSE_NAME, CHOOSE_NAME_OK, STORAGE_UNIDENTIFIED_INSIGHT,
 
-                                          STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
-                                          STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
-                                          STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
-                                          STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE
+    STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
+    STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
+    STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
+    STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE, STORAGE_SLIDE_USE, STORAGE,
+    STORAGE_REFINED_EXPERIENCE_STONE, STORAGE_EXP_STONE, STORAGE_BASIC_ELIXIR, STORAGE_SELECT_IRA, STORAGE_USE_ITEM
 
-                                          )
+)
 
 # Limit donation to 4 times.
 donations_done: bool = False
@@ -93,6 +95,8 @@ def collect_trading_post_gold(maxtimes: int = 30):
     register_locations()
 
     for x in range(0, maxtimes):
+        if STORAGE: do_storage()
+
         do_collect_gold(maxtimes, x)
 
         # Check for Banquets.
@@ -194,9 +198,29 @@ def do_magic_farm() -> None:
     # magic garden
     click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2])
     try:
-        quick_harvest = pag.locateOnWindow(GARDEN_QUICK_HARVEST, APP_TITLE, grayscale=True, confidence=0.8)
-        pag.click(quick_harvest)
-        pag.sleep(1)
+        if displayed(GARDEN_QUICK_HARVEST, _confidence=0.8):
+            click(GARDEN_QUICK_HARVEST)
+
+        if displayed(GARDEN_QUICK_SOW, _confidence=0.8):
+            click(GARDEN_QUICK_SOW)
+
+        # Handle caves.
+        while displayed(GARDEN_CAVE):
+            log.info('Quick assign a cave')
+            click(GARDEN_CAVE)
+            click(GARDEN_ASSIGN, _confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
+            click(GARDEN_CONFIRM, _confidence=0.8)
+            click('DISMISS')
+
+        # Handle chests.
+        while displayed(GARDEN_CHEST, _confidence=0.8):
+            log.info('Clear a chest')
+            click(GARDEN_CHEST, _confidence=0.8)
+            click(GARDEN_ASSIGN, _confidence=0.8)
+            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
+            click(GARDEN_CONFIRM, _confidence=0.8)
+            click('DISMISS')
 
         # Ignore notice
         if displayed(PLANT_ORDER_NOTICE):
@@ -227,40 +251,11 @@ def do_magic_farm() -> None:
 
         try:
             deliver = pag.locateOnWindow(ORDERS_DELIVER, APP_TITLE, grayscale=True, confidence=0.8)
-            log.warn('Delivered order')
+            log.warning('Delivered order')
             pag.click(deliver)
             pag.click(deliver)
             pag.sleep(1)
         except pag.ImageNotFoundException:
-            # Return to village
-            click('BACK')
-            return
-
-        # Handle caves.
-        while displayed(GARDEN_CAVE):
-            log.info('Quick assign a cave')
-            click(GARDEN_CAVE)
-            click(GARDEN_ASSIGN, _confidence=0.8)
-            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
-            click(GARDEN_CONFIRM, _confidence=0.8)
-            click('DISMISS')
-
-        # Handle chests.
-        while displayed(GARDEN_CHEST, _confidence=0.8):
-            log.info('Clear a chest')
-            click(GARDEN_CHEST, _confidence=0.8)
-            click(GARDEN_ASSIGN, _confidence=0.8)
-            click(GARDEN_QUICK_ASSIGN, _confidence=0.8)
-            click(GARDEN_CONFIRM, _confidence=0.8)
-            click('DISMISS')
-
-        try:
-            garden_quick_sow = pag.locateOnWindow(GARDEN_QUICK_SOW, APP_TITLE, grayscale=True, confidence=0.8)
-            log.warning('Sowing...')
-            pag.click(garden_quick_sow)
-        except pag.ImageNotFoundException:
-            # no harvest available. exit.
-            log.warning('No sowing needed. Skipping')
             # Return to village
             click('BACK')
             return
@@ -324,6 +319,7 @@ def do_roaming():
             click(SUSIE_TAP_TO_CONTINUE, _confidence=0.9)
             click(ROAMING_BACK, _confidence=0.8)
             return
+
         # reir
         if displayed(ROAMING_REIR, _confidence=0.8):
             click(ROAMING_ANNE_SKIP, _confidence=0.8)
@@ -456,8 +452,8 @@ def do_school():
                     pag.sleep(1.5)
 
             if displayed(SCHOOL_NAME, _confidence=0.8):
-                if displayed(CHOOSE_NAME, _confidence=0.8):
-                    click(CHOOSE_NAME_OK, _confidence=0.8)
+                # if displayed(CHOOSE_NAME_OK, _confidence=0.8):
+                click(CHOOSE_NAME_OK, _confidence=0.8)
 
             # Skip if student is about to graduate.
             try:
@@ -634,59 +630,82 @@ def do_storage():
             items[r][c] = cloneposition(STORAGE_ITEM_TAB, 'item', dx=c * 1.1, dy=(r + 1) * 1.5, _highlight=False)
             log.info(f'r={r}, c={c}, item[{r}][{c}]={items[r][c]}')
 
-    log.info(items)
-
     # Display item and try to match our list.
-    for r in range(3):
-        for c in range(5):
+    for r in reversed(range(3)):
+        for c in reversed(range(5)):
             log.info(f'Checking item at row {r}, column {c}...')
-            pag.click(items[r][c])
             pag.sleep(0.5)
+            pag.click(items[r][c])
+            pag.sleep(1)
             matched = False
-            for needle_name in [STORAGE_UNIDENTIFIED_INSIGHT, STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD,
-                                STORAGE_FAME_CARD, STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
-                                STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION, STORAGE_POTION_OF_FREEDOM,
-                                STORAGE_BASIC_HIRE_CARD
-                                ]:
-                try:
-                    needle = pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
-                    highlight('item', needle)
-                    matched = True
-                    log.info(f'Item identified: {needle_name}...')
-                    break
-                except pag.ImageNotFoundException:
-                    pass
 
-            if not matched:
-                # click again to dismiss item.
-                pag.click(items[r][c])
-            else:
-
-                # click again to dismiss item.
-                pag.click(items[r][c])
-
-                # todo: slide the bar to max
-                # try:
-                #     slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.8)
-                #     log.info('Slide...')
-                # except pag.ImageNotFoundException:
-                #     log.info('Cannot find Slide...')
+            # If meant for fellow, we are done.
+            if not item_for_fellow(matched):
+                # If not, then check if meant for all.
+                item_for_all(matched, dismiss=items[0][0])
 
     log.info('test')
 
 
-# consumables = [STORAGE_PURPLE_POTION, STORAGE_YELLOW_POTION, STORAGE_RED_POTION, STORAGE_BLUE_POTION,
-#                STORAGE_BASIC_HIRE]
-#
-# for item in consumables:
-#     loc = pag.locateOnWindow(item, APP_TITLE, confidence=0.8)
-#     pt = pag.center(loc)
-#     pix = pag.pixel(pt.x, pt.y)
-#     log.info(f'{item}, {loc}, {pix}')
-#     highlight('item', loc)
+def item_for_all(matched: bool, dismiss):
+    for needle_name in [
+        STORAGE_UNIDENTIFIED_INSIGHT, STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
+        STORAGE_REFINED_EXPERIENCE_STONE, STORAGE_EXP_STONE, STORAGE_POTION_OF_INSPIRATION,
+        STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
+        STORAGE_POTION_OF_FREEDOM, STORAGE_BASIC_HIRE_CARD
+    ]:
+        try:
+            pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
+            matched = True
+            log.info(f'Item identified: {needle_name}...')
+            break
+        except pag.ImageNotFoundException:
+            pass
+    if not matched:
+        # click anywhere to dismiss item.
+        pag.click(dismiss)
+    else:
+        # Click slide by matching the image so that it centers on the end of the slider.
+        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.7)
+        # highlight('slide', slide)
+        pag.click(slide)
+        click(STORAGE_SLIDE_USE, _confidence=0.7)
+        click(STORAGE_SELECT_IRA, _derive={'target_image': 'IRA_SELECT', 'dx': 0.8})
+        log.warning(f'Used {needle_name}')
+        click('BACK')
+
+
+def item_for_fellow(matched: bool) -> bool:
+    for needle_name in [STORAGE_BASIC_ELIXIR]:
+        try:
+            pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
+            matched = True
+            log.info(f'Item identified: {needle_name}...')
+            break
+        except pag.ImageNotFoundException:
+            pass
+    if not matched:
+        return False
+    else:
+        # Click slide by matching the image so that it centers on the end of the slider.
+        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.7)
+        # highlight('slide', slide)
+        pag.click(slide)
+        click(STORAGE_SLIDE_USE, _confidence=0.7)
+        click(STORAGE_USE_ITEM, _confidence=0.8, _highlight=True)
+        click(STORAGE_SELECT_IRA, _confidence=0.7,
+              _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 0.8, 'dwx': 0.2})
+        log.warning(f'Used {needle_name}')
+        # dismiss confirmation screen for Ira.
+        click('BACK')
+        return True
+
 
 while True:
-    # do_storage()
+
+    # click(STORAGE_SLIDE_USE, _confidence=0.7)
+    # slide = pag.locateOnWindow(STORAGE_SLIDE_USE, APP_TITLE, grayscale=True, confidence=0.7)
+    # highlight('slide', slide)
     # school_go = pag.locateOnWindow(SCHOOL_NAME, APP_TITLE, grayscale=True, confidence=0.83)
     # highlight('school_go', school_go)
     # if displayed(SCHOOL_GO, confidence=0.9):
