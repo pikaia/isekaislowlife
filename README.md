@@ -106,9 +106,16 @@ There are 10 treasures that give different buffs. In particular, there is a buff
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/8f8eaa78-cd58-4156-8f3e-e815b8c8c992)
 
-The buff gives the Treasure Inn bonus. The first treasure Inn number is unknown at this time. Perhaps an average?
+The first treasure Inn number comes from the basic earnings buff.
 
-Add the Treasure Inn bonus to the earnings bonus to derive the total earnings bonus.
+In this screenshot it is +14, and the number of empoyees was 9667. 14*9667 = 135338 or 135.3 K/s
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/e30a3cd9-390e-456b-a739-04d612bf5295)
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/31bc4391-5f68-42f7-82a2-577738370b7e)
+
+
+The individual buff gives the Treasure Inn bonus. Add the Treasure Inn bonus to the earnings bonus to derive the total earnings bonus.
 
 ## Magic farm
 This seems related to the plant encylopedia totals and the earnings increase from the money tree.
