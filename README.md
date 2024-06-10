@@ -97,6 +97,19 @@ eg the Scroll Shop is an Inspiring type building, so its bonus is 945%
 
 ![image](https://github.com/pikaia/isekaislowlife/assets/1948869/6643f11f-2fa4-4e72-8e5c-e3cd7f4d830a)
 
+# 20240607 Treasure Inn update
+With this update another variable is added to the building earnings.
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/0c91f63e-e572-4300-ae1a-ed2fabc0416b)
+
+There are 10 treasures that give different buffs. In particular, there is a buff for each building type.
+
+![image](https://github.com/pikaia/isekaislowlife/assets/1948869/8f8eaa78-cd58-4156-8f3e-e815b8c8c992)
+
+The buff gives the Treasure Inn bonus. The first treasure Inn number is unknown at this time. Perhaps an average?
+
+Add the Treasure Inn bonus to the earnings bonus to derive the total earnings bonus.
+
 ## Magic farm
 This seems related to the plant encylopedia totals and the earnings increase from the money tree.
 
