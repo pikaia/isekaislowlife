@@ -1,4 +1,4 @@
-# Main script for collecting gold, roaming, random requests, inn serve,
+# Main script for collecting gold, roaming, random requests, inn serve
 APP_TITLE = 'BlueStacks App Player'
 
 # global toggles
@@ -15,8 +15,9 @@ STAGE = False
 FOUNTAIN = True
 BANQUET = True
 DONATE = True
-AUTO_GRADUATE = True
-STORAGE = True
+AUTO_GRADUATE = False
+STORAGE = False
+MAGIC_FARM = False
 
 # Main menu
 MAIN_MENU = '../resources/mainmenu/'
@@ -27,6 +28,8 @@ MM_DRAKENBERG = '../resources/mainmenu/drakenberg.png'
 MM_STORAGE = '../resources/mainmenu/storage.png'
 
 STORAGE_ITEM_TAB = '../resources/mainmenu/storage/item_tab.png'
+STORAGE_NORMAL_ARTIFACT_CHEST = '../resources/mainmenu/storage/normal_artifact_chest.png'
+STORAGE_UNPROCESSED_DRUSE = '../resources/mainmenu/storage/unprocessed_druse.png'
 STORAGE_UNIDENTIFIED_INSIGHT = '../resources/mainmenu/storage/unidentified_insight.png'
 STORAGE_RANDOM_POTION = '../resources/mainmenu/storage/random_potion.png'
 STORAGE_GOLDEN_FAME_CARD = '../resources/mainmenu/storage/golden_fame_card.png'
@@ -95,6 +98,7 @@ BANQUET_NONE_HOSTED = '../resources/mainmenu/drakenberg/banquet/none_hosted.png'
 BANQUET_MONEY_FULL = '../resources/mainmenu/drakenberg/banquet/gift_money_full.png'
 BANQUET_ATTEND_PARTY = '../resources/mainmenu/drakenberg/banquet/attend_party.png'
 BANQUET_TAKE_SEAT = '../resources/mainmenu/drakenberg/banquet/take_seat.png'
+BANQUET_BACK = '../resources/mainmenu/drakenberg/banquet/banquet_back.png'
 
 # Stage
 STAGE_FULLAUTO = '../resources/mainmenu/stage/fullauto.png'
@@ -113,8 +117,6 @@ ROAMING_CANCEL = '../resources/mainmenu/drakenberg/roaming/cancel.png'
 ROAMING_ANNE = '../resources/mainmenu/drakenberg/roaming/roaming_anne.png'
 ROAMING_ANNE_SKIP = '../resources/mainmenu/drakenberg/roaming/anne_skip.png'
 ROAMING_SKIP = '../resources/mainmenu/drakenberg/roaming/susie_skip.png'
-TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/tap_to_continue.png'
-SUSIE_TAP_TO_CONTINUE = '../resources/mainmenu/drakenberg/roaming/susie_tap_to_continue.png'
 ROAMING_BACK = '../resources/mainmenu/drakenberg/roaming/roaming_back.png'
 
 ROAMING_SUSIE = '../resources/mainmenu/drakenberg/roaming/roaming_susie.png'
@@ -122,8 +124,15 @@ SELECT_SADAKO = '../resources/mainmenu/drakenberg/roaming/select_sadako.png'
 ROAMING_SELECT = '../resources/mainmenu/drakenberg/roaming/select.png'
 ROAMING_TREAT = '../resources/mainmenu/drakenberg/roaming/treat.png'
 
+ROAMING_MAYNARD = '../resources/mainmenu/drakenberg/roaming/roaming_maynard.png'
+CONGRATULATIONS = '../resources/mainmenu/drakenberg/roaming/congratulations.png'
+
 ROAMING_REIR = '../resources/mainmenu/drakenberg/roaming/roaming_reir.png'
 REIR_NO_THANKS = '../resources/mainmenu/drakenberg/roaming/reir_no_thanks.png'
+REIRS_SONG = '../resources/mainmenu/drakenberg/roaming/reirs_song.png'
+
+ROAMING_MEADEN = '../resources/mainmenu/drakenberg/roaming/roaming_meaden.png'
+SELECT_IRA = '../resources/mainmenu/drakenberg/roaming/select_ira.png'
 
 SCHOOL_GO = '../resources/mainmenu/village/school/go.png'
 SCHOOL_NOTICE = '../resources/mainmenu/village/school/school_notice.png'
@@ -133,6 +142,7 @@ SCHOOL_EDUCATE = '../resources/mainmenu/village/school/educate.png'
 OUT_OF_EDUCATION_POINTS = '../resources/mainmenu/village/school/out_of_education_points.png'
 SCHOOL_USE_ITEM = '../resources/mainmenu/village/school/school_use_item.png'
 SCHOOL_BACK = '../resources/mainmenu/village/school/school_back.png'
+SCHOOL_OUT_OF_RESOURCES = '../resources/mainmenu/village/school/out_of_resources.png'
 
 SCHOOL_GRADUATE = '../resources/mainmenu/village/school/graduate.png'
 GRADUATE_OK = '../resources/mainmenu/village/school/graduate_ok.png'
@@ -180,6 +190,10 @@ CAPTURE_MINI_APP = '../resources/ss/data/source/building/mini_app.png'
 
 BUILDINGS = ['inn', 'apothecary', 'workshop', 'scroll shop', 'spring resort', 'central station', 'patisserie',
              'archery range', 'clinic', 'market street', 'bank', 'tailor shop', 'sports park', 'museum', 'theatre']
+
+MINE_ATTACK = '../resources/mainmenu/mine/attack.png'
+MINE_POWER_0 = '../resources/mainmenu/mine/power_0.png'
+MINE_OK = '../resources/mainmenu/mine/ok.png'
 
 # Files used to drive capture
 SOURCE_BUILDING_FOLDER = '../resources/ss/data/source/building'

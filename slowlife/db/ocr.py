@@ -21,11 +21,12 @@ print(text)
 # 1. Earnings is in the row with Earnings:
 pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
 
-types = ['inspiring', 'diligent', 'brave', 'informed', 'unfettered']
+types = ['Inspiring', 'Diligent', 'Brave', 'Informed', 'Unfettered']
 pos = []
 for line in text.splitlines():
+    print(f'Checking line: [{line}]')
     for typ in types:
-        pattern = re.compile(r'.*{type}.*\+([0-9].*)%', re.IGNORECASE)
+        pattern = re.compile(r'{type}', re.IGNORECASE)
         result = re.search(pattern, line)
         if result is not None:
             print(line, result, '||', result.groups(), '||', result.group(result.lastindex))

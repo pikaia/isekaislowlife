@@ -4,16 +4,208 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. First part of storage. Identify consumables.">
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/building_upgrade_blueperint.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/intermediate_hire_card.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/slide_use.png" afterDir="false" />
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Add colored logger">
+      <change afterPath="$PROJECT_DIR$/slowlife/bot/Pick.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/Merged_document.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/Solo Leveling c1-270.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/bulletin 20240602 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/bulletin 20240602 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/bulletin 20240602 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/log/guild trade/bulletin 20240602 4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/defaults/drakenberg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/defaults/home.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/defaults/village.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/banquet/banquet_back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/congratulations.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/reirs_song.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_maynard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/roaming_meaden.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/select_ira.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/mine/attack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/mine/ok.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/mine/power_0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/advanced_elixir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/andras_fragment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/andras_token.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/blue_alraunne_essence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/brave_proficiency.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/diligent_proficiency.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/green_alraunne_essence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/hermes_fragment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/hermes_token.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/informed_proficiency.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/inspiring_proficiency.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/magic_fragment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/magic_insignia.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/nemetona_fragment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/nemetona_token.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/normal_artifact_chest.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/orange_alraunne_essence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/purple_alraunne_essence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/unfettered_proficiency.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/unprocessed_druse.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/valiant_fragment.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/valiant_insignia.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/storage/yellow_alraunne_essence.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/advanced_hire_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/big_cooking_pot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/black_pearl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/intermediate_hire_card.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/kitchen/pearl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/out_of_resources.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240607 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240607 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240607 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240609 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240609 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/guild/deployment 20240609 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/Meowchelin Medal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/Tou's affinity Umbrella.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/Twin Dragon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/cool tea bevearage machine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/golden camel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/hunter's hat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/lavish doghouse.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/noble lamp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/outsized omamori.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/ss/data/source/kitchen/phonograph in sea.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/inn_level_8_hire.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/mueseum_level_4_hire.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/screenshot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/stage_1247_5 cost.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/stage_1248_1_cost.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/stage_1248_2_cost.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/test.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/trading_post.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/claim.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/login_green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/login_greyed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/drakenberg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/enter_inn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/enter_magic_garden1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/autodate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_bottom_left.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_top_left.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing/advanced_blessing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing/fellow_blessing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/blessing_available.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/interact.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/family_training/skills.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/family/study_tour.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/fellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/stage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/storage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/chat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/chat_continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/stroll1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/tounoislandstory/stroll2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/banquet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/challenge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/enter_guild.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/enter_trading_post.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/donated.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/drag_point.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/donation/medium_donation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/handle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/quick_handle_checkbox.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/guild/random_requests.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/recruit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/go.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/ok.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/roaming/skip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/gold_motivation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/item_motivation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/items_empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/negotiate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/tap_to_continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/challenge/too_much.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/autohandle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events/tap_to_continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events_x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/events_y.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/stage/go.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/fixture_left_of_gold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_available.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/gold_zero.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/negotiate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/drakenberg/trading_post/person_below_gold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_kitchen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_magic_garden1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/enter_magic_garden2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/awaken.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/alraunes_gift.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/aptitude_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/limit_break_i.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/secrets_of_the_sea.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude/supreme_talent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/aptitude_disabled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/born_aptitude.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/brave_expertise.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/fellow_stats/weaponry_trading.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/level_up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/limit_break.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fellow/operation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fish/no_bait.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/fishing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/inn_visible.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/guests_available.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/inn_pamphlet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/ok.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/order_jewels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/serve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/kitchen/station_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/drag_point.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/fram_drag_point.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/money_tree.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/orders_deliver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/orders_filled.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/quick_harvest.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/quick_sow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/sch0ol.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/school/pupils_row.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/shop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/magic_garden/union_hall.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/npc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/below_pupils.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/educate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school/first_pupil.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/mainmenu/village/school_visible.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/common/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/common/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/db/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/db/ocr.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/name_ok.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/susie_tap_to_continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/tap_to_continue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/home/fountain_of_wishes.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_school.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/enter_school.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/school_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/village/school/school_back.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +249,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.Pick.executor": "Run",
     "Python.buildings (1).executor": "Run",
     "Python.buildings.executor": "Run",
     "Python.constants.executor": "Run",
@@ -69,7 +262,7 @@
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
     "Python.ocr (1).executor": "Debug",
-    "Python.ocr.executor": "Run",
+    "Python.ocr.executor": "Debug",
     "Python.utils.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -93,6 +286,28 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.game">
+    <configuration name="Pick" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pythonProject1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/bot" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/bot/Pick.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pythonProject1" />
       <option name="ENV_FILES" value="" />
@@ -129,28 +344,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/bot/game.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="kitchen" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pythonProject1" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/slowlife/capture" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slowlife/capture/kitchen.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -228,10 +421,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.game" />
+        <item itemvalue="Python.Pick" />
         <item itemvalue="Python.ocr" />
         <item itemvalue="Python.utils" />
         <item itemvalue="Python.constants" />
-        <item itemvalue="Python.kitchen" />
       </list>
     </recent_temporary>
   </component>
@@ -571,7 +764,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717242588589</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="1. Finish storage feature. Extended click to optionally crop derived locations. Storage divided into those targetting the strongest fellow, and those for all fellows.">
+      <option name="closed" value="true" />
+      <created>1717289316051</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1717289316052</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -587,7 +788,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Fix db example" />
     <MESSAGE value="Add more tables: player, guild." />
     <MESSAGE value="Add table for gods guild." />
     <MESSAGE value="Moved generated/soue image folders. Reuse code from utils." />
@@ -612,7 +812,8 @@
     <MESSAGE value="Lots of new features&#10;1. Add colorized log&#10;2. Add beginnings of auto magic farm harvest/sow. Handle delivery. Incomplete chests.&#10;3. Handle more cases for roaming. Incomplete for susie. Need to simplify.&#10;4. Better school process. Incomplete graduation." />
     <MESSAGE value="1. Correct destination folder for drakenberg. &#10;2. Started graduation process but hit a snag where pag cant distinguish between small buttons.&#10;3. Handle more specific cases for roaming (anne, reir, susie)" />
     <MESSAGE value="1. First part of storage. Identify consumables." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. First part of storage. Identify consumables." />
+    <MESSAGE value="1. Finish storage feature. Extended click to optionally crop derived locations. Storage divided into those targetting the strongest fellow, and those for all fellows." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Finish storage feature. Extended click to optionally crop derived locations. Storage divided into those targetting the strongest fellow, and those for all fellows." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -664,28 +865,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>446</line>
-          <option name="timeStamp" value="173" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>444</line>
-          <option name="timeStamp" value="176" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>478</line>
+          <line>491</line>
           <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>200</line>
+          <line>195</line>
           <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/db/ocr.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/Pick.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>706</line>
-          <option name="timeStamp" value="221" />
+          <line>556</line>
+          <option name="timeStamp" value="296" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>321</line>
+          <option name="timeStamp" value="300" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -3,29 +3,31 @@ from datetime import timedelta
 
 import pyautogui as pag
 
-from slowlife.common.utils import (log,
-                                   click,
-                                   log_sleep,
-                                   start,
-                                   cloneposition,
-                                   click_list,
-                                   add_loc, choose_path, highlight, displayed, locate_all_on_window)
+from slowlife.common.utils import (
+    log,
+    click,
+    log_sleep,
+    start,
+    cloneposition,
+    click_list,
+    add_loc,
+    displayed,
+    locate_on_window
+)
 
 from slowlife.resources.constants import (
     APP_TITLE,
 
-    COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE,
-    AUTO_GRADUATE,
+    COLLECT_GOLD, BANQUET, ROAMING, FOUNTAIN, KITCHEN, SCHOOL, DONATE, STAGE, AUTO_GRADUATE, MAGIC_FARM,
 
     MM_HOME, MM_VILLAGE, MM_STAGE, MM_DRAKENBERG, MM_STORAGE,
 
     HOME_FOUNTAIN, HOME_FAMILY,
 
-    VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD,
-    VILLAGE_SCHOOL,
+    VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD, VILLAGE_SCHOOL,
 
-    DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING,
-    DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED, BANQUET_ALREADY_ATTENDED,
+    DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING, DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED,
+    BANQUET_ALREADY_ATTENDED,
 
     TRADINGPOST_GOLD1, TRADINGPOST_GOLD2,
 
@@ -41,40 +43,33 @@ from slowlife.resources.constants import (
 
     FOUNTAIN_1,
 
-    KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2,
-    KITCHEN_USE_INN_PAMPHLET,
+    KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2, KITCHEN_USE_INN_PAMPHLET,
 
-    SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK,
-    GRADUATE_CONGRATS_OK, GRADUATE_FORM_UNION, NOTICE_OK, SCHOOL_NAME,
-    SCHOOL_GO,
+    SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_CONGRATS_OK,
+    NOTICE_OK, SCHOOL_NAME, SCHOOL_GO, SCHOOL_OUT_OF_RESOURCES, SCHOOL_NOTICE,
 
-    BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT,
+    BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT, BANQUET_BACK,
 
     GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
-    DONATION_OPENED, DONATION_CLOSED,
 
-    ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1,
-    ROAMING_ANNE_SKIP, ROAMING_ANNE, TAP_TO_CONTINUE,
-    ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, SUSIE_TAP_TO_CONTINUE,
-    ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
+    ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1, ROAMING_ANNE_SKIP, ROAMING_ANNE,
+    ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
+    REIRS_SONG,
 
-    GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED,
-    GARDEN_CAVE,
-    ORDERS_DELIVER, ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN,
-    GARDEN_CONFIRM, PLANT_ORDER_NOTICE, GARDEN_ORDER,
+    ROAMING_MAYNARD, CONGRATULATIONS,
 
-    FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, BANQUET_HAS_ENDED,
-    OUT_OF_EDUCATION_POINTS,
+    GARDEN_QUICK_HARVEST, GARDEN_QUICK_SOW, GARDEN_CHEST, GARDEN_ORDERS_FILLED, GARDEN_CAVE, ORDERS_DELIVER,
+    ORDERS_LEVEL, GARDEN_ASSIGN, GARDEN_QUICK_ASSIGN, GARDEN_CONFIRM, PLANT_ORDER_NOTICE, GARDEN_ORDER,
 
-    STORAGE_ITEM_TAB, STORAGE_BASIC_HIRE_CARD,
-    SCHOOL_NOTICE, CHOOSE_NAME, CHOOSE_NAME_OK, STORAGE_UNIDENTIFIED_INSIGHT,
+    FAMILY_AUTO_DATE, FAMILY_GO_EDUCATE, BANQUET_HAS_ENDED, OUT_OF_EDUCATION_POINTS,
 
-    STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
-    STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE,
-    STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
-    STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE, STORAGE_SLIDE_USE, STORAGE,
-    STORAGE_REFINED_EXPERIENCE_STONE, STORAGE_EXP_STONE, STORAGE_BASIC_ELIXIR, STORAGE_SELECT_IRA, STORAGE_USE_ITEM
+    STORAGE_ITEM_TAB, STORAGE_BASIC_HIRE_CARD, CHOOSE_NAME_OK, STORAGE_UNIDENTIFIED_INSIGHT,
 
+    STORAGE_NORMAL_ARTIFACT_CHEST, STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
+    STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
+    STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE, STORAGE_SLIDE_USE, STORAGE, STORAGE_REFINED_EXPERIENCE_STONE,
+    STORAGE_EXP_STONE, STORAGE_BASIC_ELIXIR, STORAGE_SELECT_IRA, STORAGE_USE_ITEM, STORAGE_UNPROCESSED_DRUSE,
+    MINE_ATTACK, MINE_POWER_0, MINE_OK, ROAMING_MEADEN, SELECT_IRA
 )
 
 # Limit donation to 4 times.
@@ -92,8 +87,6 @@ school_initialized: bool = False
 # 2. if trading pot gold is maxed out, clear it first.
 # 3. in the village make sure inn and fish are on the screen.
 def collect_trading_post_gold(maxtimes: int = 30):
-    register_locations()
-
     for x in range(0, maxtimes):
         if STORAGE: do_storage()
 
@@ -102,7 +95,7 @@ def collect_trading_post_gold(maxtimes: int = 30):
         # Check for Banquets.
         if BANQUET: do_banquet()
 
-        click(MM_HOME)
+        click(MM_HOME, _confidence=0.8)
 
         click(MM_DRAKENBERG)
 
@@ -116,11 +109,13 @@ def collect_trading_post_gold(maxtimes: int = 30):
         if KITCHEN:
             do_farmstead()
 
-            do_magic_farm()
+            if MAGIC_FARM:
+                do_magic_farm()
 
             # serve in inn. Free try every 20 mins. 47 = 20*60/26
             # if ENTER_KITCHEN and (x % 47 == 0):
-            do_school()
+            if SCHOOL:
+                do_school()
 
             do_collect_bait()
 
@@ -128,7 +123,7 @@ def collect_trading_post_gold(maxtimes: int = 30):
 
         # give time for staging to run and gold to accumulate
         pag.sleep(3)
-        click(MM_HOME, _clicks=2, _pause=2)
+        click(MM_HOME, _confidence=0.8, _clicks=2, _pause=2)
         pag.sleep(4)
 
         do_fountain()
@@ -155,7 +150,7 @@ def register_locations():
     click(MM_STORAGE, _clicks=0, _confidence=0.8)
 
     # Register village locations
-    click(MM_VILLAGE)
+    click(MM_VILLAGE, _confidence=0.45)
     click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=0)
     click_list([VILLAGE_KITCHEN1, VILLAGE_KITCHEN2], _title=APP_TITLE, _confidence=0.48, _clicks=0)
     click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], _clicks=0)
@@ -174,7 +169,7 @@ def do_collect_gold(maxtimes, x):
     if COLLECT_GOLD:
         # assume main menu is displayed.
         # On the left 'Post' is visible, one the right 'Guild'
-        log.info(f'Collecting gold {x}/{maxtimes}...')
+        log.critical(f'Collecting gold {x}/{maxtimes}...')
         click(MM_DRAKENBERG)
         click(DRAKENBERG_TRADINGPOST)
 
@@ -191,7 +186,7 @@ def do_farmstead():
     log_sleep(MM_VILLAGE, 1)
     click(MM_VILLAGE, _confidence=0.45)
     # Get some gold from Farmstead
-    click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=50, _interval=0.1)
+    click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=150, _interval=0.1)
 
 
 def do_magic_farm() -> None:
@@ -242,7 +237,7 @@ def do_magic_farm() -> None:
             except pag.ImageNotFoundException:
                 break
 
-        # 2. Check the last order below. Drag screeen up a little.
+        # 2. Check the last order below. Drag screen up a little.
         orders_level = pag.locateOnWindow(ORDERS_LEVEL, APP_TITLE, grayscale=True, confidence=0.8)
         x, y = pag.center(orders_level)
         pag.mouseDown(x, y)
@@ -267,112 +262,6 @@ def do_magic_farm() -> None:
 
     # Return to village
     click('BACK')
-
-
-# We must be in Drakenberg
-def do_roaming():
-    if ROAMING:
-        pag.sleep(1)
-        click(DRAKENBERG_ROAMING)
-        # Give time for screen to refresh
-        log_sleep(DRAKENBERG_ROAMING, 0.5)
-        click(ROAMING_GO)
-        log_sleep(DRAKENBERG_ROAMING, 1)
-
-        # roaming has outcomes when u click on GO
-        # 1. roaming not available: go -> No stamina -> click go again to dismiss -> back to go
-        # 2. roaming available:     go -> ok dialogue -> click ok -> back
-        # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _clicks=0)
-
-        # choose_path(test_image1=ROAMING_NO_STAMINA, image_ok_click1=ROAMING_GO, imageok_click1='BACK')
-
-        try:
-            pag.locateOnWindow(ROAMING_NO_STAMINA, APP_TITLE, grayscale=True, confidence=0.9)
-            log.warning('No stamina available. Skipping.')
-            # When this is no roaming available, a dialog appears
-            # click anywhere (e.g. GO) to dismiss it.
-            click(ROAMING_GO)
-            # Click on back to continue
-            pag.sleep(1)
-            click('BACK')
-            pag.sleep(1)
-            return
-        except pag.ImageNotFoundException:
-            log.info('No stamina dialogue not found. Checking for Roaming OK.')
-            pag.sleep(1)
-
-        # choose_path(test_image1=ROAMING_OK, ROAMING_OK, 'BACK')
-
-        # Anne.
-        if displayed(ROAMING_ANNE, _confidence=0.8):
-            click(ROAMING_ANNE_SKIP, _confidence=0.9)
-            click(TAP_TO_CONTINUE, _confidence=0.9)
-            click(ROAMING_BACK, _confidence=0.8)
-            return
-
-        # susie
-        if displayed(ROAMING_SUSIE, _confidence=0.8):
-            click(ROAMING_ANNE_SKIP, _confidence=0.9)
-            click(SELECT_SADAKO)
-            click(ROAMING_TREAT, _confidence=0.8)
-            click(ROAMING_ANNE_SKIP, _confidence=0.9)
-            click(SUSIE_TAP_TO_CONTINUE, _confidence=0.9)
-            click(ROAMING_BACK, _confidence=0.8)
-            return
-
-        # reir
-        if displayed(ROAMING_REIR, _confidence=0.8):
-            click(ROAMING_ANNE_SKIP, _confidence=0.8)
-            click(REIR_NO_THANKS, _confidence=0.8)
-            click(SUSIE_TAP_TO_CONTINUE, _confidence=0.9)
-            click(ROAMING_BACK, _confidence=0.8)
-            return
-
-        try:
-            roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
-            pag.click(roaming_ok)
-        except pag.ImageNotFoundException:
-            log.info('Roaming ok button not found. Check for use button.')
-            pag.sleep(1)
-            try:
-                roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
-                log.warning('Using one stamina...')
-                pag.click(roaming_use)
-            except pag.ImageNotFoundException:
-                # Check for cases where we need to select from family
-                try:
-                    roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.9)
-                    pag.click(roaming_ok)
-                except pag.ImageNotFoundException:
-                    log.info('Roaming ok button not found. Check for skip button.')
-                    pag.sleep(1)
-                    try:
-                        # from Go
-                        # choose_family: Always choose Sadako
-                        # Treat
-                        # Confirm: Click above to dismiss
-                        # Congrats: select below to dismiss
-                        # Go
-                        roaming_skip = pag.locateOnWindow(ROAMING_SKIP, APP_TITLE, grayscale=True, confidence=0.9)
-                        pag.click(roaming_skip)
-                        click(ROAMING_SELECT)
-                        click(ROAMING_TREAT)
-                        click(ROAMING_SKIP)
-                        click('BACK')
-                    except pag.ImageNotFoundException:
-                        log.error('Unexpected path not currently supported')
-                        raise NotImplementedError('Unexpected popup. Needs to handle this case.')
-
-        # click(ROAMING_SKIP, _clicks=1, _highlight=True)
-        # click(ROAMING_SELECT, _clicks=1, _highlight=True)
-        # click(ROAMING_TREAT, _clicks=1, _highlight=True)
-        # click(ROAMING_SKIP, _clicks=1, _highlight=True)
-        # click(BACK, _clicks=1, _highlight=True)
-
-        # Click on back to continue
-        pag.sleep(1)
-        click('BACK')
-        pag.sleep(1)
 
 
 # We must be in Drakenberg
@@ -415,71 +304,195 @@ def do_guild() -> None:
             return
 
 
-# We must be in village
+# We must be in Drakenberg
+def do_roaming():
+    if not ROAMING: return
+
+    pag.sleep(1)
+    click(DRAKENBERG_ROAMING)
+    # Give time for screen to refresh
+    log_sleep(DRAKENBERG_ROAMING, 0.5)
+    click(ROAMING_GO)
+    log_sleep(DRAKENBERG_ROAMING, 1)
+
+    # roaming has outcomes when u click on GO
+    # 1. roaming not available: go -> No stamina -> click go again to dismiss -> back to go
+    # 2. roaming available:     go -> ok dialogue -> click ok -> back
+    # click('../resources/mainmenu/village/drakenberg/roaming/select.png', _clicks=0)
+    if locate_on_window(ROAMING_NO_STAMINA, APP_TITLE, _grayscale=True, _confidence=0.6):
+        log.warning('No stamina available. Skipping.')
+        # When this is no roaming available, a dialog appears
+        # click anywhere (e.g. GO) to dismiss it.
+        click(ROAMING_GO)
+        # Click on back to continue
+        pag.sleep(1)
+        click(ROAMING_BACK, _confidence=0.8)
+        pag.sleep(1)
+        return
+
+    # Anne
+    if displayed(ROAMING_ANNE, _confidence=0.8):
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.8)
+        return
+
+    # susie
+    if displayed(ROAMING_SUSIE, _confidence=0.8):
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(SELECT_SADAKO)
+        click(ROAMING_TREAT, _confidence=0.8)
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(REIRS_SONG, _confidence=0.9, _derive={'target_image': 'BELOW_REIRS_SONG', 'dy': 3}, _highlight=True)
+        click(ROAMING_BACK, _confidence=0.8)
+        return
+
+    if displayed(ROAMING_MAYNARD, _confidence=0.8):
+        click(ROAMING_TREAT, _confidence=0.8)
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.8)
+        return
+
+    # reir
+    if displayed(ROAMING_REIR, _confidence=0.8):
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(REIR_NO_THANKS, _confidence=0.8)
+        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.8)
+        return
+
+    if displayed(ROAMING_MEADEN, _confidence=0.5):
+        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+        click(SELECT_IRA, _confidence=0.9, _derive={'target_image': 'IRA_SELECT', 'dx': 0.8, 'dwx': 0.2})
+        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.8)
+        return
+
+    try:
+        roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.7)
+        pag.click(roaming_ok)
+    except pag.ImageNotFoundException:
+        log.info('Roaming ok button not found. Check for use button.')
+        pag.sleep(1)
+        try:
+            roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
+            log.warning('Using one stamina...')
+            pag.click(roaming_use)
+        except pag.ImageNotFoundException:
+            # Check for cases where we need to select from family
+            try:
+                roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.7)
+                pag.click(roaming_ok)
+            except pag.ImageNotFoundException:
+                log.info('Roaming ok button not found. Check for skip button.')
+                pag.sleep(1)
+                try:
+                    # from Go
+                    # choose_family: Always choose Sadako
+                    # Treat
+                    # Confirm: Click above to dismiss
+                    # Congrats: select below to dismiss
+                    # Go
+                    roaming_skip = pag.locateOnWindow(ROAMING_SKIP, APP_TITLE, grayscale=True, confidence=0.9)
+                    pag.click(roaming_skip)
+                    click(ROAMING_SELECT)
+                    click(ROAMING_TREAT)
+                    click(ROAMING_SKIP)
+                    click(ROAMING_BACK, _confidence=0.8)
+                except pag.ImageNotFoundException:
+                    log.error('Unexpected path not currently supported')
+                    raise NotImplementedError('Unexpected popup. Needs to handle this case.')
+
+        # Click on back to continue
+        click(ROAMING_BACK, _confidence=0.8)
+        pag.sleep(1)
+        return
+
+
 def do_school():
     global school_initialized
 
-    if SCHOOL:
-        log.info('Enter school...')
-        click(VILLAGE_SCHOOL, _confidence=0.9)
+    log.info('Enter school...')
+    click(VILLAGE_SCHOOL, _confidence=0.9)
 
-        # Students are 1 row above the back button
-        if not school_initialized:
-            click(SCHOOL_BACK, _confidence=0.9, _clicks=0)
-            cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
-            cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
-            cloneposition('STUDENT1', 'STUDENT3', dx=2, dy=0)
-            cloneposition('STUDENT1', 'STUDENT4', dx=3, dy=0)
-            cloneposition('STUDENT1', 'STUDENT5', dx=4, dy=0)
-            school_initialized = True
+    # Skip if student is about to graduate.
+    if locate_on_window(SCHOOL_EDUCATE, APP_TITLE, _grayscale=True, _confidence=0.6):
+        click(SCHOOL_EDUCATE, _confidence=0.6)
+        pag.sleep(2)
+        # sometimes out of resources pop up after a short pause.
+        if locate_on_window(SCHOOL_OUT_OF_RESOURCES, APP_TITLE, _grayscale=True, _confidence=0.7):
+            # click below
+            click(SCHOOL_OUT_OF_RESOURCES, _confidence=0.7,
+                  _derive={'target_image': 'BELOW_OUT_OF_RESOURCES', 'dy': 3.5})
+    # regardless of path, leave
+    click(SCHOOL_BACK, _confidence=0.7, _highlight=True)
 
-        for student in ['STUDENT1', 'STUDENT2', 'STUDENT3', 'STUDENT4', 'STUDENT5']:
-            click(student)
-            pag.sleep(0.5)
 
-            # TODO pag matches both name and go. dont use until we have a workaround.
-            # New student
-            if displayed(SCHOOL_GO, _confidence=0.8):
-                click(SCHOOL_GO, _confidence=0.8)
-                # GO can be wrongly matched to NAME button.
-                if displayed(SCHOOL_NOTICE, _confidence=0.5):
-                    # Needs high confidence to avoid matching cancel button
-                    click(NOTICE_OK, _confidence=0.95)
-                    click(HOME_FAMILY)
-                    click(FAMILY_AUTO_DATE)
-                    click('BACK')
-                    click(FAMILY_GO_EDUCATE, _confidence=0.8)
-                    pag.sleep(1.5)
+# We must be in village
+def do_school_full():
+    global school_initialized
 
-            if displayed(SCHOOL_NAME, _confidence=0.8):
-                # if displayed(CHOOSE_NAME_OK, _confidence=0.8):
-                click(CHOOSE_NAME_OK, _confidence=0.8)
+    log.info('Enter school...')
+    click(VILLAGE_SCHOOL, _confidence=0.9)
 
-            # Skip if student is about to graduate.
-            try:
-                pag.locateOnWindow(SCHOOL_EDUCATE, APP_TITLE, grayscale=True, confidence=0.7)
-                click(SCHOOL_EDUCATE)
-                if displayed(OUT_OF_EDUCATION_POINTS):
-                    click('BACK')
-                    continue
-                try:
-                    # When use focus candy appear when we click again too soon.
-                    # Skip it.
-                    pag.locateOnWindow(SCHOOL_USE_ITEM, APP_TITLE, grayscale=True, confidence=0.9)
-                    # click anywhere (e.g. GO) to dismiss it.
-                    click(SCHOOL_BACK)
-                except pag.ImageNotFoundException:
-                    log.info('Use accumulated education tokens...')
-                    pag.sleep(2)
-                pag.sleep(1)
-            except pag.ImageNotFoundException:
-                # No Educate button found. Must be abt to graduate. Skip student
-                log.warning(f'Skip {student}. Leave graduation process to manual intervention.')
-                if AUTO_GRADUATE:
-                    click(SCHOOL_GRADUATE)
-                    click(GRADUATE_OK)
-                    click(GRADUATE_CONGRATS_OK)
+    # Students are 1 row above the back button
+    if not school_initialized:
+        click(SCHOOL_BACK, _confidence=0.9, _clicks=0)
+        cloneposition(SCHOOL_BACK, 'STUDENT1', dx=0, dy=-1)
+        cloneposition('STUDENT1', 'STUDENT2', dx=1, dy=0)
+        cloneposition('STUDENT1', 'STUDENT3', dx=2, dy=0)
+        cloneposition('STUDENT1', 'STUDENT4', dx=3, dy=0)
+        cloneposition('STUDENT1', 'STUDENT5', dx=4, dy=0)
+        school_initialized = True
+
+    for student in ['STUDENT1', 'STUDENT2', 'STUDENT3', 'STUDENT4', 'STUDENT5']:
+        click(student)
+        pag.sleep(0.5)
+
+        # TODO pag matches both name and go. dont use until we have a workaround.
+        # New student
+        if displayed(SCHOOL_GO, _confidence=0.8):
+            click(SCHOOL_GO, _confidence=0.8)
+            # GO can be wrongly matched to NAME button.
+            if displayed(SCHOOL_NOTICE, _confidence=0.5):
+                # Needs high confidence to avoid matching cancel button
+                click(NOTICE_OK, _confidence=0.95)
+                click(HOME_FAMILY)
+                click(FAMILY_AUTO_DATE)
+                click('BACK')
+                click(FAMILY_GO_EDUCATE, _confidence=0.8)
+                pag.sleep(1.5)
+
+        if displayed(SCHOOL_NAME, _confidence=0.8):
+            # if displayed(CHOOSE_NAME_OK, _confidence=0.8):
+            click(CHOOSE_NAME_OK, _confidence=0.8)
+
+        # Skip if student is about to graduate.
+        try:
+            pag.locateOnWindow(SCHOOL_EDUCATE, APP_TITLE, grayscale=True, confidence=0.7)
+            click(SCHOOL_EDUCATE)
+            if displayed(OUT_OF_EDUCATION_POINTS):
+                click('BACK')
                 continue
+            try:
+                # When use focus candy appear when we click again too soon.
+                # Skip it.
+                pag.locateOnWindow(SCHOOL_USE_ITEM, APP_TITLE, grayscale=True, confidence=0.9)
+                # click anywhere (e.g. GO) to dismiss it.
+                click(SCHOOL_BACK)
+            except pag.ImageNotFoundException:
+                log.info('Use accumulated education tokens...')
+                pag.sleep(2)
+            pag.sleep(1)
+        except pag.ImageNotFoundException:
+            # No Educate button found. Must be abt to graduate. Skip student
+            log.warning(f'Skip {student}. Leave graduation process to manual intervention.')
+            if AUTO_GRADUATE:
+                click(SCHOOL_GRADUATE)
+                click(GRADUATE_OK)
+                click(GRADUATE_CONGRATS_OK)
+            continue
 
         click('BACK')
 
@@ -530,24 +543,26 @@ def do_banquet() -> None:
 
     log_sleep('Pause for banquet to be visible', 1)
     click(DRAKENBERG_BANQUET)
-    click(BANQUET_ATTEND, _confidence=0.6)
+    # Clone button before clicking it. When clicked, it may be replaced by None Hosted screen.
+    click(BANQUET_ATTEND, _confidence=0.5, _clicks=0)
     cloneposition(BANQUET_ATTEND, 'DISMISS', dx=-1, dy=1)
+    click(BANQUET_ATTEND, _confidence=0.6)
     pag.sleep(0.5)
 
-    if displayed(_image=BANQUET_NONE_HOSTED, _confidence=0.9):
+    if displayed(_image=BANQUET_NONE_HOSTED, _confidence=0.5):
         log.warning('No banquets being hosted currently. Skip.')
     else:
-        if displayed(_image=BANQUET_ALREADY_ATTENDED, _confidence=0.95):
+        if displayed(_image=BANQUET_ALREADY_ATTENDED, _confidence=0.9):
             log.warning('No new banquets being hosted currently. Skip.')
-        elif displayed(_image=BANQUET_HAS_ENDED, _confidence=0.8):
+        elif displayed(_image=BANQUET_HAS_ENDED, _confidence=0.7):
             log.warning('Banquet has ended. Skip.')
         else:
-            banquet_attend_party = pag.locateOnWindow(BANQUET_ATTEND_PARTY, APP_TITLE, confidence=0.95)
+            banquet_attend_party = pag.locateOnWindow(BANQUET_ATTEND_PARTY, APP_TITLE, confidence=0.8)
             add_loc(BANQUET_ATTEND_PARTY, banquet_attend_party)
             click(BANQUET_ATTEND_PARTY)
             # click twice. money gifts full will pop up.
             pag.sleep(1)
-            click(BANQUET_TAKE_SEAT, _confidence=0.65, _clicks=2)
+            click(BANQUET_TAKE_SEAT, _confidence=0.6, _clicks=2)
             try:
                 pag.locateOnWindow(BANQUET_MONEY_FULL, APP_TITLE, confidence=0.7)
                 log.warning('Banquets done. Skip going forward.')
@@ -560,13 +575,14 @@ def do_banquet() -> None:
     # click anywhere to dismiss none hosted dialogue
     click('DISMISS')
     # Leave Banquet
-    click('BACK')
+    click(BANQUET_BACK, _confidence=0.7)
 
 
 # We must be in Home
 def do_fountain():
     if FOUNTAIN:
         # Fountain
+        click(MM_HOME, _confidence=0.8, _pause=2)
         # Home screen has sight delay.
         click(HOME_FOUNTAIN, _pause=2)
         # click(FOUNTAIN_10)
@@ -577,7 +593,18 @@ def do_fountain():
         click(FOUNTAIN_1)
         # Back is located in same spot on most screens.
         # Second click to leave fountain
-        click('BACK', _clicks=2, _pause=1)
+        click(MM_HOME, _clicks=2, _pause=1)
+
+
+def do_mine_clearance():
+    click(MINE_ATTACK, _confidence=0.8)
+    # derive position of strongest fellow.
+    click(MINE_POWER_0, _confidence=0.8, _clicks=0, _derive={'target_image': 'FIRST_FELLOW', 'dx': -1, 'dy': 1})
+
+    for fellow in range(4):
+        click('FIRST_FELLOW')
+        click(MINE_OK, _confidence=0.8)
+        click(MINE_ATTACK)
 
 
 # Main menu must be visible at bottom of screen
@@ -644,36 +671,6 @@ def do_storage():
                 # If not, then check if meant for all.
                 item_for_all(matched, dismiss=items[0][0])
 
-    log.info('test')
-
-
-def item_for_all(matched: bool, dismiss):
-    for needle_name in [
-        STORAGE_UNIDENTIFIED_INSIGHT, STORAGE_RANDOM_POTION, STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD,
-        STORAGE_REFINED_EXPERIENCE_STONE, STORAGE_EXP_STONE, STORAGE_POTION_OF_INSPIRATION,
-        STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
-        STORAGE_POTION_OF_FREEDOM, STORAGE_BASIC_HIRE_CARD
-    ]:
-        try:
-            pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
-            matched = True
-            log.info(f'Item identified: {needle_name}...')
-            break
-        except pag.ImageNotFoundException:
-            pass
-    if not matched:
-        # click anywhere to dismiss item.
-        pag.click(dismiss)
-    else:
-        # Click slide by matching the image so that it centers on the end of the slider.
-        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.7)
-        # highlight('slide', slide)
-        pag.click(slide)
-        click(STORAGE_SLIDE_USE, _confidence=0.7)
-        click(STORAGE_SELECT_IRA, _derive={'target_image': 'IRA_SELECT', 'dx': 0.8})
-        log.warning(f'Used {needle_name}')
-        click('BACK')
-
 
 def item_for_fellow(matched: bool) -> bool:
     for needle_name in [STORAGE_BASIC_ELIXIR]:
@@ -688,7 +685,7 @@ def item_for_fellow(matched: bool) -> bool:
         return False
     else:
         # Click slide by matching the image so that it centers on the end of the slider.
-        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.7)
+        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.5)
         # highlight('slide', slide)
         pag.click(slide)
         click(STORAGE_SLIDE_USE, _confidence=0.7)
@@ -701,50 +698,86 @@ def item_for_fellow(matched: bool) -> bool:
         return True
 
 
+def item_for_all(matched: bool, dismiss):
+    for needle_name in [
+        STORAGE_NORMAL_ARTIFACT_CHEST, STORAGE_UNPROCESSED_DRUSE, STORAGE_UNIDENTIFIED_INSIGHT, STORAGE_RANDOM_POTION,
+        STORAGE_GOLDEN_FAME_CARD, STORAGE_FAME_CARD, STORAGE_REFINED_EXPERIENCE_STONE, STORAGE_EXP_STONE,
+        STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY,
+        STORAGE_POTION_OF_ERUDITION, STORAGE_POTION_OF_FREEDOM, STORAGE_BASIC_HIRE_CARD
+    ]:
+        try:
+            pag.locateOnWindow(needle_name, APP_TITLE, grayscale=True, confidence=0.9)
+            matched = True
+            log.info(f'Item identified: {needle_name}...')
+            break
+        except pag.ImageNotFoundException:
+            pass
+    if matched:
+        # Click slide by matching the image so that it centers on the end of the slider.
+        slide = pag.locateOnWindow(STORAGE_SLIDE, APP_TITLE, grayscale=True, confidence=0.5)
+        # highlight('slide', slide)
+        pag.click(slide)
+        click(STORAGE_SLIDE_USE, _confidence=0.7)
+        log.warning(f'Used {needle_name}')
+
+    pag.click(dismiss)
+
+
+# ======================================================================================================================
+# try:
+#     roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.7)
+#     pag.click(roaming_ok)
+# except pag.ImageNotFoundException:
+#     log.info('Roaming ok button not found. Check for use button.')
 while True:
+    do_roaming()
 
-    # click(STORAGE_SLIDE_USE, _confidence=0.7)
-    # slide = pag.locateOnWindow(STORAGE_SLIDE_USE, APP_TITLE, grayscale=True, confidence=0.7)
-    # highlight('slide', slide)
-    # school_go = pag.locateOnWindow(SCHOOL_NAME, APP_TITLE, grayscale=True, confidence=0.83)
-    # highlight('school_go', school_go)
-    # if displayed(SCHOOL_GO, confidence=0.9):
-    #     log.info("school go")
-    try:
-        # from Go
+if __name__ == '__main__':
+    while True:
+
+        # click(STORAGE_SLIDE_USE, _confidence=0.7)
+        # slide = pag.locateOnWindow(STORAGE_SLIDE_USE, APP_TITLE, grayscale=True, confidence=0.7)
+        # highlight('slide', slide)
+        # school_go = pag.locateOnWindow(SCHOOL_NAME, APP_TITLE, grayscale=True, confidence=0.83)
+        # highlight('school_go', school_go)
+        # if displayed(SCHOOL_GO, confidence=0.9):
+        #     log.info("school go")
+        try:
+            # from Go
+            register_locations()
+            collect_trading_post_gold(3000)
+            # choose_family: Always choose Sadako
+            # Treat
+            # Confirm: Click above to dismiss
+            # Congrats: select below to dismiss
+            # Go
+            # Need to isolate individual cases. [Anne] skip -> [congrats] dismiss
+            # click(ROAMING_SELECT)
+            # click(ROAMING_TREAT)
+            # click(ROAMING_SKIP)
+        except pag.ImageNotFoundException:
+            log.error('Unexpected path not currently supported')
+            raise NotImplementedError('Unexpected popup. Needs to handle this case.')
+
         collect_trading_post_gold(3000)
-        # choose_family: Always choose Sadako
-        # Treat
-        # Confirm: Click above to dismiss
-        # Congrats: select below to dismiss
-        # Go
-        # Need to isolate individual cases. [Anne] skip -> [congrats] dismiss
-        # click(ROAMING_SELECT)
-        # click(ROAMING_TREAT)
-        # click(ROAMING_SKIP)
-    except pag.ImageNotFoundException:
-        log.error('Unexpected path not currently supported')
-        raise NotImplementedError('Unexpected popup. Needs to handle this case.')
-
-    collect_trading_post_gold(3000)
-    exit()
-    # try:
-    #     banquet_already_attended = pag.locateOnWindow(BANQUET_ALREADY_ATTENDED, APP_TITLE, confidence=0.9)
-    #     highlight('banquet_already_attended', banquet_already_attended)
-    #     log.warning('No new banquets being hosted currently. Skip.')
-    #     # click anywhere to dismiss none hosted dialogue
-    #     click('DISMISS')
-    #     # Leave Banquet
-    #     click('BACK')
-    # except pag.ImageNotFoundException:
-    #     log.info('No found')
-    # log.info('Enter Magic Garden...')
-    # log_sleep('KITCHEN', 1)
-    # # click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], title=APP_TITLE, confidence=0.48, _highlight=True)
-    # # click(GARDEN_QUICK_HARVEST)
-    # # click(GARDEN_QUICK_SOW)
-    # # click('BACK')
-    # Graduate
-    # click_list([SCHOOL_EDUCATE, SCHOOL_GRADUATE], title=APP_TITLE)
-    # click(GRADUATE_OK, _highlight=True)
-    # click(GRADUATE_FORM_UNION, _highlight=True, confidence=0.8)
+        exit()
+        # try:
+        #     banquet_already_attended = pag.locateOnWindow(BANQUET_ALREADY_ATTENDED, APP_TITLE, confidence=0.9)
+        #     highlight('banquet_already_attended', banquet_already_attended)
+        #     log.warning('No new banquets being hosted currently. Skip.')
+        #     # click anywhere to dismiss none hosted dialogue
+        #     click('DISMISS')
+        #     # Leave Banquet
+        #     click('BACK')
+        # except pag.ImageNotFoundException:
+        #     log.info('No found')
+        # log.info('Enter Magic Garden...')
+        # log_sleep('KITCHEN', 1)
+        # # click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], title=APP_TITLE, confidence=0.48, _highlight=True)
+        # # click(GARDEN_QUICK_HARVEST)
+        # # click(GARDEN_QUICK_SOW)
+        # # click('BACK')
+        # Graduate
+        # click_list([SCHOOL_EDUCATE, SCHOOL_GRADUATE], title=APP_TITLE)
+        # click(GRADUATE_OK, _highlight=True)
+        # click(GRADUATE_FORM_UNION, _highlight=True, confidence=0.8)

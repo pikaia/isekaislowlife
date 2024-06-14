@@ -124,6 +124,22 @@ def click_list(aliases: list, _title: str = APP_TITLE, _confidence: float = 0.5,
             return loc
 
 
+# Check if an image is on the screen (without using the cache).
+def locate_on_window(_image: str, _title: str = APP_TITLE, _grayscale: bool = True, _confidence: float = 0.5,
+                     _highlight: bool = HIGHLIGHT, _click=0) -> bool:
+    try:
+        loc = pag.locateOnWindow(_image, _title, grayscale=_grayscale, confidence=_confidence)
+        if _highlight:
+            highlight(caption=f'{_image}', rect=loc)
+        if _click > 0:
+            for x in range(int(_click)):
+                pag.click(loc)
+
+        return True
+    except pag.ImageNotFoundException:
+        return False
+
+
 # When target image is provided, dx = width offset, When shifted save derived location.
 # when target image is None, ignore.
 # _derive is a dictionary with the key being the name of the image to derive, and the value being the offset wdx.
@@ -132,12 +148,12 @@ def click(_image: str, _title: str = APP_TITLE, _confidence: float = 0.5, _highl
           match_optional=False, _use_cache: bool = True, _interval: float = 0.5) -> Optional[Box]:
     if _use_cache and _image in LOC:
         loc = LOC.get(_image)
-        log.info(f'Using cached {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+        # log.info(f'Using cached {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
     else:
         # if we can't find, move on to next in list.
         try:
             loc = pag.locateOnWindow(image=_image, title=_title, confidence=_confidence, grayscale=True)
-            log.info(f'Found {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
+            # log.info(f'Found {_image} @ ({int(loc.left + loc.width / 2)}, {int(loc.top + loc.height / 2)}) ')
         except pag.ImageNotFoundException as e:
             if match_optional:
                 return None
@@ -171,26 +187,29 @@ def click(_image: str, _title: str = APP_TITLE, _confidence: float = 0.5, _highl
     LOC[_image] = loc
 
     if _derive is not None and _derive.get('target_image') is not None:
+        # dx if an offset to the x-axis
         if 'dx' in _derive:
             dx = _derive['dx']
         else:
             dx = 0
+        # dy if an offset to the y-axis
         if 'dy' in _derive:
             dy = _derive['dy']
         else:
             dy = 0
+        # dwx is a fraction of the width. If none, then use 100%
         if 'dwx' in _derive:
             dwx = _derive['dwx']
         else:
-            dwx = 0
+            dwx = 1
 
-        loc = Box(loc.left + int(dx * loc.width), loc.top + int(dy * loc.height), int(dwx*loc.width), loc.height)
+        loc = Box(loc.left + int(dx * loc.width), loc.top + int(dy * loc.height), 1 + int(dwx * loc.width), loc.height)
         LOC[_derive['target_image']] = loc
 
-    if _highlight:
-        highlight(os.path.basename(_image), loc)
-
     if _clicks != 0:
+        if _highlight:
+            highlight(os.path.basename(_image), loc)
+
         # when clicked, return point (left, top)
         pag.click(pag.center(loc), clicks=_clicks, interval=_interval)
     pag.sleep(_pause)
@@ -239,9 +258,11 @@ def choose_path(test_image1: str, image_ok1, image_ok2: str):
         pag.sleep(1)
 
 
-def displayed(_image: str, _confidence: float = 0.5) -> bool:
+def displayed(_image: str, _confidence: float = 0.5, _highlight: bool = HIGHLIGHT) -> bool:
     try:
-        pag.locateOnWindow(_image, APP_TITLE, confidence=_confidence)
+        loc = pag.locateOnWindow(_image, APP_TITLE, confidence=_confidence)
+        if _highlight:
+            highlight(os.path.basename(_image), loc)
         return True
     except pag.ImageNotFoundException:
         return False
