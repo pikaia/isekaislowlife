@@ -74,6 +74,8 @@ VILLAGE_FISHING = '../resources/mainmenu/village/enter_fishing.png'
 VILLAGE_SCHOOL = '../resources/mainmenu/village/enter_school.png'
 VILLAGE_KITCHEN1 = '../resources/mainmenu/village/enter_kitchen1.png'
 VILLAGE_KITCHEN2 = '../resources/mainmenu/village/enter_kitchen2.png'
+VILLAGE_WOLFPACK = '../resources/mainmenu/village/wolfpack.png'
+WOLFPACK_REPEL = '../resources/mainmenu/village/wolfpack/repel.png'
 
 VILLAGE_GARDEN1 = '../resources/mainmenu/village/enter_magic_garden1.png'
 VILLAGE_GARDEN2 = '../resources/mainmenu/village/enter_magic_garden2.png'

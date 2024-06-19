@@ -26,6 +26,8 @@ from slowlife.resources.constants import (
 
     VILLAGE_KITCHEN1, VILLAGE_KITCHEN2, VILLAGE_FISHING, VILLAGE_FARMSTEAD, VILLAGE_SCHOOL,
 
+    VILLAGE_WOLFPACK, WOLFPACK_REPEL,
+
     DRAKENBERG_TRADINGPOST, DRAKENBERG_GUILD, DRAKENBERG_ROAMING, DRAKENBERG_BANQUET, BANQUET_NONE_HOSTED,
     BANQUET_ALREADY_ATTENDED,
 
@@ -184,9 +186,15 @@ def do_farmstead():
     log.info('Enter village...')
     # Enter village
     log_sleep(MM_VILLAGE, 1)
-    click(MM_VILLAGE, _confidence=0.45)
+    click(MM_VILLAGE, _confidence=0.45, _pause=1)
     # Get some gold from Farmstead
     click(VILLAGE_FARMSTEAD, _confidence=0.45, _clicks=150, _interval=0.1)
+
+    # Check if wolfpack is here
+    if displayed(VILLAGE_WOLFPACK, _confidence=0.6):
+        click(VILLAGE_WOLFPACK, _confidence=0.6)
+        click(WOLFPACK_REPEL, _confidence=0.45, _interval=0.1)
+        click(WOLFPACK_REPEL, _confidence=0.45, _derive={'target_image': 'BELOW_REPEL', 'dy': 1})
 
 
 def do_magic_farm() -> None:
@@ -315,6 +323,12 @@ def do_roaming():
     click(ROAMING_GO)
     log_sleep(DRAKENBERG_ROAMING, 1)
 
+    # 3. Congratulations:       go -> Congrats   -> Dismiss
+    if displayed(CONGRATULATIONS, _confidence=0.5):
+        click(ROAMING_OK, _confidence=0.8)
+        click(ROAMING_BACK, _confidence=0.6)
+        return
+
     # roaming has outcomes when u click on GO
     # 1. roaming not available: go -> No stamina -> click go again to dismiss -> back to go
     # 2. roaming available:     go -> ok dialogue -> click ok -> back
@@ -326,47 +340,47 @@ def do_roaming():
         click(ROAMING_GO)
         # Click on back to continue
         pag.sleep(1)
-        click(ROAMING_BACK, _confidence=0.8)
+        click(ROAMING_BACK, _confidence=0.6)
         pag.sleep(1)
         return
 
     # Anne
-    if displayed(ROAMING_ANNE, _confidence=0.8):
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+    if displayed(ROAMING_ANNE, _confidence=0.5):
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
         click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
-        click(ROAMING_BACK, _confidence=0.8)
+        click(ROAMING_BACK, _confidence=0.6)
         return
 
     # susie
-    if displayed(ROAMING_SUSIE, _confidence=0.8):
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
+    if displayed(ROAMING_SUSIE, _confidence=0.5):
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
         click(SELECT_SADAKO)
         click(ROAMING_TREAT, _confidence=0.8)
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
-        click(REIRS_SONG, _confidence=0.9, _derive={'target_image': 'BELOW_REIRS_SONG', 'dy': 3}, _highlight=True)
-        click(ROAMING_BACK, _confidence=0.8)
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
+        click(REIRS_SONG, _confidence=0.6, _derive={'target_image': 'BELOW_REIRS_SONG', 'dy': 3})
+        click(ROAMING_BACK, _confidence=0.6)
         return
 
-    if displayed(ROAMING_MAYNARD, _confidence=0.8):
-        click(ROAMING_TREAT, _confidence=0.8)
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
-        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
-        click(ROAMING_BACK, _confidence=0.8)
+    if displayed(ROAMING_MAYNARD, _confidence=0.5):
+        click(ROAMING_TREAT, _confidence=0.6)
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
+        click(CONGRATULATIONS, _confidence=0.6, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.6)
         return
 
     # reir
-    if displayed(ROAMING_REIR, _confidence=0.8):
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
-        click(REIR_NO_THANKS, _confidence=0.8)
-        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
-        click(ROAMING_BACK, _confidence=0.8)
+    if displayed(ROAMING_REIR, _confidence=0.5):
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
+        click(REIR_NO_THANKS, _confidence=0.6)
+        click(CONGRATULATIONS, _confidence=0.6, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.6)
         return
 
     if displayed(ROAMING_MEADEN, _confidence=0.5):
-        click(ROAMING_ANNE_SKIP, _confidence=0.7)
-        click(SELECT_IRA, _confidence=0.9, _derive={'target_image': 'IRA_SELECT', 'dx': 0.8, 'dwx': 0.2})
-        click(CONGRATULATIONS, _confidence=0.9, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
-        click(ROAMING_BACK, _confidence=0.8)
+        click(ROAMING_ANNE_SKIP, _confidence=0.6)
+        click(SELECT_IRA, _confidence=0.6, _derive={'target_image': 'IRA_SELECT', 'dx': 0.8, 'dwx': 0.2})
+        click(CONGRATULATIONS, _confidence=0.6, _derive={'target_image': 'BELOW_CONGRATULATIONS', 'dy': 10})
+        click(ROAMING_BACK, _confidence=0.6)
         return
 
     try:
@@ -379,6 +393,8 @@ def do_roaming():
             roaming_use = pag.locateOnWindow(ROAMING_USE, APP_TITLE, grayscale=True, confidence=0.9)
             log.warning('Using one stamina...')
             pag.click(roaming_use)
+            click(ROAMING_GO)
+            click(ROAMING_OK, _confidence=0.7)
         except pag.ImageNotFoundException:
             # Check for cases where we need to select from family
             try:
@@ -399,13 +415,12 @@ def do_roaming():
                     click(ROAMING_SELECT)
                     click(ROAMING_TREAT)
                     click(ROAMING_SKIP)
-                    click(ROAMING_BACK, _confidence=0.8)
                 except pag.ImageNotFoundException:
                     log.error('Unexpected path not currently supported')
                     raise NotImplementedError('Unexpected popup. Needs to handle this case.')
 
         # Click on back to continue
-        click(ROAMING_BACK, _confidence=0.8)
+        click(ROAMING_BACK, _confidence=0.6)
         pag.sleep(1)
         return
 
@@ -425,8 +440,11 @@ def do_school():
             # click below
             click(SCHOOL_OUT_OF_RESOURCES, _confidence=0.7,
                   _derive={'target_image': 'BELOW_OUT_OF_RESOURCES', 'dy': 3.5})
+            click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
     # regardless of path, leave
-    click(SCHOOL_BACK, _confidence=0.7, _highlight=True)
+    pag.sleep(1)
+    # if we are at the educate screen, go back once.
+    click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
 
 
 # We must be in village
@@ -689,7 +707,7 @@ def item_for_fellow(matched: bool) -> bool:
         # highlight('slide', slide)
         pag.click(slide)
         click(STORAGE_SLIDE_USE, _confidence=0.7)
-        click(STORAGE_USE_ITEM, _confidence=0.8, _highlight=True)
+        click(STORAGE_USE_ITEM, _confidence=0.8)
         click(STORAGE_SELECT_IRA, _confidence=0.7,
               _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 0.8, 'dwx': 0.2})
         log.warning(f'Used {needle_name}')
@@ -724,14 +742,9 @@ def item_for_all(matched: bool, dismiss):
 
 
 # ======================================================================================================================
-# try:
-#     roaming_ok = pag.locateOnWindow(ROAMING_OK, APP_TITLE, grayscale=True, confidence=0.7)
-#     pag.click(roaming_ok)
-# except pag.ImageNotFoundException:
-#     log.info('Roaming ok button not found. Check for use button.')
-while True:
-    do_roaming()
-
+# while True:
+#     do_storage()
+#
 if __name__ == '__main__':
     while True:
 
@@ -773,11 +786,11 @@ if __name__ == '__main__':
         #     log.info('No found')
         # log.info('Enter Magic Garden...')
         # log_sleep('KITCHEN', 1)
-        # # click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], title=APP_TITLE, confidence=0.48, _highlight=True)
+        # # click_list([VILLAGE_GARDEN1, VILLAGE_GARDEN2], title=APP_TITLE, confidence=0.48)
         # # click(GARDEN_QUICK_HARVEST)
         # # click(GARDEN_QUICK_SOW)
         # # click('BACK')
         # Graduate
         # click_list([SCHOOL_EDUCATE, SCHOOL_GRADUATE], title=APP_TITLE)
-        # click(GRADUATE_OK, _highlight=True)
-        # click(GRADUATE_FORM_UNION, _highlight=True, confidence=0.8)
+        # click(GRADUATE_OK)
+        # click(GRADUATE_FORM_UNION, confidence=0.8)
