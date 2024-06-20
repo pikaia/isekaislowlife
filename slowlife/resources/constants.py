@@ -61,6 +61,8 @@ CHOOSE_NAME_OK = '../resources/mainmenu/village/school/choose_name_ok.png'
 # Fountain of wishes
 FOUNTAIN_10 = '../resources/mainmenu/home/fountain_of_wishes/fountain10.png'
 FOUNTAIN_1 = '../resources/mainmenu/home/fountain_of_wishes/fountain1.png'
+FOUNTAIN_OUT_OF_RESOURCE = '../resources/mainmenu/home/fountain_of_wishes/out_of_resources.png'
+FOUNTAIN_BACK = '../resources/mainmenu/home/fountain_of_wishes/back.png'
 
 # Drakenberg regions
 DRAKENBERG_TRADINGPOST = '../resources/mainmenu/drakenberg/enter_trading_post.png'
@@ -172,6 +174,9 @@ DONATION_DONATED = '../resources/mainmenu/drakenberg/guild/donation/donated.png'
 DONATION_BASIC_DONATION = '../resources/mainmenu/drakenberg/guild/donation/basic_donation.png'
 DONATION_OPENED = '../resources/mainmenu/drakenberg/guild/donation/opened.png'
 DONATION_CLOSED = '../resources/mainmenu/drakenberg/guild/donation/closed.png'
+DONATION20 = '../resources/mainmenu/drakenberg/guild/donation/donation20.png'
+DONATION40 = '../resources/mainmenu/drakenberg/guild/donation/donation40.png'
+
 
 STAGE_CHALLENGE = '../resources/mainmenu/drakenberg/stage/challenge.png'
 CHALLENGE_EMPTY = '../resources/mainmenu/drakenberg/stage/challenge/items_empty.png'

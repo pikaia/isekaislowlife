@@ -43,7 +43,7 @@ from slowlife.resources.constants import (
 
     FISHING_COLLECT_BAIT,
 
-    FOUNTAIN_1,
+    FOUNTAIN_1, FOUNTAIN_10, FOUNTAIN_OUT_OF_RESOURCE, FOUNTAIN_BACK,
 
     KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2, KITCHEN_USE_INN_PAMPHLET,
 
@@ -52,11 +52,11 @@ from slowlife.resources.constants import (
 
     BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT, BANQUET_BACK,
 
-    GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL,
+    GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL, DONATION20, DONATION40,
 
     ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1, ROAMING_ANNE_SKIP, ROAMING_ANNE,
     ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
-    REIRS_SONG,
+    REIRS_SONG, SELECT_IRA,
 
     ROAMING_MAYNARD, CONGRATULATIONS,
 
@@ -71,7 +71,7 @@ from slowlife.resources.constants import (
     STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
     STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE, STORAGE_SLIDE_USE, STORAGE, STORAGE_REFINED_EXPERIENCE_STONE,
     STORAGE_EXP_STONE, STORAGE_BASIC_ELIXIR, STORAGE_SELECT_IRA, STORAGE_USE_ITEM, STORAGE_UNPROCESSED_DRUSE,
-    MINE_ATTACK, MINE_POWER_0, MINE_OK, ROAMING_MEADEN, SELECT_IRA
+    MINE_ATTACK, MINE_POWER_0, MINE_OK, ROAMING_MEADEN
 )
 
 # Limit donation to 4 times.
@@ -281,7 +281,6 @@ def do_guild() -> None:
     # 10 mins to generate a free try. Each gold loop with just gold is 26 seconds. 24 = 10*60/26
     if RANDOM_REQUESTS:
         log.info('Donations and Random requests...')
-        # scroll_screen('left', 1)
 
         # Try to donate.
         if DONATE:
@@ -299,6 +298,10 @@ def do_guild() -> None:
                 click(DONATION_BASIC_DONATION, _derive={'target_image': 'MAKE_BASIC_DONATION', 'dx': 1})
                 # dismiss congratulation screen
                 click('MAKE_BASIC_DONATION')
+
+            # Check for rewards
+            if click(DONATION20, _confidence=0.8, match_optional=True) is not None:
+                click(DONATION40, _confidence=0.8)
 
             # Exit donation screen
             click('BACK')
@@ -435,16 +438,17 @@ def do_school():
     if locate_on_window(SCHOOL_EDUCATE, APP_TITLE, _grayscale=True, _confidence=0.6):
         click(SCHOOL_EDUCATE, _confidence=0.6)
         pag.sleep(2)
-        # sometimes out of resources pop up after a short pause.
+        # if out of resources pop up, dismiss it.
         if locate_on_window(SCHOOL_OUT_OF_RESOURCES, APP_TITLE, _grayscale=True, _confidence=0.7):
             # click below
             click(SCHOOL_OUT_OF_RESOURCES, _confidence=0.7,
                   _derive={'target_image': 'BELOW_OUT_OF_RESOURCES', 'dy': 3.5})
-            click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
+        # Either way go back to village
+        click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
     # regardless of path, leave
     pag.sleep(1)
-    # if we are at the educate screen, go back once.
-    click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
+    # # if we are at the educate screen, go back once.
+    # click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
 
 
 # We must be in village
@@ -603,15 +607,15 @@ def do_fountain():
         click(MM_HOME, _confidence=0.8, _pause=2)
         # Home screen has sight delay.
         click(HOME_FOUNTAIN, _pause=2)
-        # click(FOUNTAIN_10)
-        # click(MM_FOUNTAIN, confidence=0.6)
-        # click(FOUNTAIN_10, confidence=0.6)
+        click(FOUNTAIN_10)
+        if displayed(FOUNTAIN_OUT_OF_RESOURCE, _confidence=0.6):
+            click(FOUNTAIN_OUT_OF_RESOURCE, _confidence=0.6,
+                  _derive={'target_image': 'BELOW_FOUNTAIN_OUT_OF_RESOURCES', 'dy': 3})
         # Back is located in same spot on most screens
-        # click('BACK')
         click(FOUNTAIN_1)
         # Back is located in same spot on most screens.
         # Second click to leave fountain
-        click(MM_HOME, _clicks=2, _pause=1)
+        click(FOUNTAIN_BACK, _confidence=0.6, _clicks=2)
 
 
 def do_mine_clearance():
@@ -743,7 +747,7 @@ def item_for_all(matched: bool, dismiss):
 
 # ======================================================================================================================
 # while True:
-#     do_storage()
+#     do_fountain()
 #
 if __name__ == '__main__':
     while True:

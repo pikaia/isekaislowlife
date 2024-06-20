@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Add colored logger&#10;2. Fix roaming">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_banquet.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_banquet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/congratulations.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/roaming/congratulations.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +60,7 @@
     "Python.cv.executor": "Run",
     "Python.fishing.executor": "Run",
     "Python.game (1).executor": "Run",
-    "Python.game.executor": "Run",
+    "Python.game.executor": "Debug",
     "Python.kitchen.executor": "Run",
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
@@ -585,7 +583,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718370710754</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming">
+      <option name="closed" value="true" />
+      <created>1718838177853</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1718838177853</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -601,7 +607,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add table for gods guild." />
     <MESSAGE value="Moved generated/soue image folders. Reuse code from utils." />
     <MESSAGE value="Delete old files relocated to new folders." />
     <MESSAGE value="Collect fishing bait. Consolidate some code for matching images." />
@@ -626,7 +631,8 @@
     <MESSAGE value="1. First part of storage. Identify consumables." />
     <MESSAGE value="1. Finish storage feature. Extended click to optionally crop derived locations. Storage divided into those targetting the strongest fellow, and those for all fellows." />
     <MESSAGE value="1. Add colored logger&#10;2. Fix roaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Add colored logger&#10;2. Fix roaming" />
+    <MESSAGE value="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -678,12 +684,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>509</line>
+          <line>514</line>
           <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>203</line>
+          <line>204</line>
           <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -698,13 +704,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>744</line>
-          <option name="timeStamp" value="344" />
+          <line>671</line>
+          <option name="timeStamp" value="345" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>666</line>
-          <option name="timeStamp" value="345" />
+          <line>442</line>
+          <option name="timeStamp" value="346" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>194</line>
+          <option name="timeStamp" value="347" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
+          <line>607</line>
+          <option name="timeStamp" value="349" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
