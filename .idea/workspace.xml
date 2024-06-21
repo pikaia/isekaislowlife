@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming">
+    <list default="true" id="69733375-64ba-4286-a42c-b4123416d578" name="Changes" comment="1. Consume donation first 2 rewards&#10;2. Include 10 fairy in fountain.">
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donation100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donation70.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/bot/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/bot/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/log/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/log/error.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/slowlife/resources/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_guild.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/enter_guild.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donation20.png" beforeDir="false" afterPath="$PROJECT_DIR$/slowlife/resources/mainmenu/drakenberg/guild/donation/donation20.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +64,7 @@
     "Python.cv.executor": "Run",
     "Python.fishing.executor": "Run",
     "Python.game (1).executor": "Run",
-    "Python.game.executor": "Debug",
+    "Python.game.executor": "Run",
     "Python.kitchen.executor": "Run",
     "Python.login2.executor": "Run",
     "Python.main.executor": "Run",
@@ -591,7 +595,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718838177853</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="1. Consume donation first 2 rewards&#10;2. Include 10 fairy in fountain.">
+      <option name="closed" value="true" />
+      <created>1718892205333</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718892205333</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -607,7 +619,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Moved generated/soue image folders. Reuse code from utils." />
     <MESSAGE value="Delete old files relocated to new folders." />
     <MESSAGE value="Collect fishing bait. Consolidate some code for matching images." />
     <MESSAGE value="Add images for fishing." />
@@ -632,7 +643,8 @@
     <MESSAGE value="1. Finish storage feature. Extended click to optionally crop derived locations. Storage divided into those targetting the strongest fellow, and those for all fellows." />
     <MESSAGE value="1. Add colored logger&#10;2. Fix roaming" />
     <MESSAGE value="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Adjust confidence levels for various matches.&#10;2. Add wolf pack processing&#10;3. Improve roaming" />
+    <MESSAGE value="1. Consume donation first 2 rewards&#10;2. Include 10 fairy in fountain." />
+    <option name="LAST_COMMIT_MESSAGE" value="1. Consume donation first 2 rewards&#10;2. Include 10 fairy in fountain." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -684,13 +696,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>514</line>
+          <line>533</line>
           <option name="timeStamp" value="188" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>204</line>
-          <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/db/ocr.py</url>
@@ -704,23 +711,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>671</line>
+          <line>698</line>
           <option name="timeStamp" value="345" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>442</line>
+          <line>462</line>
           <option name="timeStamp" value="346" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>194</line>
-          <option name="timeStamp" value="347" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/slowlife/bot/game.py</url>
-          <line>607</line>
-          <option name="timeStamp" value="349" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

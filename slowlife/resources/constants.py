@@ -52,6 +52,9 @@ STORAGE_SELECT_IRA = '../resources/mainmenu/storage/select_ira.png'
 HOME_FOUNTAIN = '../resources/mainmenu/home/fountain_of_wishes.png'
 HOME_FAMILY = '../resources/mainmenu/home/family.png'
 
+SALE = '../resources/mainmenu/sale.png'
+CLOSE_SALE = '../resources/mainmenu/close_sale.png'
+
 FAMILY_AUTO_DATE = '../resources/mainmenu/home/family/auto_date.png'
 FAMILY_GO_EDUCATE = '../resources/mainmenu/home/family/go_educate.png'
 SCHOOL_NAME = '../resources/mainmenu/village/school/name.png'
@@ -147,6 +150,7 @@ OUT_OF_EDUCATION_POINTS = '../resources/mainmenu/village/school/out_of_education
 SCHOOL_USE_ITEM = '../resources/mainmenu/village/school/school_use_item.png'
 SCHOOL_BACK = '../resources/mainmenu/village/school/school_back.png'
 SCHOOL_OUT_OF_RESOURCES = '../resources/mainmenu/village/school/out_of_resources.png'
+SCHOOL_OUT_OF_RESOURCES_CLOSE = '../resources/mainmenu/village/school/close.png'
 
 SCHOOL_GRADUATE = '../resources/mainmenu/village/school/graduate.png'
 GRADUATE_OK = '../resources/mainmenu/village/school/graduate_ok.png'
@@ -176,7 +180,8 @@ DONATION_OPENED = '../resources/mainmenu/drakenberg/guild/donation/opened.png'
 DONATION_CLOSED = '../resources/mainmenu/drakenberg/guild/donation/closed.png'
 DONATION20 = '../resources/mainmenu/drakenberg/guild/donation/donation20.png'
 DONATION40 = '../resources/mainmenu/drakenberg/guild/donation/donation40.png'
-
+DONATION70 = '../resources/mainmenu/drakenberg/guild/donation/donation70.png'
+DONATION100 = '../resources/mainmenu/drakenberg/guild/donation/donation100.png'
 
 STAGE_CHALLENGE = '../resources/mainmenu/drakenberg/stage/challenge.png'
 CHALLENGE_EMPTY = '../resources/mainmenu/drakenberg/stage/challenge/items_empty.png'

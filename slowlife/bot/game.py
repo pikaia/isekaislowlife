@@ -48,11 +48,12 @@ from slowlife.resources.constants import (
     KITCHEN_SERVE, KITCHEN_ORDER_JEWELS1, KITCHEN_ORDER_JEWELS2, KITCHEN_USE_INN_PAMPHLET,
 
     SCHOOL_BACK, SCHOOL_EDUCATE, SCHOOL_USE_ITEM, SCHOOL_GRADUATE, GRADUATE_OK, GRADUATE_CONGRATS_OK,
-    NOTICE_OK, SCHOOL_NAME, SCHOOL_GO, SCHOOL_OUT_OF_RESOURCES, SCHOOL_NOTICE,
+    NOTICE_OK, SCHOOL_NAME, SCHOOL_GO, SCHOOL_OUT_OF_RESOURCES, SCHOOL_NOTICE, SCHOOL_OUT_OF_RESOURCES_CLOSE,
 
     BANQUET_ATTEND, BANQUET_ATTEND_PARTY, BANQUET_TAKE_SEAT, BANQUET_BACK,
 
     GUILD_DONATION, DONATION_BASIC_DONATION, DONATION_DONATED, BANQUET_MONEY_FULL, DONATION20, DONATION40,
+    DONATION70, DONATION100,
 
     ROAMING_SKIP, ROAMING_TREAT, VILLAGE_GARDEN2, VILLAGE_GARDEN1, ROAMING_ANNE_SKIP, ROAMING_ANNE,
     ROAMING_BACK, ROAMING_SUSIE, SELECT_SADAKO, ROAMING_REIR, REIR_NO_THANKS, ROAMING_SELECT,
@@ -71,7 +72,7 @@ from slowlife.resources.constants import (
     STORAGE_POTION_OF_INSPIRATION, STORAGE_POTION_OF_DILIGENCE, STORAGE_POTION_OF_BRAVERY, STORAGE_POTION_OF_ERUDITION,
     STORAGE_POTION_OF_FREEDOM, STORAGE_SLIDE, STORAGE_SLIDE_USE, STORAGE, STORAGE_REFINED_EXPERIENCE_STONE,
     STORAGE_EXP_STONE, STORAGE_BASIC_ELIXIR, STORAGE_SELECT_IRA, STORAGE_USE_ITEM, STORAGE_UNPROCESSED_DRUSE,
-    MINE_ATTACK, MINE_POWER_0, MINE_OK, ROAMING_MEADEN
+    MINE_ATTACK, MINE_POWER_0, MINE_OK, ROAMING_MEADEN, SALE, CLOSE_SALE
 )
 
 # Limit donation to 4 times.
@@ -299,9 +300,22 @@ def do_guild() -> None:
                 # dismiss congratulation screen
                 click('MAKE_BASIC_DONATION')
 
-            # Check for rewards
-            if click(DONATION20, _confidence=0.8, match_optional=True) is not None:
-                click(DONATION40, _confidence=0.8)
+            # Open rewards
+            click(DONATION20, _confidence=0.8, match_optional=True)
+            # Dismiss popup
+            click(DONATION_BASIC_DONATION)
+
+            click(DONATION40, _confidence=0.8, match_optional=True)
+            # Dismiss popup
+            click(DONATION_BASIC_DONATION)
+
+            click(DONATION70, _confidence=0.8, match_optional=True)
+            # Dismiss popup
+            click(DONATION_BASIC_DONATION)
+
+            click(DONATION100, _confidence=0.8, match_optional=True)
+            # Dismiss popup
+            click(DONATION_BASIC_DONATION)
 
             # Exit donation screen
             click('BACK')
@@ -341,11 +355,18 @@ def do_roaming():
         # When this is no roaming available, a dialog appears
         # click anywhere (e.g. GO) to dismiss it.
         click(ROAMING_GO)
+
+        if displayed(SALE, _confidence=0.6):
+            click(CLOSE_SALE, _confidence=0.6)
+
         # Click on back to continue
         pag.sleep(1)
         click(ROAMING_BACK, _confidence=0.6)
         pag.sleep(1)
         return
+
+    if displayed(SALE, _confidence=0.6):
+        click(CLOSE_SALE, _confidence=0.6)
 
     # Anne
     if displayed(ROAMING_ANNE, _confidence=0.5):
@@ -441,8 +462,7 @@ def do_school():
         # if out of resources pop up, dismiss it.
         if locate_on_window(SCHOOL_OUT_OF_RESOURCES, APP_TITLE, _grayscale=True, _confidence=0.7):
             # click below
-            click(SCHOOL_OUT_OF_RESOURCES, _confidence=0.7,
-                  _derive={'target_image': 'BELOW_OUT_OF_RESOURCES', 'dy': 3.5})
+            click(SCHOOL_OUT_OF_RESOURCES_CLOSE, _confidence=0.7)
         # Either way go back to village
         click(SCHOOL_BACK, _confidence=0.7, _clicks=1)
     # regardless of path, leave
@@ -608,11 +628,19 @@ def do_fountain():
         # Home screen has sight delay.
         click(HOME_FOUNTAIN, _pause=2)
         click(FOUNTAIN_10)
+
+        if displayed(SALE, _confidence=0.6):
+            click(CLOSE_SALE, _confidence=0.6)
+
         if displayed(FOUNTAIN_OUT_OF_RESOURCE, _confidence=0.6):
             click(FOUNTAIN_OUT_OF_RESOURCE, _confidence=0.6,
                   _derive={'target_image': 'BELOW_FOUNTAIN_OUT_OF_RESOURCES', 'dy': 3})
         # Back is located in same spot on most screens
         click(FOUNTAIN_1)
+
+        if displayed(SALE, _confidence=0.6):
+            click(CLOSE_SALE, _confidence=0.6)
+
         # Back is located in same spot on most screens.
         # Second click to leave fountain
         click(FOUNTAIN_BACK, _confidence=0.6, _clicks=2)
@@ -746,9 +774,6 @@ def item_for_all(matched: bool, dismiss):
 
 
 # ======================================================================================================================
-# while True:
-#     do_fountain()
-#
 if __name__ == '__main__':
     while True:
 
